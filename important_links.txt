@@ -1,0 +1,5 @@
+importants links:
+
+1. Create various resources on AWS using Terraform & GitHub Actions
+
+https://devopsquare.com/create-various-resources-on-aws-using-terraform-github-actions-42c7763b025c
