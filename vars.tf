@@ -24,3 +24,4 @@ variable "subnet1_cidr" {
 variable "master_count" {
   default = 1
 }
+
