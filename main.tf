@@ -128,7 +128,7 @@ resource "aws_security_group" "demosg" {
 resource "aws_db_instance" "exist-postgres" {
   identifier             = "exist-identifier"
   name                   = "existdb"
-  instance_class         = "db.t2.micro"
+  instance_class         = "db.t3.micro"
   allocated_storage      = 5
   engine                 = "postgres"
   engine_version         = "13.4"
