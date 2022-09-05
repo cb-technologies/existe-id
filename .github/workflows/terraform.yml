@@ -22,10 +22,5 @@ jobs:
         id: init
         run: terraform init
 
-      - name: Terraform Plan
-        id: plan
-        run: terraform plan
+      - name: terraform destroy
 
-      - name: Terraform Apply
-        id: apply
-        run: terraform apply
