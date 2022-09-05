@@ -22,9 +22,10 @@ jobs:
         id: init
         run: terraform init
 
-      - name: Show Destroy plan
-        run: terraform plan -destroy
+      - name: Terraform Plan
+        id: plan
+        run: terraform plan
 
-      - name: terraform destroy
-        run: terraform destroy -auto-approve
+      - name: Terraform Apply
+        run: terraform apply -auto-approve
 

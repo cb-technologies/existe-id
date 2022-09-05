@@ -6,30 +6,36 @@ provider "aws" {
 }
 
 # Creating VPC
-resource "aws_vpc" "demovpc" {
+resource "aws_vpc" "exist_vpc" {
   cidr_block       = "${var.vpc_cidr}"
   instance_tenancy = "default"
 
   tags = {
-    Name = "Demo VPC"
+    Name = "Exist VPC"
   }
 }
 
+
+# branch name
+module "branch_name" {
+  source = "git::https://github.com/cb-technologies/existe-id.git?ref=feature-aws_setup"
+}
+
 # Creating Internet Gateway
-resource "aws_internet_gateway" "demogateway" {
-  vpc_id = "${aws_vpc.demovpc.id}"
+resource "aws_internet_gateway" "existgateway" {
+  vpc_id = "${aws_vpc.exist_vpc.id}"
 }
 
 # Grant the internet access to VPC by updating its main route table
 resource "aws_route" "internet_access" {
-  route_table_id         = "${aws_vpc.demovpc.main_route_table_id}"
+  route_table_id         = "${aws_vpc.exist_vpc.main_route_table_id}"
   destination_cidr_block = "0.0.0.0/0"
-  gateway_id             = "${aws_internet_gateway.demogateway.id}"
+  gateway_id             = "${aws_internet_gateway.existgateway.id}"
 }
 
 # Creating 1st subnet
 resource "aws_subnet" "demosubnet" {
-  vpc_id                  = "${aws_vpc.demovpc.id}"
+  vpc_id                  = "${aws_vpc.exist_vpc.id}"
   cidr_block             = "${var.subnet_cidr}"
   map_public_ip_on_launch = true
   availability_zone = "us-east-1a"
@@ -41,7 +47,7 @@ resource "aws_subnet" "demosubnet" {
 
 # Creating 2nd subnet
 resource "aws_subnet" "demosubnet1" {
-  vpc_id                  = "${aws_vpc.demovpc.id}"
+  vpc_id                  = "${aws_vpc.exist_vpc.id}"
   cidr_block             = "${var.subnet1_cidr}"
   map_public_ip_on_launch = true
   availability_zone = "us-east-1b"

@@ -35,3 +35,15 @@ jobs:
       - name: Terraform Apply
         id: apply
         run: terraform apply
+
+
+//////////
+tf destroy
+- name: Show Destroy plan
+        run: terraform plan -destroy
+
+      - name: terraform destroy
+        run: terraform destroy -auto-approve
+//////
+source = "git::https://github.com/cb-technologies/existe-id.git?ref=xxx" => referrence to git branch
+https://github.com/cb-technologies/existe-id.git
