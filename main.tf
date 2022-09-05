@@ -54,9 +54,9 @@ ingress {
   }
 }
 
-data "aws_vpc" "default" {
-  default = true
-}
+//data "aws_vpc" "default" {
+//  default = true
+//}
 resource "random_string" "exist-db-password" {
   length  = 32
   upper   = true
