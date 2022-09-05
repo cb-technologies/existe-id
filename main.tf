@@ -42,7 +42,6 @@ resource "aws_subnet" "demosubnet" {
 
 # Creating Security Group
 resource "aws_security_group" "existvpc" {
-  vpc_id      = "${data.aws_vpc.default.id}"
   name        = "existvpc"
   description = "Allow all inbound for Postgres"
 ingress {
@@ -53,9 +52,9 @@ ingress {
   }
 }
 
-data "aws_vpc" "default" {
-  default = true
-}
+//data "aws_vpc" "default" {
+//  default = true
+//}
 resource "random_string" "exist-db-password" {
   length  = 32
   upper   = true
