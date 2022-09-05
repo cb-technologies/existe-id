@@ -56,13 +56,13 @@ ingress {
 data "aws_vpc" "default" {
   default = true
 }
-
 resource "random_string" "exist-db-password" {
   length  = 32
   upper   = true
   number  = true
   special = false
 }
+
 
 # Postgres RDS instance
 resource "aws_db_instance" "exist-postgres" {
