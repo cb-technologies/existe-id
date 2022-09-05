@@ -36,7 +36,6 @@ jobs:
         id: apply
         run: terraform apply
 
-
 //////////
 tf destroy
 - name: Show Destroy plan
