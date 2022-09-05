@@ -15,7 +15,6 @@ resource "aws_default_vpc" "exist_vpc" {
   }
 }
 
-
 # Creating Security Group
 resource "aws_security_group" "existvpc" {
 //  vpc_id      = "${data.aws_vpc.default.id}"
