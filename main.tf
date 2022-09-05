@@ -40,7 +40,6 @@ resource "aws_subnet" "demosubnet" {
   }
 }
 
-
 # Creating Security Group
 resource "aws_security_group" "existvpc" {
   vpc_id      = "${data.aws_vpc.default.id}"
@@ -53,6 +52,7 @@ ingress {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
+
 data "aws_vpc" "default" {
   default = true
 }
