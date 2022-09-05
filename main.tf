@@ -16,11 +16,6 @@ resource "aws_vpc" "exist_vpc" {
 }
 
 
-# branch name
-module "branch_name" {
-  source = "git::https://github.com/cb-technologies/existe-id.git?ref=feature-aws_setup"
-}
-
 # Creating Internet Gateway
 resource "aws_internet_gateway" "existgateway" {
   vpc_id = "${aws_vpc.exist_vpc.id}"
