@@ -7,8 +7,8 @@ provider "aws" {
 
 # Creating VPC
 resource "aws_default_vpc" "exist_vpc" {
-  cidr_block       = "${var.vpc_cidr}"
-  instance_tenancy = "default"
+//  cidr_block       = "${var.vpc_cidr}"
+//  instance_tenancy = "default"
 
   tags = {
     Name = "Exist VPC"
