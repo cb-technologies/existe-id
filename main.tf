@@ -131,7 +131,7 @@ resource "aws_db_instance" "exist-postgres" {
   instance_class         = "db.t2.micro"
   allocated_storage      = 5
   engine                 = "postgres"
-  engine_version         = "12.5"
+  engine_version         = "13.4"
   skip_final_snapshot    = true
   publicly_accessible    = true
   vpc_security_group_ids = [aws_security_group.demosg.id]
