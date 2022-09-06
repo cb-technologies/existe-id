@@ -15,38 +15,19 @@ resource "aws_default_vpc" "exist_vpc" {
   }
 }
 
-//# Creating Security Group
-//resource "aws_security_group" "existvpc" {
-////  vpc_id      = "${data.aws_vpc.default.id}"
-//  vpc_id        = aws_default_vpc.exist_vpc.id
-//  name        = "existvpc"
-//  description = "Allow all inbound for Postgres"
-//ingress {
-//    from_port   = 5432
-//    to_port     = 5432
-//    protocol    = "tcp"
-//    cidr_blocks = ["0.0.0.0/0"]
-//  }
-//}
-
-
+# Creating Security Group
 resource "aws_security_group" "existvpc" {
 //  vpc_id      = "${data.aws_vpc.default.id}"
   vpc_id        = aws_default_vpc.exist_vpc.id
   name        = "existvpc"
   description = "Allow all inbound for Postgres"
+ingress {
+    from_port   = 5432
+    to_port     = 5432
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 }
-
-resource "aws_security_group_rule" "exist-security-group-rule" {
-  type = "ingress"
-  security_group_id = "${aws_security_group.existvpc.id}"
-  from_port = 5432
-  to_port = 5432
-  protocol = "tcp"
-  cidr_blocks = ["0.0.0.0/0"]
-}
-
-
 
 resource "random_string" "exist-db-password" {
   length  = 32
