@@ -5,21 +5,15 @@ provider "aws" {
   region     = "${var.aws_region}"
 }
 
-# Creating VPC
-resource "aws_default_vpc" "exist_vpc" {
-//  cidr_block       = "${var.vpc_cidr}"
-//  instance_tenancy = "default"
+# Retreiving VPC
 
-  tags = {
-    Name = "Exist VPC"
-  }
+data "aws_vpc" "default" {
+  default = true
 }
-
 # Creating Security Group
-resource "aws_security_group" "existvpc" {
-//  vpc_id      = "${data.aws_vpc.default.id}"
-  vpc_id        = aws_default_vpc.exist_vpc.id
-  name        = "exist_vpc"
+resource "aws_security_group" "exist_security_group" {
+  vpc_id      = "${data.aws_vpc.default.id}"
+  name        = "exist"
   description = "Allow all inbound for Postgres"
 ingress {
     from_port   = 5432
@@ -28,7 +22,6 @@ ingress {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
-
 resource "random_string" "exist-db-password" {
   length  = 32
   upper   = true
@@ -47,7 +40,7 @@ resource "aws_db_instance" "exist-postgres" {
   engine_version         = "13.4"
   skip_final_snapshot    = true
   publicly_accessible    = true
-  vpc_security_group_ids = [aws_security_group.existvpc.id]
+  vpc_security_group_ids = [aws_security_group.exist_security_group.id]
   username               = "existuser"
   password               = "random_string.exist-db-password.result}"
 }
