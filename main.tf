@@ -19,7 +19,7 @@ resource "aws_default_vpc" "exist_vpc" {
 resource "aws_security_group" "existvpc" {
 //  vpc_id      = "${data.aws_vpc.default.id}"
   vpc_id        = aws_default_vpc.exist_vpc.id
-  name        = "existvpc"
+  name        = "exist_vpc"
   description = "Allow all inbound for Postgres"
 ingress {
     from_port   = 5432
