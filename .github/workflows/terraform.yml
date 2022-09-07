@@ -22,13 +22,12 @@ jobs:
         id: init
         run: terraform init
 
-      - name: Terraform Import
-        id: import
-        run: terraform import aws_security_group.exist_security_group
-
       - name: Terraform Plan
         id: plan
         run: terraform plan
+      - name: Terraform Import
+        id: import
+        run: terraform import aws_security_group.exist_security_group
 
       - name: Terraform Apply
         run: terraform apply -auto-approve
