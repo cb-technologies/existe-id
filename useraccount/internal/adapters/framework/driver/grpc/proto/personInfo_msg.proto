@@ -1,0 +1,67 @@
+syntax = "proto3";
+
+package pb;
+
+option go_package = "./pb";
+
+message Address {
+  int32 number = 1;
+  string avenue = 2;
+  string quartier = 3;
+  string commune = 4; // we can further make this of type Enum since we know all the possible communes
+  string zip_code = 5;
+  string province = 6; // can be an Enum as well
+  string ville = 7;
+  string reference = 8; // reference is optional. this is just to help with easier localisation
+}
+
+message Names {
+   string nom = 1;
+   string post_nom = 2;
+   repeated string middle_names = 3;
+}
+
+message Origin {
+  repeated string province = 1; // could be from multiple provinces
+  string chef_lieu = 2;
+}
+
+message Phenotype {
+  float height = 1;
+  float weight = 2;
+  string eye_color = 3;
+}
+
+// We have to look further on how to represent images in proto files
+// Also have to find a good way of representing finger print as a stream of bytes or something else
+message Biometric {
+  bytes photos = 1;
+  bytes finger_print = 2;
+}
+
+message DateOfBirth {
+  string day = 1;
+  string month = 2;
+  string year = 3;
+}
+
+// might some performance consequence but I will into it later
+message UIUD {
+  string uiud = 1;
+}
+
+message PersonInfo {
+  Names names = 1;
+  Biometric biometrics = 2;
+  Address address = 3;
+  Origin origins = 4;
+  Phenotype phenotypes = 5;
+  DateOfBirth date_of_birth = 6;
+  UIUD id = 7;
+}
+
+message EditPersonInfoParameters{
+  UIUD personId = 1;
+  PersonInfo editedPersonInfo = 2;
+}
+
