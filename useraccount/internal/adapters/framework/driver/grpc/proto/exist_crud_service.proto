@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package pb;
+
+import "personInfo_msg.proto";
+import "exist_crud_service_msg.proto";
+
+option  go_package = "./pb";
+
+// Creating RPC endpoints / just for the sake of explanation we will this kind of comments
+service ExistCRUDService {
+  rpc AddNewPerson(PersonInfo) returns (Response) {}
+  rpc EditPersonInfo(EditPersonInfoParameters) returns (Response) {}
+  rpc FindPersonInfo(UUID) returns (PersonInfo) {}
+}
