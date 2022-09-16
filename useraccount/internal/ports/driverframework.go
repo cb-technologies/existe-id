@@ -1,25 +1,13 @@
 package ports
 
-/** we should probably define our data schema in go
-// I believe the protoc compiler will do that for us but not sure
-// I will just use placeholder here
-*/
- */
+import (
+	"context"
+	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/adapters/framework/driver/grpc/pb"
+)
 
-type Person struct {
-
-}
-
-type PersonId struct {
-
-}
-
- type FindPersonKey struct {
-
-}
-
-type APIPort interface {
-	AddNewPersonInfo(person Person) error
-	EditPersonInfo(pid PersonId) error
-	FindPersonInfo(key FindPersonKey) (Person, error)
+type GRPCPort interface {
+	Run()
+	AddNewPersonInfo(ctx context.Context, req *pb.PersonInfo) (*pb.Response, error)
+	EditPersonInfo(ctx context.Context, req *pb.EditPersonInfoParameters) (*pb.Response, error)
+	FindPersonInfo(ctx context.Context, req *pb.UUID) (*pb.PersonInfo, *pb.Response, error)
 }
