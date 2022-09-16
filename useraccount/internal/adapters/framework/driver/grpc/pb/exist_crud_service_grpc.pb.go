@@ -24,8 +24,7 @@ const _ = grpc.SupportPackageIsVersion7
 type ExistCRUDServiceClient interface {
 	AddNewPerson(ctx context.Context, in *PersonInfo, opts ...grpc.CallOption) (*Response, error)
 	EditPersonInfo(ctx context.Context, in *EditPersonInfoParameters, opts ...grpc.CallOption) (*Response, error)
-	DeletePersonInfo(ctx context.Context, in *UIUD, opts ...grpc.CallOption) (*Response, error)
-	FindPersonInfo(ctx context.Context, in *UIUD, opts ...grpc.CallOption) (*PersonInfo, error)
+	FindPersonInfo(ctx context.Context, in *UUID, opts ...grpc.CallOption) (*PersonInfo, error)
 }
 
 type existCRUDServiceClient struct {
@@ -54,16 +53,7 @@ func (c *existCRUDServiceClient) EditPersonInfo(ctx context.Context, in *EditPer
 	return out, nil
 }
 
-func (c *existCRUDServiceClient) DeletePersonInfo(ctx context.Context, in *UIUD, opts ...grpc.CallOption) (*Response, error) {
-	out := new(Response)
-	err := c.cc.Invoke(ctx, "/pb.ExistCRUDService/DeletePersonInfo", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *existCRUDServiceClient) FindPersonInfo(ctx context.Context, in *UIUD, opts ...grpc.CallOption) (*PersonInfo, error) {
+func (c *existCRUDServiceClient) FindPersonInfo(ctx context.Context, in *UUID, opts ...grpc.CallOption) (*PersonInfo, error) {
 	out := new(PersonInfo)
 	err := c.cc.Invoke(ctx, "/pb.ExistCRUDService/FindPersonInfo", in, out, opts...)
 	if err != nil {
@@ -78,8 +68,7 @@ func (c *existCRUDServiceClient) FindPersonInfo(ctx context.Context, in *UIUD, o
 type ExistCRUDServiceServer interface {
 	AddNewPerson(context.Context, *PersonInfo) (*Response, error)
 	EditPersonInfo(context.Context, *EditPersonInfoParameters) (*Response, error)
-	DeletePersonInfo(context.Context, *UIUD) (*Response, error)
-	FindPersonInfo(context.Context, *UIUD) (*PersonInfo, error)
+	FindPersonInfo(context.Context, *UUID) (*PersonInfo, error)
 	mustEmbedUnimplementedExistCRUDServiceServer()
 }
 
@@ -93,10 +82,7 @@ func (UnimplementedExistCRUDServiceServer) AddNewPerson(context.Context, *Person
 func (UnimplementedExistCRUDServiceServer) EditPersonInfo(context.Context, *EditPersonInfoParameters) (*Response, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method EditPersonInfo not implemented")
 }
-func (UnimplementedExistCRUDServiceServer) DeletePersonInfo(context.Context, *UIUD) (*Response, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DeletePersonInfo not implemented")
-}
-func (UnimplementedExistCRUDServiceServer) FindPersonInfo(context.Context, *UIUD) (*PersonInfo, error) {
+func (UnimplementedExistCRUDServiceServer) FindPersonInfo(context.Context, *UUID) (*PersonInfo, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method FindPersonInfo not implemented")
 }
 func (UnimplementedExistCRUDServiceServer) mustEmbedUnimplementedExistCRUDServiceServer() {}
@@ -148,26 +134,8 @@ func _ExistCRUDService_EditPersonInfo_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ExistCRUDService_DeletePersonInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UIUD)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ExistCRUDServiceServer).DeletePersonInfo(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/pb.ExistCRUDService/DeletePersonInfo",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ExistCRUDServiceServer).DeletePersonInfo(ctx, req.(*UIUD))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _ExistCRUDService_FindPersonInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UIUD)
+	in := new(UUID)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -179,7 +147,7 @@ func _ExistCRUDService_FindPersonInfo_Handler(srv interface{}, ctx context.Conte
 		FullMethod: "/pb.ExistCRUDService/FindPersonInfo",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ExistCRUDServiceServer).FindPersonInfo(ctx, req.(*UIUD))
+		return srv.(ExistCRUDServiceServer).FindPersonInfo(ctx, req.(*UUID))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -198,10 +166,6 @@ var ExistCRUDService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "EditPersonInfo",
 			Handler:    _ExistCRUDService_EditPersonInfo_Handler,
-		},
-		{
-			MethodName: "DeletePersonInfo",
-			Handler:    _ExistCRUDService_DeletePersonInfo_Handler,
 		},
 		{
 			MethodName: "FindPersonInfo",

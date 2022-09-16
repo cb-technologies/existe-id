@@ -21,7 +21,5 @@ type PersonId struct {
 type APIPort interface {
 	AddNewPersonInfo(person Person) error
 	EditPersonInfo(pid PersonId) error
-	DeletePersonInfo(pid PersonId) error
-	UpdatePersonInfo(pid PersonId) error
 	FindPersonInfo(key FindPersonKey) (Person, error)
 }

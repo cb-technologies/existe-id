@@ -46,8 +46,8 @@ message DateOfBirth {
 }
 
 // might some performance consequence but I will into it later
-message UIUD {
-  string uiud = 1;
+message UUID {
+  string uuid = 1;
 }
 
 message PersonInfo {
@@ -57,11 +57,11 @@ message PersonInfo {
   Origin origins = 4;
   Phenotype phenotypes = 5;
   DateOfBirth date_of_birth = 6;
-  UIUD id = 7;
+  UUID id = 7;
 }
 
 message EditPersonInfoParameters{
-  UIUD personId = 1;
+  UUID personId = 1;
   PersonInfo editedPersonInfo = 2;
 }
 
