@@ -45,7 +45,7 @@ resource "aws_rds_cluster" exist_cluster {
 
 
 # Postgres RDS instance
-resource "aws_db_instance" "exist-postgres" {
+resource "aws_rds_cluster_instance" "exist-postgres" {
   count                  = 1
   identifier             = "exist-identifier"
   cluster_identifer      =  aws_rds_cluster.exist_cluster.id
