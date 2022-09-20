@@ -83,7 +83,7 @@ EOF
 
 resource "aws_iam_user" "db-user"{
   name = var.dbuser
-  path = "/db"
+  path = "/db/"
 }
 
 resource "aws_iam_user_policy_attachment" "exist-attach"{
