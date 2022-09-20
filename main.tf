@@ -40,7 +40,7 @@ resource "aws_rds_cluster" exist_cluster {
   master_username = "postgres"
   master_password = "exist_password"
   iam_database_authentication_enabled = true
-  vpc_security_group_ids = aws_security_group.exist_security_group.id
+  vpc_security_group_ids = [aws_security_group.exist_security_group.id]
 }
 
 
