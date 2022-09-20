@@ -29,6 +29,7 @@ resource "random_string" "exist-db-password" {
   special = false
 }
 
+
 # Create Postgres Cluster
 
 resource "aws_rds_cluster" exist_cluster {
@@ -41,6 +42,7 @@ resource "aws_rds_cluster" exist_cluster {
   iam_database_authentication_enabled = true
   vpc_security_group_ids = [aws_security_group.exist_security_group.id]
 }
+
 
 # Postgres RDS instance
 resource "aws_db_instance" "exist-postgres" {
