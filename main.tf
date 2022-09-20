@@ -73,7 +73,7 @@ resource "aws_iam_policy" db-policy{
 "rds-db:connect"
 ],
 "Resource":[
-"arn:aws:rds-db:${var.region}:${data.aws_caller_identity.current.account_id}:dbuser:${aws_rds_cluster.db.cluster_resource_id}/${var.dbuser}"
+"arn:aws:rds-db:${var.aws_region}:${data.aws_caller_identity.current_exist.account_id}:dbuser:${aws_rds_cluster.exist_cluster.cluster_resource_id}/${var.dbuser}"
 ]
 }
 ]
