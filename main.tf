@@ -38,6 +38,7 @@ resource "aws_rds_cluster" exist_cluster {
   engine_version = "13.4"
   database_name = "existdb"
   master_username = "postgres"
+  allocated_storage = 100
   master_password = "exist_password"
   iam_database_authentication_enabled = true
   vpc_security_group_ids = [aws_security_group.exist_security_group.id]
