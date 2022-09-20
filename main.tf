@@ -48,16 +48,15 @@ resource "aws_rds_cluster" exist_cluster {
 resource "aws_rds_cluster_instance" "exist-postgres" {
   count                  = 1
   identifier             = "exist-identifier"
-  cluster_identifer      =  aws_rds_cluster.exist_cluster.id
-  name                   = "existdb"
+  cluster_identifier      =  aws_rds_cluster.exist_cluster.id
   instance_class         = "db.t3.micro"
-  allocated_storage      = 5
+//  allocated_storage      = 5
   engine                 = "postgres"
   engine_version         = aws_rds_cluster.exist_cluster.engine_version
-  skip_final_snapshot    = true
+//  skip_final_snapshot    = true
   publicly_accessible    = true
   vpc_security_group_ids = aws_security_group.exist_security_group.id
-  username               = "existuser"
+//  username               = "existuser"
 }
 
 //data "aws_caller_identity" "current_exist"{}
