@@ -40,7 +40,7 @@ resource "aws_rds_cluster" exist_cluster {
   master_username = "postgres"
   master_password = "exist_password"
   iam_database_authentication_enabled = true
-  vpc_security_group_ids = [aws_security_group.exist_security_group.id]
+  vpc_security_group_ids = aws_security_group.exist_security_group.id
 }
 
 
@@ -56,7 +56,7 @@ resource "aws_rds_cluster_instance" "exist-postgres" {
   engine_version         = aws_rds_cluster.exist_cluster.engine_version
   skip_final_snapshot    = true
   publicly_accessible    = true
-  vpc_security_group_ids = [aws_security_group.exist_security_group.id]
+  vpc_security_group_ids = aws_security_group.exist_security_group.id
   username               = "existuser"
 }
 
