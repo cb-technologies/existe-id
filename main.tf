@@ -55,9 +55,38 @@ resource "aws_rds_cluster_instance" "exist-postgres" {
   publicly_accessible    = true
 }
 
-//data "aws_caller_identity" "current_exist"{}
-//
-//variable "dbuser"{
-//  type    = string
-//  default = "dbuser"
-//}
+data "aws_caller_identity" "current_exist"{}
+
+variable "dbuser"{
+  type    = string
+  default = "dbuser"
+}
+
+resource "aws_iam_policy" db-policy{
+  name = "aurora-db-policy"
+  policy = <<-EOF
+{
+"Version": "2012-10-17",
+"Statement":[
+"Effect": "Allow",
+"Action":[
+"rds-db:connect"
+],
+"Resource":[
+"arn:aws:rds-db:${var.region}:${data.aws_caller_identity.current.account_id}:dbuser:${aws_rds_cluster.db.cluster_resource_id}/${var.dbuser}"
+]
+}
+]
+}
+EOF
+}
+
+resource "aws_iam_user" "db-user"{
+  name = var.dbuser
+  path = "/db"
+}
+
+resource "aws_iam_user_policy_attachment" "exist-attach"{
+  user = aws_iam_user.db-user.name
+  policy_arn = aws_iam_policy.db-policy.arn
+}
