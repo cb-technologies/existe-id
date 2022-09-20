@@ -34,7 +34,7 @@ resource "random_string" "exist-db-password" {
 
 resource "aws_rds_cluster" exist_cluster {
   cluster_identifier = "aurora-exist-cluster"
-  engine = "aurora-postgresql"
+  engine = "postgres"
   engine_version = "13.4"
   database_name = "existdb"
   master_username = "postgres"
@@ -50,7 +50,7 @@ resource "aws_rds_cluster_instance" "exist-postgres" {
   identifier             = "exist-identifier"
   cluster_identifier      =  aws_rds_cluster.exist_cluster.id
   instance_class         = "db.t3.micro"
-  engine                 = "aurora-postgresql"
+  engine                 = "postgres"
   engine_version         = aws_rds_cluster.exist_cluster.engine_version
   publicly_accessible    = true
 }

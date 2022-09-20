@@ -33,6 +33,14 @@ jobs:
         id: importDB
         run: terraform import aws_rds_cluster.exist_cluster aurora-exist-cluster
 
+      - name: Terraform Import policy
+          id: importDB
+          run: terraform import aws_iam_policy.db-policy aurora-db-policy
+
+      - name: Terraform Import user
+          id: importDB
+          run: terraform import aws_iam_user.db-user dbuser
+
       - name: Terraform Apply
         run: terraform apply -auto-approve
 
