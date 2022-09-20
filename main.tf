@@ -50,7 +50,7 @@ resource "aws_rds_cluster_instance" "exist-postgres" {
   identifier             = "exist-identifier"
   cluster_identifier      =  aws_rds_cluster.exist_cluster.id
   instance_class         = "db.t3.micro"
-  engine                 = "postgres"
+  engine                 = "aurora-postgresql"
   engine_version         = aws_rds_cluster.exist_cluster.engine_version
   publicly_accessible    = true
 }
