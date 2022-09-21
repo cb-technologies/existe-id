@@ -4,6 +4,14 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
+	"context"
+	"database/sql"
+	"fmt"
+
+	"github.com/aws/aws-sdk-go-v2/config"
+	"github.com/aws/aws-sdk-go-v2/feature/rds/auth"
+	"github.com/lib/pq"
+
 )
 
 //  Johan will probably start working here
@@ -14,17 +22,18 @@ type Adapter struct {
 }
 
 const (
-	host     = " localhost"
-	port     = 5432
-	user     = "postgres"
-	password = "xx ="
-	dbname   = "exist-id"
+	dbPort      = 5432
+	dbUser      = "postgres"
+	dbHost 		= ""
+	dbName      = "existdb"
+	region		= "us-east-1"
 )
 
 func NewAdapter() (*Adapter, error) {
-	postgresDbInfo := fmt.Sprintf("host=%s port=%d user=%s "+
-		"password=%s dbname=%s sslmode=disable",
-		host, port, user, password, dbname)
+	var dbEndpoint string = fmt.Sprintf("%s:%d", dbHost, dbPort)
+	// postgresDbInfo := fmt.Sprintf("host=%s port=%d user=%s "+
+	// 	"password=%s dbname=%s sslmode=disable",
+	// 	host, port, user, password, dbname)
 
 	db, err := sql.Open("postgres", postgresDbInfo)
 
