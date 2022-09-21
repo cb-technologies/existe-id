@@ -2,6 +2,7 @@
 # Configure and downloading plugins for aws provider
 
 provider "aws" {
+  version = "~> 3.13.0"
   region     = "${var.aws_region}"
 }
 
