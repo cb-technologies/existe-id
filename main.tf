@@ -64,24 +64,25 @@ variable "dbuser"{
   default = "dbuser"
 }
 
-resource "aws_iam_policy" db-policy{
-  name = "aurora-db-policy"
-  policy = <<-EOF
-{
-"Version": "2012-10-17",
-"Statement":[
-{
-"Effect": "Allow",
-"Action":[
-"rds-db:connect"
-],
-"Resource":[
-"arn:aws:rds-db:${var.aws_region}:${data.aws_caller_identity.current_exist.account_id}:dbuser:${aws_rds_cluster.exist_cluster.cluster_resource_id}/${var.dbuser}"
-]
-}
-]
-}
-EOF
+
+resource "aws_iam_policy" "db-policy" {
+  name        = "aurora-db-policy"
+  policy      =<<-EOF
+  {
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Action": [
+          "rds-db:connect"
+        ],
+        "Resource": [
+          "arn:aws:rds-db:${var.aws_region}:${data.aws_caller_identity.current_exist.account_id}:dbuser:${aws_rds_cluster.exist_cluster.cluster_resource_id}/${var.dbuser}"
+        ]
+      }
+    ]
+  }
+  EOF
 }
 
 resource "aws_iam_user" "db-user"{
