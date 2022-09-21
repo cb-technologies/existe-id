@@ -43,7 +43,7 @@ jobs:
 
       - name: Terraform Import RDS
         id: importRDInstance
-        run: terraform import aws_rds_cluster_instance.exist-postgres[0]
+        run: terraform import aws_rds_cluster_instance.exist-postgres[0] exist-identifier
 
       - name: Terraform Apply
         run: terraform apply -auto-approve
