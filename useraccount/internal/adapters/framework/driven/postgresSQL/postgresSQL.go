@@ -23,30 +23,40 @@ type Adapter struct {
 
 const (
 	dbPort      = 5432
-	dbUser      = "postgres"
-	dbHost 		= ""
+	dbUser      = "dbuser"
+	dbHost 		= "exist-identifier.cprbzqerfjiq.us-east-1.rds.amazonaws.com"
 	dbName      = "existdb"
 	region		= "us-east-1"
 )
 
 func NewAdapter() (*Adapter, error) {
 	var dbEndpoint string = fmt.Sprintf("%s:%d", dbHost, dbPort)
-	// postgresDbInfo := fmt.Sprintf("host=%s port=%d user=%s "+
-	// 	"password=%s dbname=%s sslmode=disable",
-	// 	host, port, user, password, dbname)
+	cfg, err := config.LoadDefaultConfig(context.TODO())
+   if err != nil {
+	   panic("configuration error: " + err.Error())
+   }
 
-	db, err := sql.Open("postgres", postgresDbInfo)
-
+   authenticationToken, err := auth.BuildAuthToken(
+	context.TODO(), dbEndpoint, region, dbUser, cfg.Credentials)
 	if err != nil {
-		panic(err) // have to know what to do in this case
+		panic("failed to create authentication token: " + err.Error())
 	}
 
-	defer db.Close()
-	err = db.Ping()
+	dsn := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s",
+	   dbHost, dbPort, dbUser, authenticationToken, dbName,
+   )
 
-	if err != nil {
-		panic(err)
-	}
+
+
+	db, err := sql.Open("postgres", dsn)
+   if err != nil {
+	   panic(err)
+   }
+
+   err = db.Ping()
+   if err != nil {
+	   panic(err)
+   }
 
 	return &Adapter{db: db}, nil
 }
