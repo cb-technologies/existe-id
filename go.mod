@@ -5,6 +5,7 @@ go 1.18
 require (
 	github.com/aws/aws-sdk-go-v2/config v1.17.7
 	github.com/aws/aws-sdk-go-v2/feature/rds/auth v1.2.1
+	github.com/lib/pq v1.10.7
 	google.golang.org/grpc v1.49.0
 	google.golang.org/protobuf v1.28.1
 )
