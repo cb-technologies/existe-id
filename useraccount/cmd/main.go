@@ -1,7 +1,9 @@
 package main
 
-import "fmt"
+import (
 
+)
+
+// This file is responsible for orchestrating the startup of our application
 func main() {
-	fmt.Println("Existe ID, just trying")
 }
