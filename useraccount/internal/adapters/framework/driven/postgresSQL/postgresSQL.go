@@ -7,6 +7,7 @@ import (
 	"context"
 	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/feature/rds/auth"
+	_ "github.com/lib/pq"
 
 )
 
@@ -27,7 +28,8 @@ const (
 
 func NewAdapter() (*Adapter, error) {
 	var dbEndpoint string = fmt.Sprintf("%s:%d", dbHost, dbPort)
-	cfg, err := config.LoadDefaultConfig(context.TODO())
+	cfg, err := config.LoadDefaultConfig(context.TODO(),config.WithRegion("us-east-1"))
+	fmt.Sprintf("Where is the context")
    if err != nil {
 	   panic("configuration error: " + err.Error())
    }
