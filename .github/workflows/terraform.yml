@@ -1,51 +1,51 @@
-name: Terraform-GitHub-Actions
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
-env:
-  AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key }}
-  AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_key }}
-jobs:
-  build:
-    name: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+# name: Terraform-GitHub-Actions
+# on:
+#   push:
+#     branches: [ main ]
+#   pull_request:
+#     branches: [ main ]
+# env:
+#   AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key }}
+#   AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_key }}
+# jobs:
+#   build:
+#     name: build
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v2
 
-      - name: Set up Terraform
-        uses: hashicorp/setup-terraform@v1
+#       - name: Set up Terraform
+#         uses: hashicorp/setup-terraform@v1
 
-      - name: Terraform Init
-        id: init
-        run: terraform init
+#       - name: Terraform Init
+#         id: init
+#         run: terraform init
 
-      - name: Terraform Plan
-        id: plan
-        run: terraform plan
-      - name: Terraform Import
-        id: import
-        run: terraform import aws_security_group.exist_security_group sg-0dcaba01d69808d92
+#       - name: Terraform Plan
+#         id: plan
+#         run: terraform plan
+#       - name: Terraform Import
+#         id: import
+#         run: terraform import aws_security_group.exist_security_group sg-0dcaba01d69808d92
 
-      - name: Terraform Import Database
-        id: importDB
-        run: terraform import aws_rds_cluster.exist_cluster aurora-exist-cluster
+#       - name: Terraform Import Database
+#         id: importDB
+#         run: terraform import aws_rds_cluster.exist_cluster aurora-exist-cluster
 
-      - name: Terraform Import policy
-        id: importPolicy
-        run: terraform import aws_iam_policy.db-policy arn:aws:iam::456807214525:policy/aurora-db-policy
+#       - name: Terraform Import policy
+#         id: importPolicy
+#         run: terraform import aws_iam_policy.db-policy arn:aws:iam::456807214525:policy/aurora-db-policy
 
-      - name: Terraform Import user
-        id: importUser
-        run: terraform import aws_iam_user.db-user dbuser
+#       - name: Terraform Import user
+#         id: importUser
+#         run: terraform import aws_iam_user.db-user dbuser
 
-      - name: Terraform Import RDS
-        id: importRDInstance
-        run: terraform import aws_rds_cluster_instance.exist-postgres[0] exist-identifier
+#       - name: Terraform Import RDS
+#         id: importRDInstance
+#         run: terraform import aws_rds_cluster_instance.exist-postgres[0] exist-identifier
 
-      - name: Terraform Apply
-        run: terraform apply -auto-approve
+#       - name: Terraform Apply
+#         run: terraform apply -auto-approve
 
 
