@@ -28,8 +28,7 @@ const (
 
 func NewAdapter() (*Adapter, error) {
 	var dbEndpoint string = fmt.Sprintf("%s:%d", dbHost, dbPort)
-	cfg, err := config.LoadDefaultConfig(context.TODO(),config.WithRegion("us-east-1"))
-	fmt.Sprintf("Where is the context")
+	cfg, err := config.LoadDefaultConfig(context.TODO())
    if err != nil {
 	   panic("configuration error: " + err.Error())
    }

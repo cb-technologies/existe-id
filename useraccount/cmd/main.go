@@ -9,7 +9,11 @@ func main() {
 	
 	postgres, err := postgresSQL.NewAdapter()
 
-	fmt.Sprintf("The error is %s",err)
+	if err != nil {
+		fmt.Println("The error is ",err)
+	}
+	
+	fmt.Println("Connection succesful!")
 	postgres.CloseDBConnection()
 
 
