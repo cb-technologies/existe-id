@@ -3,10 +3,9 @@ package postgresSQL
 import (
 	"database/sql"
 	"fmt"
-	"log"
-	"context"
-	"github.com/aws/aws-sdk-go-v2/config"
-	"github.com/aws/aws-sdk-go-v2/feature/rds/auth"
+
+	"github.com/aws/aws-sdk-go/aws/credentials"
+	"github.com/aws/aws-sdk-go/service/rds/rdsutils"
 	_ "github.com/lib/pq"
 
 )
