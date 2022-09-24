@@ -5,14 +5,15 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/adapters/framework/driver/grpc/pb"
+	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/entity/db"
 	_ "github.com/lib/pq"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 )
 
-//  Johan will probably start working here
-
-// the adapter that will implement the interface defined in ports
 type Adapter struct {
-	db *sql.DB
+	db *gorm.DB
 }
 
 const (
@@ -30,12 +31,20 @@ func NewAdapter() (*Adapter, error) {
 		dbHost, dbPort, dbUser, dbPassword, dbName,
 	)
 
-	db, err := sql.Open("postgres", dsn)
+	postgresdb, err := sql.Open("postgres", dsn)
 	if err != nil {
 		panic(err)
 	}
 
-	err = db.Ping()
+	err = postgresdb.Ping()
+	if err != nil {
+		panic(err)
+	}
+
+	db, err := gorm.Open(postgres.New(postgres.Config{
+		Conn: postgresdb,
+	}), &gorm.Config{})
+
 	if err != nil {
 		panic(err)
 	}
@@ -44,17 +53,52 @@ func NewAdapter() (*Adapter, error) {
 }
 
 func (adapter Adapter) CloseDBConnection() {
-	err := adapter.db.Close()
+	db, _ := adapter.db.DB()
+
+	err := db.Close()
 	if err != nil {
 		log.Fatalf("db close failure: %v", err)
 	}
 }
-func (adapter Adapter) AddNewPersonInfo() {
-	// TODO: implement
+
+func (adapter Adapter) AddNewPersonInfo(personInfo *pb.PersonInfoRequest) {
+
+	// personInformationRequest := mapper.protoPersonInfoRequestToDBPersonInfoRequest()
+
+	if adapter.isDatabaseTableCreated() {
+		// add directly
+	}
+	// create
+	err := adapter.createDatabaseTable()
+
+	if err != nil {
+		// do something
+	}
+	// add user
+	//adapter.db.Create(personInformation)
+
 }
+
 func (adapter Adapter) UpdatePersonInfo() {
 	// TODO: implement
 }
 func (adapter Adapter) FindPersonInfo() {
 	// TODO: implement
+}
+
+func (adapter Adapter) createDatabaseTable() error {
+
+	err := adapter.db.Migrator().CreateTable(&db.PersonInfoRequest{})
+	if err != nil {
+		log.Fatalf("db creation failure: %v", err)
+	}
+	err = adapter.db.AutoMigrate(&db.PersonInfoRequest{})
+	if err != nil {
+		log.Fatalf("Failed to Migrate table: %v", err)
+	}
+	return err
+}
+
+func (adapter Adapter) isDatabaseTableCreated() bool {
+	return adapter.db.Migrator().HasTable(&db.PersonInfoRequest{})
 }
