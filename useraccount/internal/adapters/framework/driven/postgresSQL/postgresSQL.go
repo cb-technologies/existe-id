@@ -3,13 +3,13 @@ package postgresSQL
 import (
 	"database/sql"
 	"fmt"
-	"log"
-
 	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/adapters/framework/driver/grpc/pb"
 	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/entity/db"
+	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/mapper/dbmapper"
 	_ "github.com/lib/pq"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
+	"log"
 )
 
 type Adapter struct {
@@ -57,26 +57,28 @@ func (adapter Adapter) CloseDBConnection() {
 
 	err := db.Close()
 	if err != nil {
-		log.Fatalf("db close failure: %v", err)
+		log.Fatalf("dbmapper close failure: %v", err)
 	}
 }
 
-func (adapter Adapter) AddNewPersonInfo(personInfo *pb.PersonInfoRequest) {
+func (adapter Adapter) AddNewPersonInfo(personInfo *pb.PersonInfoRequest) error {
 
-	// personInformationRequest := mapper.protoPersonInfoRequestToDBPersonInfoRequest()
+	personInfoModel := dbmapper.PersonInfoRequestToPersonInfoModel(personInfo)
 
-	if adapter.isDatabaseTableCreated() {
-		// add directly
+	if !adapter.isDatabaseTableCreated() {
+		err := adapter.createDatabaseTable()
+		if err != nil {
+			fmt.Println("Could not create the database")
+		}
 	}
-	// create
-	err := adapter.createDatabaseTable()
 
-	if err != nil {
-		// do something
+	result := adapter.db.Create(personInfoModel)
+
+	if result.Error != nil {
+		fmt.Println("Failed to create the user. error %v", result.Error)
 	}
-	// add user
-	//adapter.db.Create(personInformation)
 
+	return result.Error
 }
 
 func (adapter Adapter) UpdatePersonInfo() {
@@ -88,11 +90,11 @@ func (adapter Adapter) FindPersonInfo() {
 
 func (adapter Adapter) createDatabaseTable() error {
 
-	err := adapter.db.Migrator().CreateTable(&db.PersonInfoRequest{})
+	err := adapter.db.Migrator().CreateTable(&db.PersonInfoModel{})
 	if err != nil {
-		log.Fatalf("db creation failure: %v", err)
+		log.Fatalf("dbmapper creation failure: %v", err)
 	}
-	err = adapter.db.AutoMigrate(&db.PersonInfoRequest{})
+	err = adapter.db.AutoMigrate(&db.PersonInfoModel{})
 	if err != nil {
 		log.Fatalf("Failed to Migrate table: %v", err)
 	}
@@ -100,5 +102,5 @@ func (adapter Adapter) createDatabaseTable() error {
 }
 
 func (adapter Adapter) isDatabaseTableCreated() bool {
-	return adapter.db.Migrator().HasTable(&db.PersonInfoRequest{})
+	return adapter.db.Migrator().HasTable(&db.PersonInfoModel{})
 }

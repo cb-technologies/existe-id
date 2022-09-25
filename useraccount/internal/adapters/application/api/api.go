@@ -14,7 +14,7 @@ func NewAdapter(db ports.PostgresSQLPort) *Adapter {
 }
 
 func (adapter Adapter) AddNewPersonInfo(personInfo *pb.PersonInfoRequest) error {
-	// make the call to the db
+	// make the call to the dbmapper
 
 	return nil
 }
