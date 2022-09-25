@@ -6,6 +6,7 @@ import (
 	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/adapters/framework/driven/postgresSQL"
 )
 
+// This file is responsible for orchestrating the startup of our application
 func main() {
 
 	fmt.Println("Existe ID")
@@ -17,7 +18,7 @@ func main() {
 	}
 
 	fmt.Println("Connection succesful!")
+	postgres.AddNewPersonInfo("Tuala", "Tuala", "Tuala", "Boma")
 	postgres.CloseDBConnection()
 
 }
-
