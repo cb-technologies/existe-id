@@ -18,7 +18,7 @@ func main() {
 	}
 
 	fmt.Println("Connection succesful!")
-	postgres.PlayField()
+	postgres.AddNewPersonInfo("Tuala", "Tuala", "Tuala", "Boma")
 	postgres.CloseDBConnection()
 
 }
