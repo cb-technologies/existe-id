@@ -17,7 +17,7 @@ message Address {
 
 message Names {
    string nom = 1;
-   string post_nom = 2;
+   string prenom = 2;
    repeated string middle_names = 3;
 }
 
@@ -50,18 +50,39 @@ message UUID {
   string uuid = 1;
 }
 
-message PersonInfo {
+message Date {
+  int32 year = 1;
+  int32 month = 2;
+  int32 day = 3;
+}
+
+message CardValidity {
+  Date IssueDate = 1;
+  Date ExpirationDate = 2;
+}
+
+message PersonInfoRequest {
   Names names = 1;
   Biometric biometrics = 2;
   Address address = 3;
   Origin origins = 4;
   Phenotype phenotypes = 5;
   DateOfBirth date_of_birth = 6;
-  UUID id = 7;
+}
+
+message PersonInfoResponse {
+  Names names = 1;
+  Biometric biometrics = 2;
+  Address address = 3;
+  Origin origins = 4;
+  Phenotype phenotypes = 5;
+  DateOfBirth date_of_birth = 6;
+  CardValidity card_validity = 7;
+  UUID UUID = 8;
 }
 
 message EditPersonInfoParameters{
   UUID personId = 1;
-  PersonInfo editedPersonInfo = 2;
+  PersonInfoResponse editedPersonInfo = 2;
 }
 

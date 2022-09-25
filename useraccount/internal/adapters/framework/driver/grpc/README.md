@@ -19,3 +19,15 @@ protoc --proto_path=... --go_out=  path_to_the_proto_fine
 --go_out: should be the file in which the go files will be created
 
 
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOPATH/bin
+
+For Message
+
+protoc --proto_path=internal/adapters/framework/driver/grpc/proto --go_out=internal/adapters/framework/driver/grpc internal/adapters/framework/driver/grpc/proto/personInfo_msg.proto
+
+
+For Service
+
+protoc --go-grpc_out=internal/adapters/framework/driver/grpc --proto_path=internal/adapters/framework/driver/grpc/proto internal/adapters/framework/driver/grpc/proto/exist_crud_service.proto
+

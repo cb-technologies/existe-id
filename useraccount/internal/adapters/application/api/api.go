@@ -13,19 +13,19 @@ func NewAdapter(db ports.PostgresSQLPort) *Adapter {
 	return &Adapter{db: db}
 }
 
-func (adapter Adapter) AddNewPersonInfo(personInfo pb.PersonInfo) error {
+func (adapter Adapter) AddNewPersonInfo(personInfo *pb.PersonInfoRequest) error {
 	// make the call to the db
 
 	return nil
 }
 
-func (adapter Adapter) UpdatePersonInfo(parameters pb.EditPersonInfoParameters) error {
+func (adapter Adapter) UpdatePersonInfo(parameters *pb.EditPersonInfoParameters) error {
 	// make a call to the DB
 
 	return nil
 }
 
-func (adapter Adapter) FindPersonInfo(uuid pb.UUID) (pb.PersonInfo, error) {
+func (adapter Adapter) FindPersonInfo(uuid *pb.UUID) (pb.PersonInfoResponse, error) {
 
-	return pb.PersonInfo{}, nil
+	return pb.PersonInfoResponse{}, nil
 }
