@@ -20,11 +20,11 @@ type AddressModel struct {
 type NamesModel struct {
 	Nom         string
 	Prenom      string
-	MiddleNames []string
+	MiddleNames []string `gorm:"serializer:json"`
 }
 
 type OriginModel struct {
-	Province []string
+	Province []string `gorm:"serializer:json"`
 	ChefLieu string
 }
 
@@ -35,8 +35,8 @@ type PhenotypeModel struct {
 }
 
 type BiometricModel struct {
-	Photos      []byte
-	FingerPrint []byte
+	Photos      []byte `gorm:"serializer:json"`
+	FingerPrint []byte `gorm:"serializer:json"`
 }
 
 type DateOfBirthModel struct {
@@ -46,8 +46,8 @@ type DateOfBirthModel struct {
 }
 
 type CardValidityModel struct {
-	CardIssueDate      date.Date
-	CardExpirationDate date.Date
+	CardIssueDate      date.Date `gorm:"serializer:json"`
+	CardExpirationDate date.Date `gorm:"serializer:json"`
 }
 
 type PersonInfoModel struct {
@@ -58,7 +58,7 @@ type PersonInfoModel struct {
 	Address      AddressModel      `gorm:"embedded"`
 	Origins      OriginModel       `gorm:"embedded"`
 	Phenotypes   PhenotypeModel    `gorm:"embedded"`
-	DateOfBirth  DateOfBirthModel  // TODO we have to change this into a more compact format. we can use the data type provided by go
+	DateOfBirth  DateOfBirthModel  `gorm:"serializer:json"` // TODO we have to change this into a more compact format. we can use the data type provided by go
 	CardValidity CardValidityModel `gorm:"embedded"`
 	UUID         uuid.UUID
 }

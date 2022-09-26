@@ -8,7 +8,7 @@ require (
 	google.golang.org/genproto v0.0.0-20220923205249-dd2d53f1fffc
 	google.golang.org/grpc v1.49.0
 	google.golang.org/protobuf v1.28.1
-	gorm.io/driver/postgres v1.3.10
+	gorm.io/driver/postgres v1.3.5
 	gorm.io/gorm v1.23.10
 )
 

@@ -68,14 +68,14 @@ func (adapter Adapter) AddNewPersonInfo(personInfo *pb.PersonInfoRequest) error 
 	if !adapter.isDatabaseTableCreated() {
 		err := adapter.createDatabaseTable()
 		if err != nil {
-			fmt.Println("Could not create the database")
+			log.Fatalf("Could not create the database %v", err)
 		}
 	}
 
 	result := adapter.db.Create(personInfoModel)
 
 	if result.Error != nil {
-		fmt.Println("Failed to create the user. error %v", result.Error)
+		log.Fatalf("Failed to create the user. error %v", result.Error)
 	}
 
 	return result.Error
@@ -84,6 +84,7 @@ func (adapter Adapter) AddNewPersonInfo(personInfo *pb.PersonInfoRequest) error 
 func (adapter Adapter) UpdatePersonInfo() {
 	// TODO: implement
 }
+
 func (adapter Adapter) FindPersonInfo() {
 	// TODO: implement
 }
