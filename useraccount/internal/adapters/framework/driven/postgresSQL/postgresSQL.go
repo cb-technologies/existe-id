@@ -3,13 +3,14 @@ package postgresSQL
 import (
 	"database/sql"
 	"fmt"
+	"log"
+
 	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/adapters/framework/driver/grpc/pb"
 	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/entity/db"
 	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/mapper/dbmapper"
 	_ "github.com/lib/pq"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
-	"log"
 )
 
 type Adapter struct {
@@ -64,7 +65,7 @@ func (adapter Adapter) CloseDBConnection() {
 func (adapter Adapter) AddNewPersonInfo(personInfo *pb.PersonInfoRequest) error {
 
 	personInfoModel := dbmapper.PersonInfoRequestToPersonInfoModel(personInfo)
-
+	personInfoModel.NationalID = db.NationalIDNumberModel{Id: "2"} // TODO function to generate ID number
 	if !adapter.isDatabaseTableCreated() {
 		err := adapter.createDatabaseTable()
 		if err != nil {
@@ -81,11 +82,17 @@ func (adapter Adapter) AddNewPersonInfo(personInfo *pb.PersonInfoRequest) error 
 	return result.Error
 }
 
-func (adapter Adapter) UpdatePersonInfo() {
+func (adapter Adapter) UpdatePersonInfo(nationalId *pb.NationalIDNumber) {
 	// TODO: implement
+	presonInfo := db.PersonInfoModel{}
+	//findResult := adapter.db.Where(&db.PersonInfoModel{NationalID: db.NationalIDNumberModel{Id: nationalId.Id}}).First(&db.PersonInfoModel{})
+	//adapter.db.Migrator().AddColumn(&db.PersonInfoModel{}, "NationalID")
+	//adapter.db.First(&presonInfo, "id = ?", "1b74413f-f3b8-409f-ac47-e8c062e3472a")
+	fmt.Println(presonInfo)
+
 }
 
-func (adapter Adapter) FindPersonInfo(nationalId *pb.NationalIDNumber) (pb.PersonInfoResponse, error) {
+func (adapter Adapter) FindPersonInfo(nationalId *pb.NationalIDNumber) {
 	//findResult := adapter.db.Where(&db.PersonInfoModel{NationalID: db.NationalIDNumberModel{Id: nationalId.Id}}).First(&db.PersonInfoModel{})
 
 }

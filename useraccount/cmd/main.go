@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+
 	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/adapters/framework/driver/grpc/pb"
 
 	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/adapters/framework/driven/postgresSQL"
@@ -59,8 +60,12 @@ func main() {
 		DateOfBirth: &dateOfBirthTest,
 	}
 
+	my_id := "2"
+	natinalId := pb.NationalIDNumber{
+		Id: my_id,
+	}
 	err = postgres.AddNewPersonInfo(&personTest)
-
+	postgres.UpdatePersonInfo(&natinalId)
 	if err != nil {
 		fmt.Println("Test Failed! A demain faut dormir")
 	} else {
