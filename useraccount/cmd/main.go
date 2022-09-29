@@ -2,9 +2,11 @@ package main
 
 import (
 	"fmt"
-	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/adapters/framework/driver/grpc/pb"
 
 	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/adapters/framework/driven/postgresSQL"
+	//"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/adapters/framework/driver/grpc/pb"
+	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/entity/db"
+	"github.com/google/uuid"
 )
 
 func main() {
@@ -20,43 +22,45 @@ func main() {
 	fmt.Println("Connection succesful!")
 
 	// Trying to mimic a request just to see if the GORM code is working
-	namesTest := pb.Names{
+	namesTest := db.NamesModel{
 		Nom:         "Bingoto",
 		Prenom:      "Areely",
 		MiddleNames: []string{"Bamanissa"},
 	}
-	biometricsTest := pb.Biometric{
+	biometricsTest := db.BiometricModel{
 		Photos:      []uint8{1, 2},
 		FingerPrint: []uint8{2, 3},
 	}
 
-	addressTest := pb.Address{
+	addressTest := db.AddressModel{
 		Number:   1,
 		Avenue:   "Nicolas",
 		Quartier: "Santa Clara",
 	}
 
-	originTest := pb.Origin{
+	originTest := db.OriginModel{
 		Province: []string{"Bandundu"},
 	}
 
-	phenotypeTest := pb.Phenotype{
+	phenotypeTest := db.PhenotypeModel{
 		EyeColor: "blue",
 	}
 
-	dateOfBirthTest := pb.DateOfBirth{
+	dateOfBirthTest := db.DateOfBirthModel{
 		Day:   "Monday",
 		Month: "February",
 		Year:  "2002",
 	}
+	my_UUID := uuid.New()
 
-	personTest := pb.PersonInfoRequest{
-		Names:       &namesTest,
-		Biometrics:  &biometricsTest,
-		Address:     &addressTest,
-		Origins:     &originTest,
-		Phenotypes:  &phenotypeTest,
-		DateOfBirth: &dateOfBirthTest,
+	personTest := db.PersonInfoModel{
+		Names:       namesTest,
+		Biometrics:  biometricsTest,
+		Address:     addressTest,
+		Origins:     originTest,
+		Phenotypes:  phenotypeTest,
+		DateOfBirth: dateOfBirthTest,
+		UUID:        my_UUID,
 	}
 
 	err = postgres.AddNewPersonInfo(&personTest)
@@ -64,7 +68,7 @@ func main() {
 	if err != nil {
 		fmt.Println("Test Failed! A demain faut dormir")
 	} else {
-		fmt.Println("Person created successfully")
+		fmt.Println("Person created successfully with UUID", my_UUID)
 	}
 
 	postgres.CloseDBConnection()
