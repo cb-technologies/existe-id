@@ -88,6 +88,8 @@ func (adapter Adapter) UpdatePersonInfo() {
 func (adapter Adapter) FindPersonInfo(nationalId *pb.NationalIDNumber) (pb.PersonInfoResponse, error) {
 	//findResult := adapter.db.Where(&db.PersonInfoModel{NationalID: db.NationalIDNumberModel{Id: nationalId.Id}}).First(&db.PersonInfoModel{})
 
+	return pb.PersonInfoResponse{}, nil
+
 }
 
 func (adapter Adapter) createDatabaseTable() error {

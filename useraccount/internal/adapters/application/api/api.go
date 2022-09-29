@@ -1,9 +1,10 @@
 package api
 
 import (
+	"log"
+
 	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/adapters/framework/driver/grpc/pb"
 	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/ports"
-	"log"
 )
 
 type Adapter struct {
@@ -28,8 +29,8 @@ func (adapter Adapter) UpdatePersonInfo(parameters *pb.EditPersonInfoParameters)
 	return nil
 }
 
-func (adapter Adapter) FindPersonInfo(uuid *pb.UUID) (pb.PersonInfoResponse, error) {
-	error
+func (adapter Adapter) FindPersonInfo(nationalID *pb.NationalIDNumber) (pb.PersonInfoResponse, error) {
+	// error
 
 	return pb.PersonInfoResponse{}, nil
 }

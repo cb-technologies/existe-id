@@ -3,7 +3,6 @@ module github.com/cb-technologies/existe-id/useraccount
 go 1.18
 
 require (
-	github.com/google/uuid v1.3.0
 	github.com/lib/pq v1.10.7
 	google.golang.org/genproto v0.0.0-20220923205249-dd2d53f1fffc
 	google.golang.org/grpc v1.49.0
