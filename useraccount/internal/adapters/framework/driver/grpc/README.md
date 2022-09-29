@@ -25,9 +25,8 @@ export PATH=$PATH:$GOPATH/bin
 For Message
 
 protoc --proto_path=internal/adapters/framework/driver/grpc/proto --go_out=internal/adapters/framework/driver/grpc internal/adapters/framework/driver/grpc/proto/personInfo_msg.proto
-
+protoc --proto_path=internal/adapters/framework/driver/grpc/proto --go_out=internal/adapters/framework/driver/grpc internal/adapters/framework/driver/grpc/proto/exist_crud_service_msg.proto
 
 For Service
 
 protoc --go-grpc_out=internal/adapters/framework/driver/grpc --proto_path=internal/adapters/framework/driver/grpc/proto internal/adapters/framework/driver/grpc/proto/exist_crud_service.proto
-

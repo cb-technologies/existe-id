@@ -3,5 +3,5 @@ syntax = "proto3";
 option go_package = "./pb";
 
 message Response {
-  int32 success = 1;
+  int32 status = 1;
 }

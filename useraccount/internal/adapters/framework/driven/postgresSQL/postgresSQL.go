@@ -85,8 +85,9 @@ func (adapter Adapter) UpdatePersonInfo() {
 	// TODO: implement
 }
 
-func (adapter Adapter) FindPersonInfo() {
-	// TODO: implement
+func (adapter Adapter) FindPersonInfo(nationalId *pb.NationalIDNumber) (pb.PersonInfoResponse, error) {
+	//findResult := adapter.db.Where(&db.PersonInfoModel{NationalID: db.NationalIDNumberModel{Id: nationalId.Id}}).First(&db.PersonInfoModel{})
+
 }
 
 func (adapter Adapter) createDatabaseTable() error {

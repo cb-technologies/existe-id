@@ -46,8 +46,8 @@ message DateOfBirth {
 }
 
 // might some performance consequence but I will into it later
-message UUID {
-  string uuid = 1;
+message NationalIDNumber {
+  string id = 1;
 }
 
 message Date {
@@ -78,11 +78,11 @@ message PersonInfoResponse {
   Phenotype phenotypes = 5;
   DateOfBirth date_of_birth = 6;
   CardValidity card_validity = 7;
-  UUID UUID = 8;
+  NationalIDNumber id = 8;
 }
 
 message EditPersonInfoParameters{
-  UUID personId = 1;
+  NationalIDNumber personId = 1;
   PersonInfoResponse editedPersonInfo = 2;
 }
 

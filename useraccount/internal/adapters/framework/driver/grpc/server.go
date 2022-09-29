@@ -1,12 +1,13 @@
 package rpc
 
+import "github.com/cb-technologies/existe-id/useraccount/useraccount/internal/ports"
 
 type Adapter struct {
-
+	api ports.APIPorts
 }
 
-func NewAdapter() *Adapter {
-	return &Adapter{}
+func NewAdapter(api ports.APIPorts) *Adapter {
+	return &Adapter{api: api}
 }
 
 // In the server file, we only implement the Run() methods from the GRPC port

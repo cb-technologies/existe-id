@@ -3,6 +3,7 @@ package api
 import (
 	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/adapters/framework/driver/grpc/pb"
 	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/ports"
+	"log"
 )
 
 type Adapter struct {
@@ -14,9 +15,11 @@ func NewAdapter(db ports.PostgresSQLPort) *Adapter {
 }
 
 func (adapter Adapter) AddNewPersonInfo(personInfo *pb.PersonInfoRequest) error {
-	// make the call to the dbmapper
-
-	return nil
+	error := adapter.db.AddNewPersonInfo(personInfo)
+	if error != nil {
+		log.Fatal("Error adding a new person")
+	}
+	return error
 }
 
 func (adapter Adapter) UpdatePersonInfo(parameters *pb.EditPersonInfoParameters) error {
@@ -26,6 +29,7 @@ func (adapter Adapter) UpdatePersonInfo(parameters *pb.EditPersonInfoParameters)
 }
 
 func (adapter Adapter) FindPersonInfo(uuid *pb.UUID) (pb.PersonInfoResponse, error) {
+	error
 
 	return pb.PersonInfoResponse{}, nil
 }
