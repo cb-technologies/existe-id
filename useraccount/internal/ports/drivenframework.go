@@ -6,5 +6,5 @@ type PostgresSQLPort interface {
 	CloseDBConnection()
 	AddNewPersonInfo(personInfo *pb.PersonInfoRequest) error
 	UpdatePersonInfo()
-	FindPersonInfo()
+	FindPersonInfo(nationalId *pb.NationalIDNumber) (*pb.PersonInfoResponse, error)
 }
