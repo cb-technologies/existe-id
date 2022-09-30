@@ -133,7 +133,13 @@ func PersonInfoRequestToPersonInfoModel(personInfoModel *pb.PersonInfoRequest) *
 	}
 }
 
-func personInfoModelToPersonInfoResponse(personInfoModel *db.PersonInfoModel) *pb.PersonInfoResponse {
+func nationaIDNumberModelToProtoNationalID(nationalID *db.NationalIDNumberModel) *pb.NationalIDNumber {
+	return &pb.NationalIDNumber{
+		Id: nationalID.Id,
+	}
+}
+
+func PersonInfoModelToPersonInfoResponse(personInfoModel *db.PersonInfoModel) *pb.PersonInfoResponse {
 	return &pb.PersonInfoResponse{
 		Names:        namesModelToProtoNames(&personInfoModel.Names),
 		Biometrics:   biometricModelToProtoBiometric(&personInfoModel.Biometrics),
@@ -142,5 +148,6 @@ func personInfoModelToPersonInfoResponse(personInfoModel *db.PersonInfoModel) *p
 		Phenotypes:   phenotypeModelToProtoPhenotype(&personInfoModel.Phenotypes),
 		DateOfBirth:  dateOfBirthModelToProtoDateOfBirth(&personInfoModel.DateOfBirth),
 		CardValidity: cardValidityModelToProtoCardValidity(&personInfoModel.CardValidity),
+		Id:           nationaIDNumberModelToProtoNationalID(&personInfoModel.NationalID),
 	}
 }
