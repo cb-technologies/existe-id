@@ -10,5 +10,5 @@ type GRPCPort interface {
 	Run()
 	AddNewPersonInfo(ctx context.Context, req *pb.PersonInfoRequest) (*pb.Response, error)
 	UpdatePersonInfo(ctx context.Context, req *pb.EditPersonInfoParameters) (*pb.Response, error)
-	FindPersonInfo(ctx context.Context, req *pb.UUID) (*pb.PersonInfoResponse, error)
+	FindPersonInfo(ctx context.Context, req *pb.NationalIDNumber) (*pb.PersonInfoResponse, error)
 }

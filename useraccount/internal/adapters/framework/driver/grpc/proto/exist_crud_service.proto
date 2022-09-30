@@ -11,5 +11,5 @@ option  go_package = "./pb";
 service ExistCRUDService {
   rpc AddNewPerson(PersonInfoRequest) returns (Response) {}
   rpc EditPersonInfo(EditPersonInfoParameters) returns (Response) {}
-  rpc FindPersonInfo(UUID) returns (PersonInfoResponse) {}
+  rpc FindPersonInfo(NationalIDNumber) returns (PersonInfoResponse) {}
 }
