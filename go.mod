@@ -4,6 +4,7 @@ go 1.18
 
 require (
 	github.com/lib/pq v1.10.7
+	github.com/sony/sonyflake v1.1.0
 	google.golang.org/genproto v0.0.0-20220923205249-dd2d53f1fffc
 	google.golang.org/grpc v1.49.0
 	google.golang.org/protobuf v1.28.1
