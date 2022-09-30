@@ -60,12 +60,12 @@ func main() {
 		DateOfBirth: &dateOfBirthTest,
 	}
 
-	my_id := "2"
-	natinalId := pb.NationalIDNumber{
-		Id: my_id,
-	}
+	// my_id := "2"
+	// natinalId := db.NationalIDNumber{
+	// 	NationalId : my_id,
+	// }
 	err = postgres.AddNewPersonInfo(&personTest)
-	postgres.UpdatePersonInfo(&natinalId)
+	//postgres.UpdatePersonInfo(&natinalId)
 	if err != nil {
 		fmt.Println("Test Failed! A demain faut dormir")
 	} else {
