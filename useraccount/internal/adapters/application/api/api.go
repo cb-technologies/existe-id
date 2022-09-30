@@ -29,8 +29,13 @@ func (adapter Adapter) UpdatePersonInfo(parameters *pb.EditPersonInfoParameters)
 	return nil
 }
 
-func (adapter Adapter) FindPersonInfo(nationalID *pb.NationalIDNumber) (pb.PersonInfoResponse, error) {
-	// error
+func (adapter Adapter) FindPersonInfo(nationalID *pb.NationalIDNumber) (*pb.PersonInfoResponse, error) {
 
-	return pb.PersonInfoResponse{}, nil
+	personInfo, err := adapter.db.FindPersonInfo(nationalID)
+	
+	if err != nil {
+		log.Fatal("Error finding a personInfo")
+		return &pb.PersonInfoResponse{}, err
+	}
+	return personInfo, nil
 }

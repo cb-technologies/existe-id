@@ -23,7 +23,13 @@ func (a Adapter) UpdatePersonInfo(ctx context.Context, req *pb.EditPersonInfoPar
 	return &pb.Response{}, nil
 
 }
-func (a Adapter) FindPersonInfo(ctx context.Context, req *pb.NationalIDNumber) (*pb.PersonInfoResponse, error) {
-	// TODO: implement
-	return &pb.PersonInfoResponse{}, nil
+func (adapter Adapter) FindPersonInfo(ctx context.Context, req *pb.NationalIDNumber) (*pb.PersonInfoResponse, error) {
+	
+	personInfo, err := adapter.api.FindPersonInfo(req)
+
+	if err != nil {
+		log.Fatal("Could not Find personInfo")
+		return &pb.PersonInfoResponse{}, err
+	}
+	return personInfo, nil
 }

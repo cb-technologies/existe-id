@@ -3,13 +3,14 @@ package postgresSQL
 import (
 	"database/sql"
 	"fmt"
+	"log"
+
 	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/adapters/framework/driver/grpc/pb"
 	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/entity/db"
 	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/mapper/dbmapper"
 	_ "github.com/lib/pq"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
-	"log"
 )
 
 type Adapter struct {
@@ -91,10 +92,18 @@ func (adapter Adapter) UpdatePersonInfo() {
 	// TODO: implement
 }
 
-func (adapter Adapter) FindPersonInfo(nationalId *pb.NationalIDNumber) (pb.PersonInfoResponse, error) {
-	//findResult := adapter.db.Where(&db.PersonInfoModel{NationalID: db.NationalIDNumberModel{NationalID: nationalId.NationalID}}).First(&db.PersonInfoModel{})
+func (adapter Adapter) FindPersonInfo(nationalId *pb.NationalIDNumber) (*pb.PersonInfoResponse, error) {
+	personInfo := &db.PersonInfoModel{NationalID: db.NationalIDNumberModel{NationalID: nationalId.Id}}
 
-	return pb.PersonInfoResponse{}, nil
+	err := adapter.db.Where(personInfo).First(&db.PersonInfoModel{}).Error
+
+	if err != nil {
+		log.Fatalf("Person with id %v does not exist", nationalId.Id)
+		return &pb.PersonInfoResponse{}, err
+	}
+	
+	result := dbmapper.PersonInfoModelToPersonInfoResponse(personInfo)
+	return result, nil
 
 }
 
