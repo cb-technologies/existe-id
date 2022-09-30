@@ -4,7 +4,8 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
-
+  
+  "github.com/cb-technologies/existe-id/useraccount/useraccount/internal/adapters/core"
 	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/adapters/framework/driver/grpc/pb"
 	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/entity/db"
 	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/mapper/dbmapper"
@@ -65,7 +66,7 @@ func (adapter Adapter) CloseDBConnection() {
 func (adapter Adapter) AddNewPersonInfo(personInfo *pb.PersonInfoRequest) error {
 
 	personInfoModel := dbmapper.PersonInfoRequestToPersonInfoModel(personInfo)
-	personInfoModel.NationalID = db.NationalIDNumberModel{NationalID: "new_id"}
+	core.GenerateNationalID(personInfoModel)
 
 	if !adapter.isDatabaseTableCreated() {
 		err := adapter.createDatabaseTable()
