@@ -1,7 +1,6 @@
 package db
 
 import (
-	"github.com/google/uuid"
 	"google.golang.org/genproto/googleapis/type/date"
 	"gorm.io/gorm"
 )
@@ -50,15 +49,19 @@ type CardValidityModel struct {
 	CardExpirationDate date.Date `gorm:"serializer:json"`
 }
 
+type NationalIDNumberModel struct {
+	NationalID string
+}
+
 type PersonInfoModel struct {
 	gorm.Model
 
-	Names        NamesModel        `gorm:"embedded"`
-	Biometrics   BiometricModel    `gorm:"embedded"`
-	Address      AddressModel      `gorm:"embedded"`
-	Origins      OriginModel       `gorm:"embedded"`
-	Phenotypes   PhenotypeModel    `gorm:"embedded"`
-	DateOfBirth  DateOfBirthModel  `gorm:"serializer:json"` // TODO we have to change this into a more compact format. we can use the data type provided by go
-	CardValidity CardValidityModel `gorm:"embedded"`
-	UUID         uuid.UUID
+	Names        NamesModel            `gorm:"embedded"`
+	Biometrics   BiometricModel        `gorm:"embedded"`
+	Address      AddressModel          `gorm:"embedded"`
+	Origins      OriginModel           `gorm:"embedded"`
+	Phenotypes   PhenotypeModel        `gorm:"embedded"`
+	DateOfBirth  DateOfBirthModel      `gorm:"serializer:json"` // TODO we have to change this into a more compact format. we can use the data type provided by go
+	CardValidity CardValidityModel     `gorm:"embedded"`
+	NationalID   NationalIDNumberModel `gorm:"embedded"`
 }

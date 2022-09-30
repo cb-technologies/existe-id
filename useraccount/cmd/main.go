@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
-	"github.com/google/uuid"
+
 	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/adapters/framework/driven/postgresSQL"
-	//"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/adapters/framework/driver/grpc/pb"
+	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/adapters/framework/driver/grpc/pb"
 )
 
 func main() {
@@ -20,50 +20,47 @@ func main() {
 	fmt.Println("Connection succesful!")
 
 	// Trying to mimic a request just to see if the GORM code is working
-	// namesTest := db.NamesModel{
-	// 	Nom:         "Bingoto",
-	// 	Prenom:      "Areely",
-	// 	MiddleNames: []string{"Bamanissa"},
-	// }
-	// biometricsTest := db.BiometricModel{
-	// 	Photos:      []uint8{1, 2},
-	// 	FingerPrint: []uint8{2, 3},
-	// }
+	namesTest := pb.Names{
+		Nom:         "Nicolas",
+		Prenom:      "Nkiere",
+		MiddleNames: []string{"Bamanissa"},
+	}
+	biometricsTest := pb.Biometric{
+		Photos:      []uint8{1, 2},
+		FingerPrint: []uint8{2, 3},
+	}
 
-	// addressTest := db.AddressModel{
-	// 	Number:   1,
-	// 	Avenue:   "Nicolas",
-	// 	Quartier: "Santa Clara",
-	// }
+	addressTest := pb.Address{
+		Number:   1,
+		Avenue:   "Nicolas",
+		Quartier: "Santa Clara",
+	}
 
-	// originTest := db.OriginModel{
-	// 	Province: []string{"Bandundu"},
-	// }
+	originTest := pb.Origin{
+		Province: []string{"Bandundu"},
+	}
 
-	// phenotypeTest := db.PhenotypeModel{
-	// 	EyeColor: "blue",
-	// }
+	phenotypeTest := pb.Phenotype{
+		EyeColor: "blue",
+	}
 
-	// dateOfBirthTest := db.DateOfBirthModel{
-	// 	Day:   "Monday",
-	// 	Month: "February",
-	// 	Year:  "2002",
-	// }
-	// my_UUID := uuid.New()
+	dateOfBirthTest := pb.DateOfBirth{
+		Day:   "Monday",
+		Month: "February",
+		Year:  "2002",
+	}
 
-	// personTest := db.PersonInfoModel{
-	// 	Names:       namesTest,
-	// 	Biometrics:  biometricsTest,
-	// 	Address:     addressTest,
-	// 	Origins:     originTest,
-	// 	Phenotypes:  phenotypeTest,
-	// 	DateOfBirth: dateOfBirthTest,
-	// 	UUID:        my_UUID,
-	// }
+	personTest := pb.PersonInfoRequest{
+		Names:       &namesTest,
+		Biometrics:  &biometricsTest,
+		Address:     &addressTest,
+		Origins:     &originTest,
+		Phenotypes:  &phenotypeTest,
+		DateOfBirth: &dateOfBirthTest,
+	}
 
-	//err = postgres.AddNewPersonInfo(&personTest)
-	my_id uuid.UUID := "915aa63c-68e8-4c0f-b884-033b2673ab14";
-	postgres.UpdatePersonInfo()
+	err = postgres.AddNewPersonInfo(&personTest)
+
 	if err != nil {
 		fmt.Println("Test Failed! A demain faut dormir")
 	} else {
