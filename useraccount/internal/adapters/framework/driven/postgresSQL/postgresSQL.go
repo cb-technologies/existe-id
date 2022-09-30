@@ -64,12 +64,18 @@ func (adapter Adapter) CloseDBConnection() {
 func (adapter Adapter) AddNewPersonInfo(personInfo *pb.PersonInfoRequest) error {
 
 	personInfoModel := dbmapper.PersonInfoRequestToPersonInfoModel(personInfo)
+	personInfoModel.NationalID = db.NationalIDNumberModel{NationalID: "new_id"}
 
 	if !adapter.isDatabaseTableCreated() {
 		err := adapter.createDatabaseTable()
 		if err != nil {
 			log.Fatalf("Could not create the database %v", err)
 		}
+	}
+	err := adapter.db.AutoMigrate(&db.PersonInfoModel{})
+
+	if err != nil {
+		log.Fatalf("Could not migrate the database")
 	}
 
 	result := adapter.db.Create(personInfoModel)
@@ -86,7 +92,7 @@ func (adapter Adapter) UpdatePersonInfo() {
 }
 
 func (adapter Adapter) FindPersonInfo(nationalId *pb.NationalIDNumber) (pb.PersonInfoResponse, error) {
-	//findResult := adapter.db.Where(&db.PersonInfoModel{NationalID: db.NationalIDNumberModel{Id: nationalId.Id}}).First(&db.PersonInfoModel{})
+	//findResult := adapter.db.Where(&db.PersonInfoModel{NationalID: db.NationalIDNumberModel{NationalID: nationalId.NationalID}}).First(&db.PersonInfoModel{})
 
 	return pb.PersonInfoResponse{}, nil
 

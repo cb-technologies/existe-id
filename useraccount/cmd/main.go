@@ -21,8 +21,8 @@ func main() {
 
 	// Trying to mimic a request just to see if the GORM code is working
 	namesTest := pb.Names{
-		Nom:         "Bingoto",
-		Prenom:      "Areely",
+		Nom:         "Nicolas",
+		Prenom:      "Nkiere",
 		MiddleNames: []string{"Bamanissa"},
 	}
 	biometricsTest := pb.Biometric{

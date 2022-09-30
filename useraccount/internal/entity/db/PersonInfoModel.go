@@ -50,7 +50,7 @@ type CardValidityModel struct {
 }
 
 type NationalIDNumberModel struct {
-	Id string
+	NationalID string
 }
 
 type PersonInfoModel struct {

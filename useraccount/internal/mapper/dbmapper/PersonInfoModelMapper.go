@@ -135,7 +135,7 @@ func PersonInfoRequestToPersonInfoModel(personInfoModel *pb.PersonInfoRequest) *
 
 func nationaIDNumberModelToProtoNationalID(nationalID *db.NationalIDNumberModel) *pb.NationalIDNumber {
 	return &pb.NationalIDNumber{
-		Id: nationalID.Id,
+		Id: nationalID.NationalID,
 	}
 }
 
