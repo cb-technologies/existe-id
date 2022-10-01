@@ -82,16 +82,23 @@ func (adapter Adapter) AddNewPersonInfo(personInfo *db.PersonInfoModel) error {
 	return result.Error
 }
 
-func (adapter Adapter) UpdatePersonInfo(nationalID string) {
+func (adapter Adapter) UpdatePersonInfo(nationalId *db.NationalIDNumberModel) (*db.PersonInfoModel, error) {
 	// TODO: implement
-	person := db.PersonInfoModel{}
-	result := adapter.db.First(&person, "national_id = ?", nationalID)
-	if result.Error != nil {
-		//fmt.Print(err)
-		log.Fatalf("Could not find the person")
-	} else {
-		fmt.Println(result.RowsAffected)
+	var result db.PersonInfoModel
+
+	personInfo := &db.PersonInfoModel{NationalID: *nationalId}
+	err := adapter.db.Where(personInfo).First(&result).Error
+
+	if err != nil {
+		log.Fatalf("Person with id %v does not exist", nationalId.NationalID)
+		return &db.PersonInfoModel{}, err
 	}
+
+	fmt.Println("From Update")
+	fmt.Println(result.Names)
+	fmt.Println("EndUpdate")
+
+	return &result, nil
 }
 
 func (adapter Adapter) FindPersonInfo(nationalId *db.NationalIDNumberModel) (*db.PersonInfoModel, error) {
@@ -105,7 +112,9 @@ func (adapter Adapter) FindPersonInfo(nationalId *db.NationalIDNumberModel) (*db
 		log.Fatalf("Person with id %v does not exist", nationalId.NationalID)
 		return &db.PersonInfoModel{}, err
 	}
-
+	fmt.Println("From FInd")
+	fmt.Println(result.Names)
+	fmt.Println("EndFrom")
 	return &result, nil
 
 }

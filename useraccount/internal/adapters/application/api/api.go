@@ -1,9 +1,10 @@
 package api
 
 import (
+	"log"
+
 	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/entity/db"
 	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/mapper/dbmapper"
-	"log"
 
 	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/adapters/framework/driver/grpc/pb"
 	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/ports"
@@ -29,7 +30,7 @@ func (adapter Adapter) AddNewPersonInfo(personInfo *pb.PersonInfoRequest) error 
 	return error
 }
 
-func (adapter Adapter) UpdatePersonInfo(parameters *pb.EditPersonInfoParameters) error {
+func (adapter Adapter) UpdatePersonInfo(nationalID *pb.NationalIDNumber) error {
 	// make a call to the DB
 
 	return nil
