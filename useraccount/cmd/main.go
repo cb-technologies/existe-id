@@ -2,16 +2,25 @@ package main
 
 import (
 	"fmt"
-	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/adapters/framework/driver/grpc/pb"
-
+	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/adapters/application/api"
+	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/adapters/core/national_id_generator"
 	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/adapters/framework/driven/postgresSQL"
+	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/adapters/framework/driver/grpc/pb"
+	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/ports"
 )
 
 func main() {
 
 	fmt.Println("Existe ID")
 
+	var postgres ports.PostgresSQLPort
+	var application ports.APIPorts
+	var core ports.IDCoreFunctionsPorts
+
 	postgres, err := postgresSQL.NewAdapter()
+	core = national_id_generator.NewAdapter()
+
+	application = api.NewAdapter(postgres, core)
 
 	if err != nil {
 		fmt.Println("The error is ", err)
@@ -21,9 +30,9 @@ func main() {
 
 	// Trying to mimic a request just to see if the GORM code is working
 	namesTest := pb.Names{
-		Nom:         "Nicolas",
-		Prenom:      "Nkiere",
-		MiddleNames: []string{"Bamanissa"},
+		Nom:         "Andrea",
+		Prenom:      "Mufuta",
+		MiddleNames: []string{"Mbuyi"},
 	}
 	biometricsTest := pb.Biometric{
 		Photos:      []uint8{1, 2},
@@ -32,7 +41,7 @@ func main() {
 
 	addressTest := pb.Address{
 		Number:   1,
-		Avenue:   "Nicolas",
+		Avenue:   "Ramba Place",
 		Quartier: "Santa Clara",
 	}
 
@@ -59,14 +68,12 @@ func main() {
 		DateOfBirth: &dateOfBirthTest,
 	}
 
-	err = postgres.AddNewPersonInfo(&personTest)
+	err = application.AddNewPersonInfo(&personTest)
 
 	if err != nil {
 		fmt.Println("Test Failed! A demain faut dormir")
 	} else {
 		fmt.Println("Person created successfully")
 	}
-
-	postgres.CloseDBConnection()
 
 }
