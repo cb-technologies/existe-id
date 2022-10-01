@@ -37,13 +37,15 @@ func (adapter Adapter) UpdatePersonInfo(parameters *pb.EditPersonInfoParameters)
 
 func (adapter Adapter) FindPersonInfo(nationalID *pb.NationalIDNumber) (*pb.PersonInfoResponse, error) {
 
-	personInfo, err := adapter.db.FindPersonInfo(nationalID)
-	
+	nationalIDModel := dbmapper.ProtoNationaIDNumberToNationalIDNumberModel(nationalID)
+	personInfo, err := adapter.db.FindPersonInfo(nationalIDModel)
+
 	if err != nil {
 		log.Fatal("Error finding a personInfo")
 		return &pb.PersonInfoResponse{}, err
 	}
-	return personInfo, nil
+	result := dbmapper.PersonInfoModelToPersonInfoResponse(personInfo)
+	return result, nil
 }
 
 func (adapter Adapter) GenerateNationalID() (*string, error) {
