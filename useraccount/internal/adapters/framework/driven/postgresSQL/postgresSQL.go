@@ -5,10 +5,6 @@ import (
 	"fmt"
 	"log"
 
-<<<<<<< HEAD
-	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/adapters/framework/driver/grpc/pb"
-=======
->>>>>>> main
 	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/entity/db"
 	_ "github.com/lib/pq"
 	"gorm.io/driver/postgres"
