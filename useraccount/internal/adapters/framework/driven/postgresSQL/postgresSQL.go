@@ -24,7 +24,7 @@ const (
 	dbHost     = "exist-identifier.cprbzqerfjiq.us-east-1.rds.amazonaws.com"
 	dbName     = "existdb"
 	region     = "us-east-1"
-	dbPassword = "test1234"
+	dbPassword = "exist2022"
 )
 
 func NewAdapter() (*Adapter, error) {
