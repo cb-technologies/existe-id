@@ -139,7 +139,7 @@ func nationaIDNumberModelToProtoNationalID(nationalID *db.NationalIDNumberModel)
 	}
 }
 
-func ProtoNationaIDNumberToNationalIDNumberModel(nationalID *pb.NationalIDNumber) *db.NationalIDNumberModel {
+func ProtoNationalIDNumberToNationalIDNumberModel(nationalID *pb.NationalIDNumber) *db.NationalIDNumberModel {
 	return &db.NationalIDNumberModel{
 		NationalID: nationalID.Id,
 	}

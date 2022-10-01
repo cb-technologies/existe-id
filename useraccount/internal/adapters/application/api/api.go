@@ -37,7 +37,7 @@ func (adapter Adapter) UpdatePersonInfo(parameters *pb.EditPersonInfoParameters)
 
 func (adapter Adapter) FindPersonInfo(nationalID *pb.NationalIDNumber) (*pb.PersonInfoResponse, error) {
 
-	nationalIDModel := dbmapper.ProtoNationaIDNumberToNationalIDNumberModel(nationalID)
+	nationalIDModel := dbmapper.ProtoNationalIDNumberToNationalIDNumberModel(nationalID)
 	personInfo, err := adapter.db.FindPersonInfo(nationalIDModel)
 
 	if err != nil {
