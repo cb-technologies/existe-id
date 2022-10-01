@@ -37,9 +37,9 @@ jobs:
       #   id: importPolicy
       #   run: terraform import aws_iam_policy.dbmapper-policy arn:aws:iam::456807214525:policy/aurora-dbmapper-policy
 
-      - name: Terraform Import user
-        id: importUser
-        run: terraform import aws_iam_user.dbmapper-user dbuser
+      # - name: Terraform Import user
+      #   id: importUser
+      #   run: terraform import aws_iam_user.dbmapper-user dbuser
 
       - name: Terraform Import RDS
         id: importRDInstance
