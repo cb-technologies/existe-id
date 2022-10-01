@@ -1,10 +1,12 @@
 package ports
 
-import "github.com/cb-technologies/existe-id/useraccount/useraccount/internal/adapters/framework/driver/grpc/pb"
+import (
+	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/entity/db"
+)
 
 type PostgresSQLPort interface {
 	CloseDBConnection()
-	AddNewPersonInfo(personInfo *pb.PersonInfoRequest) error
+	AddNewPersonInfo(personInfo *db.PersonInfoModel) error
 	UpdatePersonInfo()
-	FindPersonInfo()
+	FindPersonInfo(nationalId *db.NationalIDNumberModel) (*db.PersonInfoModel, error)
 }

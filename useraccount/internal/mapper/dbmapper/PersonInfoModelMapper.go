@@ -139,6 +139,12 @@ func nationaIDNumberModelToProtoNationalID(nationalID *db.NationalIDNumberModel)
 	}
 }
 
+func ProtoNationalIDNumberToNationalIDNumberModel(nationalID *pb.NationalIDNumber) *db.NationalIDNumberModel {
+	return &db.NationalIDNumberModel{
+		NationalID: nationalID.Id,
+	}
+}
+
 func PersonInfoModelToPersonInfoResponse(personInfoModel *db.PersonInfoModel) *pb.PersonInfoResponse {
 	return &pb.PersonInfoResponse{
 		Names:        namesModelToProtoNames(&personInfoModel.Names),

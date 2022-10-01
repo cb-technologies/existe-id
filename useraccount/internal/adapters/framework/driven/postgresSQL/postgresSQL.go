@@ -5,9 +5,11 @@ import (
 	"fmt"
 	"log"
 
+<<<<<<< HEAD
 	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/adapters/framework/driver/grpc/pb"
+=======
+>>>>>>> main
 	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/entity/db"
-	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/mapper/dbmapper"
 	_ "github.com/lib/pq"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -23,7 +25,7 @@ const (
 	dbHost     = "exist-identifier.cprbzqerfjiq.us-east-1.rds.amazonaws.com"
 	dbName     = "existdb"
 	region     = "us-east-1"
-	dbPassword = "test1234"
+	dbPassword = "exist2022"
 )
 
 func NewAdapter() (*Adapter, error) {
@@ -62,11 +64,7 @@ func (adapter Adapter) CloseDBConnection() {
 	}
 }
 
-func (adapter Adapter) AddNewPersonInfo(personInfo *pb.PersonInfoRequest) error {
-
-	personInfoModel := dbmapper.PersonInfoRequestToPersonInfoModel(personInfo)
-	personInfoModel.NationalID = db.NationalIDNumberModel{NationalID: "new_id"}
-
+func (adapter Adapter) AddNewPersonInfo(personInfo *db.PersonInfoModel) error {
 	if !adapter.isDatabaseTableCreated() {
 		err := adapter.createDatabaseTable()
 		if err != nil {
@@ -79,7 +77,7 @@ func (adapter Adapter) AddNewPersonInfo(personInfo *pb.PersonInfoRequest) error 
 		log.Fatalf("Could not migrate the database")
 	}
 
-	result := adapter.db.Create(personInfoModel)
+	result := adapter.db.Create(personInfo)
 
 	if result.Error != nil {
 		log.Fatalf("Failed to create the user. error %v", result.Error)
@@ -100,10 +98,19 @@ func (adapter Adapter) UpdatePersonInfo(nationalID string) {
 	}
 }
 
-func (adapter Adapter) FindPersonInfo(nationalId *pb.NationalIDNumber) (pb.PersonInfoResponse, error) {
-	//findResult := adapter.db.Where(&db.PersonInfoModel{NationalID: db.NationalIDNumberModel{NationalID: nationalId.NationalID}}).First(&db.PersonInfoModel{})
+func (adapter Adapter) FindPersonInfo(nationalId *db.NationalIDNumberModel) (*db.PersonInfoModel, error) {
 
-	return pb.PersonInfoResponse{}, nil
+	var result db.PersonInfoModel
+
+	personInfo := &db.PersonInfoModel{NationalID: *nationalId}
+	err := adapter.db.Where(personInfo).First(&result).Error
+
+	if err != nil {
+		log.Fatalf("Person with id %v does not exist", nationalId.NationalID)
+		return &db.PersonInfoModel{}, err
+	}
+
+	return &result, nil
 
 }
 
