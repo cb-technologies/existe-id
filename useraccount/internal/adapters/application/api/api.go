@@ -8,7 +8,8 @@ import (
 )
 
 type Adapter struct {
-	db ports.PostgresSQLPort
+	db   ports.PostgresSQLPort
+	core CoreFunctions
 }
 
 func NewAdapter(db ports.PostgresSQLPort) *Adapter {
