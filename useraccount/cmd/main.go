@@ -3,28 +3,27 @@ package main
 import (
 	"fmt"
 
-	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/adapters/application/api"
-	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/adapters/core/national_id_generator"
-
-	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/adapters/framework/driver/grpc/pb"
+	//"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/adapters/application/api"
+	//"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/adapters/core/national_id_generator"
 
 	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/adapters/framework/driven/postgresSQL"
-	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/ports"
+	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/entity/db"
+	//"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/ports"
 )
 
 func main() {
 
 	fmt.Println("Existe ID")
 
-	var postgres ports.PostgresSQLPort
-	var application ports.APIPorts
-	var core ports.IDCoreFunctionsPorts
+	// var postgres ports.PostgresSQLPort
+	// var application ports.APIPorts
+	// var core ports.IDCoreFunctionsPorts
 
-	postgress, err := postgresSQL.NewAdapter()
-	core = national_id_generator.NewAdapter()
+	// postgres, err := postgresSQL.NewAdapter()
+	// core = national_id_generator.NewAdapter()
 
-	application = api.NewAdapter(postgress, core)
-
+	// application = api.NewAdapter(postgres, core)
+	my_postgres, err := postgresSQL.NewAdapter()
 	if err != nil {
 		fmt.Println("The error is ", err)
 	}
@@ -71,11 +70,12 @@ func main() {
 	//	DateOfBirth: &dateOfBirthTest,
 	//}
 
-	nationalID := &pb.NationalIDNumber{Id: "5f054e6280000de"}
+	nationalID := &db.NationalIDNumberModel{NationalID: "5f054e6280000de"}
 
 	//err = application.AddNewPersonInfo(&personTest)
-	person, err := application.FindPersonInfo(nationalID)
-
+	//person, err := my_postgres.FindPersonInfo(nationalID)
+	person, err := my_postgres.FindPersonInfo(nationalID)
+	my_postgres.UpdatePersonInfo(nationalID)
 	if err != nil {
 		fmt.Println("Test Failed! A demain faut dormir")
 	} else {
