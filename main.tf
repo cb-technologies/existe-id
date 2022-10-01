@@ -94,3 +94,4 @@ resource "aws_iam_user_policy_attachment" "exist-attach"{
   user = aws_iam_user.db-user.name
   policy_arn = aws_iam_policy.db-policy.arn
 }
+// test

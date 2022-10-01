@@ -7,6 +7,7 @@ import (
 type APIPorts interface {
 	AddNewPersonInfo(personInfo *pb.PersonInfoRequest) error
 	UpdatePersonInfo(parameters *pb.EditPersonInfoParameters) error
-	FindPersonInfo(nationalID *pb.NationalIDNumber) (pb.PersonInfoResponse, error)
+	FindPersonInfo(nationalID *pb.NationalIDNumber) (*pb.PersonInfoResponse, error)
 	GenerateNationalID() (*string, error)
+
 }

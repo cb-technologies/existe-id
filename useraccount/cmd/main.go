@@ -2,8 +2,14 @@ package main
 
 import (
 	"fmt"
+
 	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/adapters/application/api"
 	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/adapters/core/national_id_generator"
+
+
+	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/adapters/framework/driver/grpc/pb"
+
+
 	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/adapters/framework/driven/postgresSQL"
 	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/adapters/framework/driver/grpc/pb"
 	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/ports"
@@ -27,6 +33,7 @@ func main() {
 	}
 
 	fmt.Println("Connection succesful!")
+
 
 	// Trying to mimic a request just to see if the GORM code is working
 	namesTest := pb.Names{
@@ -73,6 +80,8 @@ func main() {
 	if err != nil {
 		fmt.Println("Test Failed! A demain faut dormir")
 	} else {
+		fmt.Println("---------------------------")
+
 		fmt.Println("Person created successfully")
 	}
 
