@@ -33,9 +33,9 @@ jobs:
         id: importDB
         run: terraform import aws_rds_cluster.exist_cluster aurora-exist-cluster
 
-      - name: Terraform Import policy
-        id: importPolicy
-        run: terraform import aws_iam_policy.dbmapper-policy arn:aws:iam::456807214525:policy/aurora-dbmapper-policy
+      # - name: Terraform Import policy
+      #   id: importPolicy
+      #   run: terraform import aws_iam_policy.dbmapper-policy arn:aws:iam::456807214525:policy/aurora-dbmapper-policy
 
       - name: Terraform Import user
         id: importUser
@@ -47,5 +47,6 @@ jobs:
 
       - name: Terraform Apply
         run: terraform apply -auto-approve
+
 
 
