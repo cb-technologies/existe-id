@@ -1,6 +1,8 @@
 package api
 
 import (
+	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/entity/db"
+	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/mapper/dbmapper"
 	"log"
 
 	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/adapters/framework/driver/grpc/pb"
@@ -8,15 +10,19 @@ import (
 )
 
 type Adapter struct {
-	db ports.PostgresSQLPort
+	db   ports.PostgresSQLPort
+	core ports.IDCoreFunctionsPorts
 }
 
-func NewAdapter(db ports.PostgresSQLPort) *Adapter {
-	return &Adapter{db: db}
+func NewAdapter(db ports.PostgresSQLPort, core ports.IDCoreFunctionsPorts) *Adapter {
+	return &Adapter{db: db, core: core}
 }
 
 func (adapter Adapter) AddNewPersonInfo(personInfo *pb.PersonInfoRequest) error {
-	error := adapter.db.AddNewPersonInfo(personInfo)
+	personInfoModel := dbmapper.PersonInfoRequestToPersonInfoModel(personInfo)
+	nationalId, _ := adapter.core.GenerateNationalID()
+	personInfoModel.NationalID = db.NationalIDNumberModel{NationalID: *nationalId}
+	error := adapter.db.AddNewPersonInfo(personInfoModel)
 	if error != nil {
 		log.Fatal("Error adding a new person")
 	}
@@ -38,4 +44,8 @@ func (adapter Adapter) FindPersonInfo(nationalID *pb.NationalIDNumber) (*pb.Pers
 		return &pb.PersonInfoResponse{}, err
 	}
 	return personInfo, nil
+}
+
+func (adapter Adapter) GenerateNationalID() (*string, error) {
+	return adapter.core.GenerateNationalID()
 }

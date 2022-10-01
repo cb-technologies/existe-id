@@ -7,8 +7,8 @@ import (
   
   "github.com/cb-technologies/existe-id/useraccount/useraccount/internal/adapters/core"
 	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/adapters/framework/driver/grpc/pb"
+
 	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/entity/db"
-	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/mapper/dbmapper"
 	_ "github.com/lib/pq"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -24,7 +24,7 @@ const (
 	dbHost     = "exist-identifier.cprbzqerfjiq.us-east-1.rds.amazonaws.com"
 	dbName     = "existdb"
 	region     = "us-east-1"
-	dbPassword = "test1234"
+	dbPassword = "exist2022"
 )
 
 func NewAdapter() (*Adapter, error) {
@@ -63,11 +63,7 @@ func (adapter Adapter) CloseDBConnection() {
 	}
 }
 
-func (adapter Adapter) AddNewPersonInfo(personInfo *pb.PersonInfoRequest) error {
-
-	personInfoModel := dbmapper.PersonInfoRequestToPersonInfoModel(personInfo)
-	core.GenerateNationalID(personInfoModel)
-
+func (adapter Adapter) AddNewPersonInfo(personInfo *db.PersonInfoModel) error {
 	if !adapter.isDatabaseTableCreated() {
 		err := adapter.createDatabaseTable()
 		if err != nil {
@@ -80,7 +76,7 @@ func (adapter Adapter) AddNewPersonInfo(personInfo *pb.PersonInfoRequest) error 
 		log.Fatalf("Could not migrate the database")
 	}
 
-	result := adapter.db.Create(personInfoModel)
+	result := adapter.db.Create(personInfo)
 
 	if result.Error != nil {
 		log.Fatalf("Failed to create the user. error %v", result.Error)
