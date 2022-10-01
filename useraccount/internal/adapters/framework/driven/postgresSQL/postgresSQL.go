@@ -4,9 +4,6 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
-  
-  "github.com/cb-technologies/existe-id/useraccount/useraccount/internal/adapters/core"
-	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/adapters/framework/driver/grpc/pb"
 
 	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/entity/db"
 	_ "github.com/lib/pq"
@@ -89,18 +86,19 @@ func (adapter Adapter) UpdatePersonInfo() {
 	// TODO: implement
 }
 
-func (adapter Adapter) FindPersonInfo(nationalId *pb.NationalIDNumber) (*pb.PersonInfoResponse, error) {
-	personInfo := &db.PersonInfoModel{NationalID: db.NationalIDNumberModel{NationalID: nationalId.Id}}
+func (adapter Adapter) FindPersonInfo(nationalId *db.NationalIDNumberModel) (*db.PersonInfoModel, error) {
 
-	err := adapter.db.Where(personInfo).First(&db.PersonInfoModel{}).Error
+	var result db.PersonInfoModel
+
+	personInfo := &db.PersonInfoModel{NationalID: *nationalId}
+	err := adapter.db.Where(personInfo).First(&result).Error
 
 	if err != nil {
-		log.Fatalf("Person with id %v does not exist", nationalId.Id)
-		return &pb.PersonInfoResponse{}, err
+		log.Fatalf("Person with id %v does not exist", nationalId.NationalID)
+		return &db.PersonInfoModel{}, err
 	}
-	
-	result := dbmapper.PersonInfoModelToPersonInfoResponse(personInfo)
-	return result, nil
+
+	return &result, nil
 
 }
 
