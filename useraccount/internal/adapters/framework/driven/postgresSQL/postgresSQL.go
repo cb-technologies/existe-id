@@ -82,23 +82,24 @@ func (adapter Adapter) AddNewPersonInfo(personInfo *db.PersonInfoModel) error {
 	return result.Error
 }
 
-func (adapter Adapter) UpdatePersonInfo(nationalId *db.NationalIDNumberModel) (*db.PersonInfoModel, error) {
-	// TODO: implement
-	var result db.PersonInfoModel
+func (adapter Adapter) UpdatePersonInfo(personNewInfo *db.PersonInfoModel) error {
 
-	personInfo := &db.PersonInfoModel{NationalID: *nationalId}
-	err := adapter.db.Where(personInfo).First(&result).Error
+	nationalId := personNewInfo.NationalID
 
-	if err != nil {
+	person, find_err := adapter.FindPersonInfo(&nationalId)
+
+	if find_err != nil {
 		log.Fatalf("Person with id %v does not exist", nationalId.NationalID)
-		return &db.PersonInfoModel{}, err
+		return find_err
 	}
 
-	fmt.Println("From Update")
-	fmt.Println(result.Names)
-	fmt.Println("EndUpdate")
+	err := adapter.db.Model(db.PersonInfoModel{}).Where(&person).Updates(personNewInfo).Error
 
-	return &result, nil
+	if err != nil {
+		log.Fatalf("Failed to update the user. error %v", err)
+	}
+
+	return nil
 }
 
 func (adapter Adapter) FindPersonInfo(nationalId *db.NationalIDNumberModel) (*db.PersonInfoModel, error) {
@@ -112,9 +113,6 @@ func (adapter Adapter) FindPersonInfo(nationalId *db.NationalIDNumberModel) (*db
 		log.Fatalf("Person with id %v does not exist", nationalId.NationalID)
 		return &db.PersonInfoModel{}, err
 	}
-	fmt.Println("From FInd")
-	fmt.Println(result.Names)
-	fmt.Println("EndFrom")
 	return &result, nil
 
 }
