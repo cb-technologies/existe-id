@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 
+	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/adapters/application/api"
 	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/adapters/core/national_id_generator"
 
 	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/adapters/framework/driven/postgresSQL"
@@ -22,7 +23,7 @@ func main() {
 	postgres, err := postgresSQL.NewAdapter()
 	core = national_id_generator.NewAdapter()
 
-	// application = api.NewAdapter(postgres, core)
+	application = api.NewAdapter(postgres, core)
 	my_postgres, err := postgresSQL.NewAdapter()
 	if err != nil {
 		fmt.Println("The error is ", err)
@@ -114,9 +115,9 @@ func main() {
 	//err = application.AddNewPersonInfo(&personTest)
 	//person, err := my_postgres.FindPersonInfo(nationalID)
 	person, err := my_postgres.FindPersonInfo(nationalID)
-	if false {
-		my_postgres.UpdatePersonInfo(&personTest)
-	}
+	// if false {
+	// 	my_postgres.UpdatePersonInfo(&personTest)
+	// }
 	if err != nil {
 		fmt.Println("Test Failed! A demain faut dormir")
 	} else {
