@@ -22,9 +22,14 @@ protoc --proto_path=... --go_out=  path_to_the_proto_fine
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
 
+First, in command line, go to useraccount dictory.
+Then run,
+
+
 For Message
 
 protoc --proto_path=internal/adapters/framework/driver/grpc/proto --go_out=internal/adapters/framework/driver/grpc internal/adapters/framework/driver/grpc/proto/personInfo_msg.proto
+
 protoc --proto_path=internal/adapters/framework/driver/grpc/proto --go_out=internal/adapters/framework/driver/grpc internal/adapters/framework/driver/grpc/proto/exist_crud_service_msg.proto
 
 For Service

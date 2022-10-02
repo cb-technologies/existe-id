@@ -82,8 +82,24 @@ func (adapter Adapter) AddNewPersonInfo(personInfo *db.PersonInfoModel) error {
 	return result.Error
 }
 
-func (adapter Adapter) UpdatePersonInfo() {
-	// TODO: implement
+func (adapter Adapter) UpdatePersonInfo(personNewInfo *db.PersonInfoModel) error {
+
+	nationalId := personNewInfo.NationalID
+
+	person, find_err := adapter.FindPersonInfo(&nationalId)
+
+	if find_err != nil {
+		log.Fatalf("Person with id %v does not exist", nationalId.NationalID)
+		return find_err
+	}
+
+	err := adapter.db.Model(db.PersonInfoModel{}).Where(&person).Updates(personNewInfo).Error
+
+	if err != nil {
+		log.Fatalf("Failed to update the user. error %v", err)
+	}
+
+	return nil
 }
 
 func (adapter Adapter) FindPersonInfo(nationalId *db.NationalIDNumberModel) (*db.PersonInfoModel, error) {
@@ -97,7 +113,6 @@ func (adapter Adapter) FindPersonInfo(nationalId *db.NationalIDNumberModel) (*db
 		log.Fatalf("Person with id %v does not exist", nationalId.NationalID)
 		return &db.PersonInfoModel{}, err
 	}
-
 	return &result, nil
 
 }

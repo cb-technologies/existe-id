@@ -83,6 +83,6 @@ message PersonInfoResponse {
 
 message EditPersonInfoParameters{
   NationalIDNumber personId = 1;
-  PersonInfoResponse editedPersonInfo = 2;
+  PersonInfoRequest editedPersonInfo = 2;
 }
 

@@ -10,6 +10,6 @@ option  go_package = "./pb";
 // Creating RPC endpoints
 service ExistCRUDService {
   rpc AddNewPerson(PersonInfoRequest) returns (Response) {}
-  rpc EditPersonInfo(EditPersonInfoParameters) returns (Response) {}
+  rpc UpdatePersonInfo(EditPersonInfoParameters) returns (Response) {}
   rpc FindPersonInfo(NationalIDNumber) returns (PersonInfoResponse) {}
 }
