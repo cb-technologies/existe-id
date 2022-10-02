@@ -7,6 +7,6 @@ import (
 type PostgresSQLPort interface {
 	CloseDBConnection()
 	AddNewPersonInfo(personInfo *db.PersonInfoModel) error
-	UpdatePersonInfo(nationalId *db.NationalIDNumberModel)
+	UpdatePersonInfo(personNewInfo *db.PersonInfoModel) error
 	FindPersonInfo(nationalId *db.NationalIDNumberModel) (*db.PersonInfoModel, error)
 }

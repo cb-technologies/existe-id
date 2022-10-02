@@ -30,10 +30,17 @@ func (adapter Adapter) AddNewPersonInfo(personInfo *pb.PersonInfoRequest) error 
 	return error
 }
 
-func (adapter Adapter) UpdatePersonInfo(nationalID *pb.NationalIDNumber) error {
+func (adapter Adapter) UpdatePersonInfo(personNewInfo *pb.EditPersonInfoParameters) error {
 	// make a call to the DB
+	personNewInfoRequest := personNewInfo.EditedPersonInfo
+	personInfoModel := dbmapper.PersonInfoRequestToPersonInfoModel(personNewInfoRequest)
+	personInfoModel.NationalID = *dbmapper.ProtoNationalIDNumberToNationalIDNumberModel(personNewInfo.PersonId)
+	error := adapter.db.UpdatePersonInfo(personInfoModel)
 
-	return nil
+	if error != nil {
+		log.Fatal("Error updating person info")
+	}
+	return error
 }
 
 func (adapter Adapter) FindPersonInfo(nationalID *pb.NationalIDNumber) (*pb.PersonInfoResponse, error) {

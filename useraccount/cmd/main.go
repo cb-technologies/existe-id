@@ -4,23 +4,23 @@ import (
 	"fmt"
 
 	//"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/adapters/application/api"
-	//"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/adapters/core/national_id_generator"
+	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/adapters/core/national_id_generator"
 
 	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/adapters/framework/driven/postgresSQL"
 	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/entity/db"
-	//"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/ports"
+	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/ports"
 )
 
 func main() {
 
 	fmt.Println("Existe ID")
 
-	// var postgres ports.PostgresSQLPort
-	// var application ports.APIPorts
-	// var core ports.IDCoreFunctionsPorts
+	var postgres ports.PostgresSQLPort
+	var application ports.APIPorts
+	var core ports.IDCoreFunctionsPorts
 
-	// postgres, err := postgresSQL.NewAdapter()
-	// core = national_id_generator.NewAdapter()
+	postgres, err := postgresSQL.NewAdapter()
+	core = national_id_generator.NewAdapter()
 
 	// application = api.NewAdapter(postgres, core)
 	my_postgres, err := postgresSQL.NewAdapter()
@@ -31,7 +31,7 @@ func main() {
 	fmt.Println("Connection succesful!")
 
 	//Trying to mimic a request just to see if the GORM code is working
-	namesTest := db.NamesModel{
+	namesTest := pb.NamesModel{
 		Nom:         "Nathan",
 		Prenom:      "Tuala",
 		MiddleNames: []string{"Mbuyi"},
