@@ -8,7 +8,6 @@ import (
 
 	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/adapters/framework/driven/postgresSQL"
 	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/adapters/framework/driver/grpc/pb"
-	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/entity/db"
 	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/ports"
 )
 
@@ -24,7 +23,7 @@ func main() {
 	core = national_id_generator.NewAdapter()
 
 	application = api.NewAdapter(postgres, core)
-	my_postgres, err := postgresSQL.NewAdapter()
+	//my_postgres, err := postgresSQL.NewAdapter()
 	if err != nil {
 		fmt.Println("The error is ", err)
 	}
@@ -62,46 +61,52 @@ func main() {
 	// 	Year:  "2002",
 	// }
 
-	namesTest := pb.Names{
-		Nom:         "Andrea",
-		Prenom:      "Mufuta",
-		MiddleNames: []string{"Mbuyi"},
-	}
-	biometricsTest := pb.Biometric{
-		Photos:      []uint8{1, 2},
-		FingerPrint: []uint8{2, 3},
-	}
+	// namesTest := pb.Names{
+	// 	Nom:         "Samy",
+	// 	Prenom:      "Tuala",
+	// 	MiddleNames: []string{"Mbuyi"},
+	// }
+	// biometricsTest := pb.Biometric{
+	// 	Photos:      []uint8{1, 2},
+	// 	FingerPrint: []uint8{2, 3},
+	// }
 
-	addressTest := pb.Address{
-		Number:   1,
-		Avenue:   "Ramba Place",
-		Quartier: "Santa Clara",
-	}
+	// addressTest := pb.Address{
+	// 	Number:   1,
+	// 	Avenue:   "Ramba Place",
+	// 	Quartier: "Santa Clara",
+	// }
 
-	originTest := pb.Origin{
-		Province: []string{"Bandundu"},
-	}
+	// originTest := pb.Origin{
+	// 	Province: []string{"Bandundu"},
+	// }
 
-	phenotypeTest := pb.Phenotype{
-		EyeColor: "blue",
-	}
+	// phenotypeTest := pb.Phenotype{
+	// 	EyeColor: "blue",
+	// }
 
-	dateOfBirthTest := pb.DateOfBirth{
-		Day:   "Monday",
-		Month: "February",
-		Year:  "2002",
-	}
+	// dateOfBirthTest := pb.DateOfBirth{
+	// 	Day:   "Monday",
+	// 	Month: "February",
+	// 	Year:  "2002",
+	// }
 
-	personTest := pb.PersonInfoRequest{
-		Names:       &namesTest,
-		Biometrics:  &biometricsTest,
-		Address:     &addressTest,
-		Origins:     &originTest,
-		Phenotypes:  &phenotypeTest,
-		DateOfBirth: &dateOfBirthTest,
-	}
+	// personTest := pb.PersonInfoRequest{
+	// 	Names:       &namesTest,
+	// 	Biometrics:  &biometricsTest,
+	// 	Address:     &addressTest,
+	// 	Origins:     &originTest,
+	// 	Phenotypes:  &phenotypeTest,
+	// 	DateOfBirth: &dateOfBirthTest,
+	// }
 
-	nationalID := &db.NationalIDNumberModel{NationalID: "5f054e6280000de"}
+	nationalID := &pb.NationalIDNumber{Id: "5f054e6280000de"}
+
+	// newPersonTest := pb.EditPersonInfoParameters{
+	// 	PersonId:         nationalID,
+	// 	EditedPersonInfo: &personTest,
+	// }
+
 	// personTest := db.PersonInfoModel{
 	// 	Names:       namesTest,
 	// 	Biometrics:  biometricsTest,
@@ -114,7 +119,11 @@ func main() {
 
 	//err = application.AddNewPersonInfo(&personTest)
 	//person, err := my_postgres.FindPersonInfo(nationalID)
-	person, err := my_postgres.FindPersonInfo(nationalID)
+	person, err := application.FindPersonInfo(nationalID)
+	// find_err := application.UpdatePersonInfo(&newPersonTest)
+	// if find_err != nil {
+	// 	fmt.Print("Update Failing")
+	// }
 	// if false {
 	// 	my_postgres.UpdatePersonInfo(&personTest)
 	// }
