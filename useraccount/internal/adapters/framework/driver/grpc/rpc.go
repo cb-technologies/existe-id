@@ -18,13 +18,18 @@ func (adapter Adapter) AddNewPersonInfo(ctx context.Context, req *pb.PersonInfoR
 	return &pb.Response{Status: serviceresponse.SUCCESS}, error
 }
 
-func (a Adapter) UpdatePersonInfo(ctx context.Context, req *pb.EditPersonInfoParameters) (*pb.Response, error) {
+func (adapter Adapter) UpdatePersonInfo(ctx context.Context, req *pb.EditPersonInfoParameters) (*pb.Response, error) {
 	// TODO: implement
-	return &pb.Response{}, nil
+	error := adapter.api.UpdatePersonInfo(req)
 
+	if error != nil {
+		log.Fatal("Could not update person info")
+		return &pb.Response{Status: serviceresponse.FAILURE}, error
+	}
+	return &pb.Response{Status: serviceresponse.SUCCESS}, error
 }
 func (adapter Adapter) FindPersonInfo(ctx context.Context, req *pb.NationalIDNumber) (*pb.PersonInfoResponse, error) {
-	
+
 	personInfo, err := adapter.api.FindPersonInfo(req)
 
 	if err != nil {
