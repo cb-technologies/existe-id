@@ -21,8 +21,10 @@ func NewAdapter(db ports.PostgresSQLPort, core ports.IDCoreFunctionsPorts) *Adap
 
 func (adapter Adapter) AddNewPersonInfo(personInfo *pb.PersonInfoRequest) error {
 	personInfoModel := dbmapper.PersonInfoRequestToPersonInfoModel(personInfo)
+
 	nationalId, _ := adapter.core.GenerateNationalID()
 	personInfoModel.NationalID = db.NationalIDNumberModel{NationalID: *nationalId}
+
 	error := adapter.db.AddNewPersonInfo(personInfoModel)
 	if error != nil {
 		log.Fatal("Error adding a new person")

@@ -21,7 +21,7 @@ const (
 	dbHost     = "exist-identifier.cprbzqerfjiq.us-east-1.rds.amazonaws.com"
 	dbName     = "existdb"
 	region     = "us-east-1"
-	dbPassword = "exist2022"
+	dbPassword = "exist2022_1"
 )
 
 func NewAdapter() (*Adapter, error) {
@@ -86,11 +86,11 @@ func (adapter Adapter) UpdatePersonInfo(personNewInfo *db.PersonInfoModel) error
 
 	nationalId := personNewInfo.NationalID
 
-	person, find_err := adapter.FindPersonInfo(&nationalId)
+	person, findErr := adapter.FindPersonInfo(&nationalId)
 
-	if find_err != nil {
+	if findErr != nil {
 		log.Fatalf("Person with id %v does not exist", nationalId.NationalID)
-		return find_err
+		return findErr
 	}
 
 	err := adapter.db.Model(db.PersonInfoModel{}).Where(&person).Updates(personNewInfo).Error

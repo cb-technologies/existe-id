@@ -11,7 +11,6 @@ type AddressModel struct {
 	Quartier  string
 	Commune   string
 	ZipCode   string
-	Province  string
 	Ville     string
 	Reference string
 }

@@ -12,7 +12,6 @@ func protoAddressToDBAddress(address *pb.Address) *db.AddressModel {
 		Quartier:  address.Quartier,
 		Commune:   address.Commune,
 		ZipCode:   address.ZipCode,
-		Province:  address.Province,
 		Ville:     address.Ville,
 		Reference: address.Reference,
 	}
@@ -25,7 +24,6 @@ func addressModelToProtoAddress(addressModel *db.AddressModel) *pb.Address {
 		Quartier:  addressModel.Quartier,
 		Commune:   addressModel.Commune,
 		ZipCode:   addressModel.ZipCode,
-		Province:  addressModel.Province,
 		Ville:     addressModel.Ville,
 		Reference: addressModel.Reference,
 	}
@@ -34,7 +32,7 @@ func addressModelToProtoAddress(addressModel *db.AddressModel) *pb.Address {
 func protoNamesToDBNames(names *pb.Names) *db.NamesModel {
 	return &db.NamesModel{
 		Nom:         names.Nom,
-		Prenom:      names.Prenom, // TODO: fix to prenom
+		Prenom:      names.Prenom,
 		MiddleNames: names.MiddleNames,
 	}
 }
