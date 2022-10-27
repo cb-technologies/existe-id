@@ -19,7 +19,7 @@ func NewAdapter(db ports.PostgresSQLPort, core ports.IDCoreFunctionsPorts) *Adap
 	return &Adapter{db: db, core: core}
 }
 
-func (adapter Adapter) AddNewPersonInfo(personInfo *pb.PersonInfoRequest) error {
+func (adapter Adapter) AddNewPerson(personInfo *pb.PersonInfoRequest) error {
 	personInfoModel := dbmapper.PersonInfoRequestToPersonInfoModel(personInfo)
 
 	nationalId, _ := adapter.core.GenerateNationalID()
