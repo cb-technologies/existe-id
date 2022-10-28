@@ -2,28 +2,23 @@ package serverGrpc
 
 import (
 	"context"
-	"fmt"
-	"log"
-	"net"
-
-	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/constants/serviceresponse"
-	"google.golang.org/grpc"
-
 	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/adapters/framework/driver/grpc/pb"
+	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/constants/serviceresponse"
+	"log"
 
 	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/ports"
 )
 
 type Adapter struct {
+	pb.UnimplementedExistCRUDServer
 	api ports.APIPorts
-	pb.UnimplementedExistCRUDServiceServer
 }
 
 func NewAdapter(api ports.APIPorts) *Adapter {
 	return &Adapter{api: api}
 }
 
-func (adapter Adapter) AddNewPerson(ctx context.Context, req *pb.PersonInfoRequest) (*pb.Response, error) {
+func (adapter Adapter) AddNewPersonInfo(ctx context.Context, req *pb.PersonInfoRequest) (*pb.Response, error) {
 	error := adapter.api.AddNewPerson(req)
 	if error != nil {
 		log.Fatal("Could not create a personInfo")
@@ -62,21 +57,4 @@ var (
 
 func (adapter Adapter) Run() {
 
-	lis, err := net.Listen("tcp", "0.0.0.0:9090")
-
-	if err != nil {
-		log.Fatalf("Error while listening : %v", err)
-	}
-
-	grpcServer := grpc.NewServer()
-
-	pb.RegisterExistCRUDServiceServer(grpcServer, adapter)
-
-	fmt.Println("Nicolas debugging 2")
-
-	err = grpcServer.Serve(lis)
-	fmt.Println("Checking")
-	if err != nil {
-		log.Fatalf("Error while serving : %v", err)
-	}
 }

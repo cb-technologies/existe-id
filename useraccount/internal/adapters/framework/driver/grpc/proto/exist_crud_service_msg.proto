@@ -1,7 +1,0 @@
-syntax = "proto3";
-
-option go_package = "./pb";
-
-message Response {
-  int32 status = 1;
-}

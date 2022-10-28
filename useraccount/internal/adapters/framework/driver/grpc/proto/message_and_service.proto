@@ -1,8 +1,7 @@
 syntax = "proto3";
-
 package pb;
 
-option go_package = "./pb";
+option go_package = "/pb";
 
 message Address {
   int32 number = 1;
@@ -16,9 +15,9 @@ message Address {
 }
 
 message Names {
-   string nom = 1;
-   string prenom = 2;
-   repeated string middle_names = 3;
+  string nom = 1;
+  string prenom = 2;
+  repeated string middle_names = 3;
 }
 
 message Origin {
@@ -85,4 +84,15 @@ message EditPersonInfoParameters{
   NationalIDNumber personId = 1;
   PersonInfoRequest editedPersonInfo = 2;
 }
+
+message Response {
+  int32 status = 1;
+}
+
+service ExistCRUD {
+  rpc AddNewPersonInfo(PersonInfoRequest) returns (Response) {}
+  rpc UpdatePersonInfo(EditPersonInfoParameters) returns (Response) {}
+  rpc FindPersonInfo(NationalIDNumber) returns (PersonInfoResponse) {}
+}
+
 
