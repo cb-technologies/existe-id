@@ -1,145 +1,69 @@
 package main
 
 import (
-	"fmt"
 	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/adapters/application/api"
 	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/adapters/core/national_id_generator"
-	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/adapters/framework/driver/grpc/pb"
-
 	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/adapters/framework/driven/postgresSQL"
+	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/adapters/framework/driver/grpc/pb"
+	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/adapters/framework/driver/grpc/serverGrpc"
 	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/ports"
+	"github.com/improbable-eng/grpc-web/go/grpcweb"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
+	"log"
+	"net"
+	"net/http"
 )
+
+type Adapter2 struct {
+	pb.UnimplementedExistCRUDServer
+}
 
 func main() {
 
-	fmt.Println("Existe ID")
+	var postgresAdapter ports.PostgresSQLPort
+	var appAdapter ports.APIPorts
+	var coreAdapter ports.IDCoreFunctionsPorts
 
-	var postgres ports.PostgresSQLPort
-	var application ports.APIPorts
-	var core ports.IDCoreFunctionsPorts
+	// In the future we will probably pass the different variable in order to build a dsn here
+	// We can get them from the environment variables
+	// for now we are creating a dsn within the postgresSQL new adapter function
+	postgresAdapter, _ = postgresSQL.NewAdapter()
+	coreAdapter = national_id_generator.NewAdapter()
+	appAdapter = api.NewAdapter(postgresAdapter, coreAdapter)
+	gRPCAdapter := serverGrpc.NewAdapter(appAdapter)
+	//fmt.Println("Nicolas debugging")
 
-	postgres, err := postgresSQL.NewAdapter()
-	core = national_id_generator.NewAdapter()
+	grpcServer := grpc.NewServer()
 
-	application = api.NewAdapter(postgres, core)
-	//my_postgres, err := postgresSQL.NewAdapter()
+	pb.RegisterExistCRUDServer(grpcServer, gRPCAdapter)
+	reflection.Register(grpcServer)
+	// Opening another thread to start the real exist id server
+
+	lis, err := net.Listen("tcp", "localhost:4550")
+	go func() {
+		log.Fatalf("failed to serve : %v", grpcServer.Serve(lis))
+	}()
+
 	if err != nil {
-		fmt.Println("The error is ", err)
+		log.Fatalf("Error while listening : %v", err)
 	}
 
-	fmt.Println("Connection succesful!")
+	grpcWebServer := grpcweb.WrapServer(
+		grpcServer,
+		// Enabling CORS
+		grpcweb.WithOriginFunc(func(origin string) bool { return true }),
+	)
 
-	// Add a new User
-
-	namesTest := pb.Names{
-		Nom:         "Elie",
-		Prenom:      "Masanka",
-		MiddleNames: []string{"Ntumba"},
-	}
-	biometricsTest := pb.Biometric{
-		Photos:      []uint8{1, 2},
-		FingerPrint: []uint8{2, 3},
+	httpServerExist := &http.Server{
+		Handler: grpcWebServer,
+		Addr:    "localhost:4551",
 	}
 
-	addressTest := pb.Address{
-		Number:   1,
-		Avenue:   "Boma",
-		Quartier: "OUA",
-		Commune:  "Kintambo",
-		ZipCode:  "1430",
-	}
+	log.Printf("Http server listening at %v", httpServerExist.Addr)
 
-	phenotypeTest := pb.Phenotype{
-		EyeColor: "brown",
-	}
-
-	originTest := pb.Origin{
-		Province: []string{"BasCongo"},
-		ChefLieu: "kibasa",
-	}
-
-	dateOfBirthTest := pb.DateOfBirth{
-		Day:   "23",
-		Month: "March",
-		Year:  "1998",
-	}
-
-	personTest := pb.PersonInfoRequest{
-		Names:       &namesTest,
-		Biometrics:  &biometricsTest,
-		Address:     &addressTest,
-		Origins:     &originTest,
-		Phenotypes:  &phenotypeTest,
-		DateOfBirth: &dateOfBirthTest,
-	}
-
-	err = application.AddNewPersonInfo(&personTest)
+	err = httpServerExist.ListenAndServe()
 	if err != nil {
-		fmt.Println("Error Adding a User")
-	} else {
-		fmt.Println("---------------------------")
-		fmt.Println("Person created successfully")
+		log.Fatalf("failed to serve: %v", err)
 	}
-
-	//Find a User
-	//nationalID := &pb.NationalIDNumber{Id: "5f7ec5a5300002e"}
-	//person, err := application.FindPersonInfo(nationalID)
-	//if err != nil {
-	//	fmt.Println("Error")
-	//} else {
-	//	fmt.Println("---------------------------")
-	//	fmt.Println(person)
-	//	fmt.Println("Person found successfully")
-	//}
-
-	// Update a User
-
-	//namesTest := pb.Names{
-	//	Nom:         "Elie",
-	//	Prenom:      "Masanka",
-	//	MiddleNames: []string{"Ntumba"},
-	//}
-	//biometricsTest := pb.Biometric{
-	//	Photos:      []uint8{1, 2},
-	//	FingerPrint: []uint8{2, 3},
-	//}
-	//
-	//addressTest := pb.Address{
-	//	Number:   1,
-	//	Avenue:   "XXXXX",
-	//	Quartier: "BBBB",
-	//	Commune:  "Kintambo",
-	//	ZipCode:  "1430",
-	//}
-	//
-	//phenotypeTest := pb.Phenotype{
-	//	EyeColor: "brown",
-	//}
-	//
-	//dateOfBirthTest := pb.DateOfBirth{
-	//	Day:   "23",
-	//	Month: "March",
-	//	Year:  "1998",
-	//}
-	//
-	//personTest := pb.PersonInfoRequest{
-	//	Names:       &namesTest,
-	//	Biometrics:  &biometricsTest,
-	//	Address:     &addressTest,
-	//	Phenotypes:  &phenotypeTest,
-	//	DateOfBirth: &dateOfBirthTest,
-	//}
-	//nationalID := &pb.NationalIDNumber{Id: "5f7ec5a5300002e"}
-	//
-	//newPersonTest := pb.EditPersonInfoParameters{
-	//	PersonId:         nationalID,
-	//	EditedPersonInfo: &personTest,
-	//}
-	//find_err := application.UpdatePersonInfo(&newPersonTest)
-	//if find_err != nil {
-	//	fmt.Println("Update Failing")
-	//} else {
-	//	fmt.Println("Success updating the person information")
-	//}
-
 }
