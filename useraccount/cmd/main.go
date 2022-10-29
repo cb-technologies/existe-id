@@ -7,10 +7,12 @@ import (
 	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/adapters/framework/driver/grpc/pb"
 	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/adapters/framework/driver/grpc/serverGrpc"
 	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/ports"
+	"github.com/improbable-eng/grpc-web/go/grpcweb"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 	"log"
 	"net"
+	"net/http"
 )
 
 type Adapter2 struct {
@@ -36,15 +38,32 @@ func main() {
 
 	pb.RegisterExistCRUDServer(grpcServer, gRPCAdapter)
 	reflection.Register(grpcServer)
+	// Opening another thread to start the real exist id server
 
-	lis, err := net.Listen("tcp", "0.0.0.0:4550")
+	lis, err := net.Listen("tcp", "localhost:4550")
+	go func() {
+		log.Fatalf("failed to serve : %v", grpcServer.Serve(lis))
+	}()
 
 	if err != nil {
 		log.Fatalf("Error while listening : %v", err)
 	}
 
-	err = grpcServer.Serve(lis)
+	grpcWebServer := grpcweb.WrapServer(
+		grpcServer,
+		// Enabling CORS
+		grpcweb.WithOriginFunc(func(origin string) bool { return true }),
+	)
+
+	httpServerExist := &http.Server{
+		Handler: grpcWebServer,
+		Addr:    "localhost:4551",
+	}
+
+	log.Printf("Http server listening at %v", httpServerExist.Addr)
+
+	err = httpServerExist.ListenAndServe()
 	if err != nil {
-		log.Fatalf("Error while serving : %v", err)
+		log.Fatalf("failed to serve: %v", err)
 	}
 }
