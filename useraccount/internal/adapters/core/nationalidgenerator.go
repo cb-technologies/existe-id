@@ -1,17 +1,11 @@
-package national_id_generator
+package core
 
 import (
-	"github.com/sony/sonyflake"
 	"log"
 	"strconv"
+
+	"github.com/sony/sonyflake"
 )
-
-type Adapter struct {
-}
-
-func NewAdapter() *Adapter {
-	return &Adapter{}
-}
 
 func (adapter Adapter) GenerateNationalID() (*string, error) {
 	return generateUniqueNationalID()
