@@ -25,6 +25,8 @@ type ExistCRUDClient interface {
 	AddNewPersonInfo(ctx context.Context, in *PersonInfoRequest, opts ...grpc.CallOption) (*Response, error)
 	UpdatePersonInfo(ctx context.Context, in *EditPersonInfoParameters, opts ...grpc.CallOption) (*Response, error)
 	FindPersonInfo(ctx context.Context, in *NationalIDNumber, opts ...grpc.CallOption) (*PersonInfoResponse, error)
+	SignInAgent(ctx context.Context, in *AgentSignInInfo, opts ...grpc.CallOption) (*Response, error)
+	SignUpAgent(ctx context.Context, in *AgentInfo, opts ...grpc.CallOption) (*Response, error)
 }
 
 type existCRUDClient struct {
@@ -62,6 +64,24 @@ func (c *existCRUDClient) FindPersonInfo(ctx context.Context, in *NationalIDNumb
 	return out, nil
 }
 
+func (c *existCRUDClient) SignInAgent(ctx context.Context, in *AgentSignInInfo, opts ...grpc.CallOption) (*Response, error) {
+	out := new(Response)
+	err := c.cc.Invoke(ctx, "/pb.ExistCRUD/SignInAgent", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *existCRUDClient) SignUpAgent(ctx context.Context, in *AgentInfo, opts ...grpc.CallOption) (*Response, error) {
+	out := new(Response)
+	err := c.cc.Invoke(ctx, "/pb.ExistCRUD/SignUpAgent", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ExistCRUDServer is the server API for ExistCRUD service.
 // All implementations must embed UnimplementedExistCRUDServer
 // for forward compatibility
@@ -69,6 +89,8 @@ type ExistCRUDServer interface {
 	AddNewPersonInfo(context.Context, *PersonInfoRequest) (*Response, error)
 	UpdatePersonInfo(context.Context, *EditPersonInfoParameters) (*Response, error)
 	FindPersonInfo(context.Context, *NationalIDNumber) (*PersonInfoResponse, error)
+	SignInAgent(context.Context, *AgentSignInInfo) (*Response, error)
+	SignUpAgent(context.Context, *AgentInfo) (*Response, error)
 	mustEmbedUnimplementedExistCRUDServer()
 }
 
@@ -84,6 +106,12 @@ func (UnimplementedExistCRUDServer) UpdatePersonInfo(context.Context, *EditPerso
 }
 func (UnimplementedExistCRUDServer) FindPersonInfo(context.Context, *NationalIDNumber) (*PersonInfoResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method FindPersonInfo not implemented")
+}
+func (UnimplementedExistCRUDServer) SignInAgent(context.Context, *AgentSignInInfo) (*Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SignInAgent not implemented")
+}
+func (UnimplementedExistCRUDServer) SignUpAgent(context.Context, *AgentInfo) (*Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SignUpAgent not implemented")
 }
 func (UnimplementedExistCRUDServer) mustEmbedUnimplementedExistCRUDServer() {}
 
@@ -152,6 +180,42 @@ func _ExistCRUD_FindPersonInfo_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ExistCRUD_SignInAgent_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AgentSignInInfo)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ExistCRUDServer).SignInAgent(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/pb.ExistCRUD/SignInAgent",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ExistCRUDServer).SignInAgent(ctx, req.(*AgentSignInInfo))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ExistCRUD_SignUpAgent_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AgentInfo)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ExistCRUDServer).SignUpAgent(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/pb.ExistCRUD/SignUpAgent",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ExistCRUDServer).SignUpAgent(ctx, req.(*AgentInfo))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ExistCRUD_ServiceDesc is the grpc.ServiceDesc for ExistCRUD service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -170,6 +234,14 @@ var ExistCRUD_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "FindPersonInfo",
 			Handler:    _ExistCRUD_FindPersonInfo_Handler,
+		},
+		{
+			MethodName: "SignInAgent",
+			Handler:    _ExistCRUD_SignInAgent_Handler,
+		},
+		{
+			MethodName: "SignUpAgent",
+			Handler:    _ExistCRUD_SignUpAgent_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

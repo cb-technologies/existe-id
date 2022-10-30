@@ -93,6 +93,20 @@ service ExistCRUD {
   rpc AddNewPersonInfo(PersonInfoRequest) returns (Response) {}
   rpc UpdatePersonInfo(EditPersonInfoParameters) returns (Response) {}
   rpc FindPersonInfo(NationalIDNumber) returns (PersonInfoResponse) {}
+  rpc SignInAgent(AgentSignInInfo) returns (Response) {}
+  rpc SignUpAgent(AgentInfo) returns (Response) {}
 }
 
+// proto definition for the Agent login part of the app
 
+message AgentInfo {
+  string nom = 1;
+  string prenom = 2;
+  string email = 3;
+  string password = 4;
+}
+
+message AgentSignInInfo {
+  string email = 1;
+  string password = 2;
+}

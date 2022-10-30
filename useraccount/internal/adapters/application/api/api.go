@@ -11,12 +11,13 @@ import (
 )
 
 type Adapter struct {
-	db   ports.PostgresSQLPort
-	core ports.IDCoreFunctionsPorts
+	dbPersonInfo ports.PostgresSQLPersonInfoPort
+	dbAgentInfo  ports.PostgresSQLAgentInfoPort
+	core         ports.IDCoreFunctionsPorts
 }
 
-func NewAdapter(db ports.PostgresSQLPort, core ports.IDCoreFunctionsPorts) *Adapter {
-	return &Adapter{db: db, core: core}
+func NewAdapter(dbPersonInfo ports.PostgresSQLPersonInfoPort, dbAgentInfo ports.PostgresSQLAgentInfoPort, core ports.IDCoreFunctionsPorts) *Adapter {
+	return &Adapter{dbPersonInfo: dbPersonInfo, dbAgentInfo: dbAgentInfo, core: core}
 }
 
 func (adapter Adapter) AddNewPerson(personInfo *pb.PersonInfoRequest) error {
@@ -25,7 +26,7 @@ func (adapter Adapter) AddNewPerson(personInfo *pb.PersonInfoRequest) error {
 	nationalId, _ := adapter.core.GenerateNationalID()
 	personInfoModel.NationalID = db.NationalIDNumberModel{NationalID: *nationalId}
 
-	error := adapter.db.AddNewPersonInfo(personInfoModel)
+	error := adapter.dbPersonInfo.AddNewPersonInfo(personInfoModel)
 	if error != nil {
 		log.Fatal("Error adding a new person")
 	}
@@ -37,7 +38,7 @@ func (adapter Adapter) UpdatePersonInfo(personNewInfo *pb.EditPersonInfoParamete
 	personNewInfoRequest := personNewInfo.EditedPersonInfo
 	personInfoModel := dbmapper.PersonInfoRequestToPersonInfoModel(personNewInfoRequest)
 	personInfoModel.NationalID = *dbmapper.ProtoNationalIDNumberToNationalIDNumberModel(personNewInfo.PersonId)
-	error := adapter.db.UpdatePersonInfo(personInfoModel)
+	error := adapter.dbPersonInfo.UpdatePersonInfo(personInfoModel)
 
 	if error != nil {
 		log.Fatal("Error updating person info")
@@ -48,7 +49,7 @@ func (adapter Adapter) UpdatePersonInfo(personNewInfo *pb.EditPersonInfoParamete
 func (adapter Adapter) FindPersonInfo(nationalID *pb.NationalIDNumber) (*pb.PersonInfoResponse, error) {
 
 	nationalIDModel := dbmapper.ProtoNationalIDNumberToNationalIDNumberModel(nationalID)
-	personInfo, err := adapter.db.FindPersonInfo(nationalIDModel)
+	personInfo, err := adapter.dbPersonInfo.FindPersonInfo(nationalIDModel)
 
 	if err != nil {
 		log.Fatal("Error finding a personInfo")
@@ -60,4 +61,23 @@ func (adapter Adapter) FindPersonInfo(nationalID *pb.NationalIDNumber) (*pb.Pers
 
 func (adapter Adapter) GenerateNationalID() (*string, error) {
 	return adapter.core.GenerateNationalID()
+}
+
+func (adapter Adapter) SignInAgent(agentSignInInfo *pb.AgentSignInInfo) error {
+	agentSignInInfoModel := dbmapper.ProtoAgentSignInInfoToAgentSignInInfoModel(agentSignInInfo)
+
+	agentSignInInfoModelResult, err := adapter.dbAgentInfo.SignInAgent(agentSignInInfoModel)
+	if err != nil {
+		return err
+	}
+
+	err = adapter.core.VerifyPassword(agentSignInInfoModelResult.Password, agentSignInInfoModel.Password)
+
+	return err
+}
+
+func (adapter Adapter) SignUpAgent(agentSignUpInfo *pb.AgentInfo) error {
+	agentSignUpInfoModel := dbmapper.ProtoAgentInfoToAgentInfoModel(agentSignUpInfo)
+
+	return adapter.dbAgentInfo.SignUpAgent(agentSignUpInfoModel)
 }

@@ -2,7 +2,6 @@ package postgresSQL
 
 import (
 	"database/sql"
-	"fmt"
 	"log"
 
 	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/entity/db"
@@ -11,25 +10,13 @@ import (
 	"gorm.io/gorm"
 )
 
-type Adapter struct {
+type PersonInfoAdapter struct {
 	db *gorm.DB
 }
 
-const (
-	dbPort     = 5432
-	dbUser     = "postgres"
-	dbHost     = "exist-identifier.cprbzqerfjiq.us-east-1.rds.amazonaws.com"
-	dbName     = "existdb"
-	region     = "us-east-1"
-	dbPassword = "ezochanger"
-)
+func NewPersonInfoAdapter() (*PersonInfoAdapter, error) {
 
-func NewAdapter() (*Adapter, error) {
-
-	dsn := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s",
-		dbHost, dbPort, dbUser, dbPassword, dbName,
-	)
-
+	dsn := makeDSN()
 	postgresdb, err := sql.Open("postgres", dsn)
 	if err != nil {
 		panic(err)
@@ -48,10 +35,10 @@ func NewAdapter() (*Adapter, error) {
 		panic(err)
 	}
 
-	return &Adapter{db: db}, nil
+	return &PersonInfoAdapter{db: db}, nil
 }
 
-func (adapter Adapter) CloseDBConnection() {
+func (adapter PersonInfoAdapter) CloseDBConnection() {
 	db, _ := adapter.db.DB()
 
 	err := db.Close()
@@ -60,7 +47,7 @@ func (adapter Adapter) CloseDBConnection() {
 	}
 }
 
-func (adapter Adapter) AddNewPersonInfo(personInfo *db.PersonInfoModel) error {
+func (adapter PersonInfoAdapter) AddNewPersonInfo(personInfo *db.PersonInfoModel) error {
 	if !adapter.isDatabaseTableCreated() {
 		err := adapter.createDatabaseTable()
 		if err != nil {
@@ -82,7 +69,7 @@ func (adapter Adapter) AddNewPersonInfo(personInfo *db.PersonInfoModel) error {
 	return result.Error
 }
 
-func (adapter Adapter) UpdatePersonInfo(personNewInfo *db.PersonInfoModel) error {
+func (adapter PersonInfoAdapter) UpdatePersonInfo(personNewInfo *db.PersonInfoModel) error {
 
 	nationalId := personNewInfo.NationalID
 
@@ -102,7 +89,7 @@ func (adapter Adapter) UpdatePersonInfo(personNewInfo *db.PersonInfoModel) error
 	return nil
 }
 
-func (adapter Adapter) FindPersonInfo(nationalId *db.NationalIDNumberModel) (*db.PersonInfoModel, error) {
+func (adapter PersonInfoAdapter) FindPersonInfo(nationalId *db.NationalIDNumberModel) (*db.PersonInfoModel, error) {
 
 	var result db.PersonInfoModel
 
@@ -117,7 +104,7 @@ func (adapter Adapter) FindPersonInfo(nationalId *db.NationalIDNumberModel) (*db
 
 }
 
-func (adapter Adapter) createDatabaseTable() error {
+func (adapter PersonInfoAdapter) createDatabaseTable() error {
 
 	err := adapter.db.Migrator().CreateTable(&db.PersonInfoModel{})
 	if err != nil {
@@ -130,6 +117,6 @@ func (adapter Adapter) createDatabaseTable() error {
 	return err
 }
 
-func (adapter Adapter) isDatabaseTableCreated() bool {
+func (adapter PersonInfoAdapter) isDatabaseTableCreated() bool {
 	return adapter.db.Migrator().HasTable(&db.PersonInfoModel{})
 }

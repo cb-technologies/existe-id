@@ -9,4 +9,6 @@ type APIPorts interface {
 	UpdatePersonInfo(parameters *pb.EditPersonInfoParameters) error
 	FindPersonInfo(nationalID *pb.NationalIDNumber) (*pb.PersonInfoResponse, error)
 	GenerateNationalID() (*string, error)
+	SignInAgent(agentSignInInfo *pb.AgentSignInInfo) error
+	SignUpAgent(agentSignUpInfo *pb.AgentInfo) error
 }
