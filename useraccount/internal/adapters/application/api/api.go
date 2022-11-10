@@ -59,6 +59,20 @@ func (adapter Adapter) FindPersonInfo(nationalID *pb.NationalIDNumber) (*pb.Pers
 	return result, nil
 }
 
+func (adapter Adapter) RetreiveUserBasedOnField(names *db.NamesModel, dateOfBirth *db.DateOfBirthModel) (*pb.PersonInfoResponse, error) {
+
+	namesModel := dbmapper.protoNamesToDBNames(Names)
+	dateOfBirthModel := dbmapper.protoDateOfBirthToDBDateOfBirth(DateOfBirth)
+	personInfo, err := 	adapter.dbPersonInfo.RetreiveUserBasedOnField(namesModel, dateOfBirthModel)
+
+	if err != nil {
+		log.Fatal("Error finding a personInfo")
+		return &pb.PersonInfoResponse{}, err
+	}
+	result := dbmapper.PersonInfoModelToPersonInfoResponse(personInfo)
+	return result, nil
+}
+
 func (adapter Adapter) GenerateNationalID() (*string, error) {
 	return adapter.core.GenerateNationalID()
 }

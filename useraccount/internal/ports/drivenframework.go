@@ -9,6 +9,7 @@ type PostgresSQLPersonInfoPort interface {
 	AddNewPersonInfo(personInfo *db.PersonInfoModel) error
 	UpdatePersonInfo(personNewInfo *db.PersonInfoModel) error
 	FindPersonInfo(nationalId *db.NationalIDNumberModel) (*db.PersonInfoModel, error)
+	RetreiveUserBasedOnField(names *db.NamesModel, dateOfBirth *db.DateOfBirthModel) (*db.PersonInfoModel, error)
 }
 
 type PostgresSQLAgentInfoPort interface {

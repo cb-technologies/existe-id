@@ -85,6 +85,11 @@ message EditPersonInfoParameters{
   PersonInfoRequest editedPersonInfo = 2;
 }
 
+message RetreivePersonInfoParameters{
+  Names names = 1;
+  DateOfBirth date_of_birth = 2;
+}
+
 message Response {
   int32 status = 1;
 }
@@ -93,6 +98,7 @@ service ExistCRUD {
   rpc AddNewPersonInfo(PersonInfoRequest) returns (Response) {}
   rpc UpdatePersonInfo(EditPersonInfoParameters) returns (Response) {}
   rpc FindPersonInfo(NationalIDNumber) returns (PersonInfoResponse) {}
+  rpc RetreiveUserBasedOnField(RetreivePersonInfoParameters) returns (PersonInfoResponse) {}
   rpc SignInAgent(AgentSignInInfo) returns (Response) {}
   rpc SignUpAgent(AgentInfo) returns (Response) {}
 }

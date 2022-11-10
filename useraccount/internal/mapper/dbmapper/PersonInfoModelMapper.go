@@ -6,7 +6,7 @@ import (
 )
 
 func protoAddressToDBAddress(address *pb.Address) *db.AddressModel {
-	return &db.AddressModel{
+	return &db.AddressModel{ProtoNationalIDNumberToNationalIDNumberModel
 		Number:    address.Number,
 		Avenue:    address.Avenue,
 		Quartier:  address.Quartier,

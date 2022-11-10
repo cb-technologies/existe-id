@@ -95,9 +95,26 @@ func (adapter PersonInfoAdapter) FindPersonInfo(nationalId *db.NationalIDNumberM
 
 	personInfo := &db.PersonInfoModel{NationalID: *nationalId}
 	err := adapter.db.Where(personInfo).First(&result).Error
+	
 
 	if err != nil {
 		log.Fatalf("Person with id %v does not exist", nationalId.NationalID)
+		return &db.PersonInfoModel{}, err
+	}
+	return &result, nil
+
+}
+
+func (adapter PersonInfoAdapter) RetreiveUserBasedOnField(names *db.NamesModel, dateOfBirth *db.DateOfBirthModel) (*db.PersonInfoModel, error) {
+
+	var result db.PersonInfoModel
+
+	personInfo := &db.PersonInfoModel{Names: *names, DateOfBirth: *dateOfBirth} // Retreiving names and dateofbirth
+	err := adapter.db.Where(personInfo).First(&result).Error
+
+
+	if err != nil {
+		log.Fatalf("Person with name %v and date of birth %v does not exist", names.Nom, names.Prenom)
 		return &db.PersonInfoModel{}, err
 	}
 	return &result, nil
