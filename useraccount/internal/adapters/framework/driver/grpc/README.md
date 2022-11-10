@@ -31,15 +31,15 @@ Then run,
 For Messages
 
 ```sh
-protoc --proto_path=internal/adapters/framework/driver/grpc/proto --go_out=internal/adapters/framework/driver/grpc internal/adapters/framework/driver/grpc/proto/messages.proto
+protoc --proto_path=internal/adapters/framework/driver/grpc/proto --go_out=internal/adapters/framework/driver/grpc internal/adapters/framework/driver/grpc/proto/message_and_service.proto
 
-protoc --proto_path=internal/adapters/framework/driver/grpc/proto --go_out=internal/adapters/framework/driver/grpc internal/adapters/framework/driver/grpc/proto/exist_crud_service_msg.proto
+protoc --proto_path=internal/adapters/framework/driver/grpc/proto --go_out=internal/adapters/framework/driver/grpc internal/adapters/framework/driver/grpc/proto/message_and_service.proto
 ```
 
 For Service
 
 ```sh
-protoc --go-grpc_out=internal/adapters/framework/driver/grpc --proto_path=internal/adapters/framework/driver/grpc/proto internal/adapters/framework/driver/grpc/proto/service.proto
+protoc --go-grpc_out=internal/adapters/framework/driver/grpc --proto_path=internal/adapters/framework/driver/grpc/proto internal/adapters/framework/driver/grpc/proto/message_and_service.proto
 ```
 
 
