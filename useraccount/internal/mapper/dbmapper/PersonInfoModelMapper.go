@@ -6,7 +6,7 @@ import (
 )
 
 func protoAddressToDBAddress(address *pb.Address) *db.AddressModel {
-	return &db.AddressModel{ProtoNationalIDNumberToNationalIDNumberModel
+	return &db.AddressModel{
 		Number:    address.Number,
 		Avenue:    address.Avenue,
 		Quartier:  address.Quartier,
@@ -29,7 +29,7 @@ func addressModelToProtoAddress(addressModel *db.AddressModel) *pb.Address {
 	}
 }
 
-func protoNamesToDBNames(names *pb.Names) *db.NamesModel {
+func ProtoNamesToDBNames(names *pb.Names) *db.NamesModel {
 	return &db.NamesModel{
 		Nom:         names.Nom,
 		Prenom:      names.Prenom,
@@ -89,7 +89,7 @@ func biometricModelToProtoBiometric(biometricModel *db.BiometricModel) *pb.Biome
 	}
 }
 
-func protoDateOfBirthToDBDateOfBirth(dateofBirth *pb.DateOfBirth) *db.DateOfBirthModel {
+func ProtoDateOfBirthToDBDateOfBirth(dateofBirth *pb.DateOfBirth) *db.DateOfBirthModel {
 	return &db.DateOfBirthModel{
 		Day:   dateofBirth.Day,
 		Month: dateofBirth.Month,
@@ -122,12 +122,12 @@ func cardValidityModelToProtoCardValidity(cardValidityModel *db.CardValidityMode
 
 func PersonInfoRequestToPersonInfoModel(personInfoModel *pb.PersonInfoRequest) *db.PersonInfoModel {
 	return &db.PersonInfoModel{
-		Names:       *protoNamesToDBNames(personInfoModel.Names),
+		Names:       *ProtoNamesToDBNames(personInfoModel.Names),
 		Biometrics:  *protoBiometricToDBBiometric(personInfoModel.Biometrics),
 		Address:     *protoAddressToDBAddress(personInfoModel.Address),
 		Origins:     *protoOriginToDBOrigin(personInfoModel.Origins),
 		Phenotypes:  *protoPhenotypeToDBPhenotype(personInfoModel.Phenotypes),
-		DateOfBirth: *protoDateOfBirthToDBDateOfBirth(personInfoModel.DateOfBirth),
+		DateOfBirth: *ProtoDateOfBirthToDBDateOfBirth(personInfoModel.DateOfBirth),
 	}
 }
 
