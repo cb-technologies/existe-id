@@ -42,11 +42,11 @@ func main() {
 
 	lis, err := net.Listen("tcp", "localhost:4550")
 	go func() {
-		log.Fatalf("failed to serve : %v", grpcServer.Serve(lis))
+		log.Printf("failed to serve : %v", grpcServer.Serve(lis))
 	}()
 
 	if err != nil {
-		log.Fatalf("Error while listening : %v", err)
+		log.Printf("Error while listening : %v", err)
 	}
 
 	grpcWebServer := grpcweb.WrapServer(
@@ -64,6 +64,6 @@ func main() {
 
 	err = httpServerExist.ListenAndServe()
 	if err != nil {
-		log.Fatalf("failed to serve: %v", err)
+		log.Printf("failed to serve: %v", err)
 	}
 }
