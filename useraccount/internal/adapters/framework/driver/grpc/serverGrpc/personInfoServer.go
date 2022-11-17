@@ -38,3 +38,14 @@ func (adapter Adapter) FindPersonInfo(ctx context.Context, req *pb.NationalIDNum
 	}
 	return personInfo, nil
 }
+
+func (adapter Adapter) RetreiveUserBasedOnField(ctx context.Context, req *pb.RetreivePersonInfoParameters) (*pb.PersonInfoResponse, error) {
+
+	personInfo, err := adapter.api.RetreiveUserBasedOnField(req.Names, req.DateOfBirth)
+
+	if err != nil {
+		log.Fatal("Could not Find personInfo")
+		return &pb.PersonInfoResponse{}, err
+	}
+	return personInfo, nil
+}
