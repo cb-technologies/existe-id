@@ -25,7 +25,7 @@ func AgentSignInInfoModelToAgentSignInInfoProto(agentSignInInfoModel *db.AgentSi
 func ProtoAgentInfoToAgentInfoModel(agentInfo *pb.AgentInfo) *db.AgentInfoModel {
 	hashedPassword, err := core.HashPassword(agentInfo.Password)
 	if err != nil {
-		log.Fatalf("Failed to hash the password %v", err)
+		log.Printf("Failed to hash the password %v", err)
 	}
 
 	return &db.AgentInfoModel{
