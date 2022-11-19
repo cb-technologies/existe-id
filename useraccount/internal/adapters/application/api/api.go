@@ -28,7 +28,7 @@ func (adapter Adapter) AddNewPerson(personInfo *pb.PersonInfoRequest) error {
 
 	error := adapter.dbPersonInfo.AddNewPersonInfo(personInfoModel)
 	if error != nil {
-		log.Fatal("Error adding a new person")
+		log.Print("Error adding a new person")
 	}
 	return error
 }
@@ -41,7 +41,7 @@ func (adapter Adapter) UpdatePersonInfo(personNewInfo *pb.EditPersonInfoParamete
 	error := adapter.dbPersonInfo.UpdatePersonInfo(personInfoModel)
 
 	if error != nil {
-		log.Fatal("Error updating person info")
+		log.Print("Error updating person info")
 	}
 	return error
 }
@@ -52,7 +52,7 @@ func (adapter Adapter) FindPersonInfo(nationalID *pb.NationalIDNumber) (*pb.Pers
 	personInfo, err := adapter.dbPersonInfo.FindPersonInfo(nationalIDModel)
 
 	if err != nil {
-		log.Fatal("Error finding a personInfo")
+		log.Print("Error finding a personInfo")
 		return &pb.PersonInfoResponse{}, err
 	}
 	result := dbmapper.PersonInfoModelToPersonInfoResponse(personInfo)
@@ -63,10 +63,10 @@ func (adapter Adapter) RetreiveUserBasedOnField(names *pb.Names, dateOfBirth *pb
 
 	namesModel := dbmapper.ProtoNamesToDBNames(names)
 	dateOfBirthModel := dbmapper.ProtoDateOfBirthToDBDateOfBirth(dateOfBirth)
-	personInfo, err := 	adapter.dbPersonInfo.RetreiveUserBasedOnField(namesModel, dateOfBirthModel)
+	personInfo, err := adapter.dbPersonInfo.RetreiveUserBasedOnField(namesModel, dateOfBirthModel)
 
 	if err != nil {
-		log.Fatal("Error finding a personInfo")
+		log.Print("Error finding a personInfo")
 		return &pb.PersonInfoResponse{}, err
 	}
 	result := dbmapper.PersonInfoModelToPersonInfoResponse(personInfo)

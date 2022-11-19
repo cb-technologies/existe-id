@@ -15,7 +15,7 @@ func generateUniqueNationalID() (*string, error) {
 	flake := sonyflake.NewSonyflake(sonyflake.Settings{})
 	id, err := flake.NextID()
 	if err != nil {
-		log.Fatalf("flake.NextID() failed with %s\n", err)
+		log.Printf("flake.NextID() failed with %s\n", err)
 	}
 	nationalIdStr := strconv.FormatInt(int64(id), 16)
 

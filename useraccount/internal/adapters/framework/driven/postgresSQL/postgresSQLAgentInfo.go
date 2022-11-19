@@ -35,11 +35,11 @@ func (adapter AgentInfoAdapter) createDatabaseTable() error {
 
 	err := adapter.db.Migrator().CreateTable(&db.AgentInfoModel{})
 	if err != nil {
-		log.Fatalf("dbmapper createion failure: %v", err)
+		log.Printf("dbmapper createion failure: %v", err)
 	}
 	err = adapter.db.AutoMigrate(&db.AgentInfoModel{})
 	if err != nil {
-		log.Fatalf("Failed to Migrate table: %v", err)
+		log.Printf("Failed to Migrate table: %v", err)
 	}
 
 	return err
@@ -54,7 +54,7 @@ func (adapter AgentInfoAdapter) CloseDBConnection() {
 
 	err := db.Close()
 	if err != nil {
-		log.Fatalf("dbmapper close failure: %v", err)
+		log.Printf("dbmapper close failure: %v", err)
 	}
 }
 
@@ -62,19 +62,19 @@ func (adapter AgentInfoAdapter) SignUpAgent(agentSignUpInfo *db.AgentInfoModel) 
 	if !adapter.isDatabaseTableCreated() {
 		err := adapter.createDatabaseTable()
 		if err != nil {
-			log.Fatalf("Could not create the database %v", err)
+			log.Printf("Could not create the database %v", err)
 		}
 	}
 	err := adapter.db.AutoMigrate(&db.AgentInfoModel{})
 
 	if err != nil {
-		log.Fatalf("Could not migrate the database")
+		log.Printf("Could not migrate the database")
 	}
 
 	result := adapter.db.Create(agentSignUpInfo)
 
 	if result.Error != nil {
-		log.Fatalf("Failed to create the user. error %v", result.Error)
+		log.Printf("Failed to create the user. error %v", result.Error)
 	}
 
 	return result.Error
