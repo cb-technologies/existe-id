@@ -89,6 +89,18 @@ func biometricModelToProtoBiometric(biometricModel *db.BiometricModel) *pb.Biome
 	}
 }
 
+func protoSexToDBSex(sex *pb.Sex) *db.Sex {
+	return &db.Sex{
+		Sex: sex.Sex,
+	}
+}
+
+func sexToProtoSex(sex *db.Sex) *pb.Sex {
+	return &pb.Sex{
+		Sex: sex.Sex,
+	}
+}
+
 func ProtoDateOfBirthToDBDateOfBirth(dateofBirth *pb.DateOfBirth) *db.DateOfBirthModel {
 	return &db.DateOfBirthModel{
 		Day:   dateofBirth.Day,
@@ -128,6 +140,7 @@ func PersonInfoRequestToPersonInfoModel(personInfoModel *pb.PersonInfoRequest) *
 		Origins:     *protoOriginToDBOrigin(personInfoModel.Origins),
 		Phenotypes:  *protoPhenotypeToDBPhenotype(personInfoModel.Phenotypes),
 		DateOfBirth: *ProtoDateOfBirthToDBDateOfBirth(personInfoModel.DateOfBirth),
+		Sex:         *protoSexToDBSex(personInfoModel.Sex),
 	}
 }
 
@@ -153,5 +166,6 @@ func PersonInfoModelToPersonInfoResponse(personInfoModel *db.PersonInfoModel) *p
 		DateOfBirth:  dateOfBirthModelToProtoDateOfBirth(&personInfoModel.DateOfBirth),
 		CardValidity: cardValidityModelToProtoCardValidity(&personInfoModel.CardValidity),
 		Id:           nationaIDNumberModelToProtoNationalID(&personInfoModel.NationalID),
+		Sex:          sexToProtoSex(&personInfoModel.Sex),
 	}
 }

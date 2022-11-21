@@ -43,6 +43,10 @@ type DateOfBirthModel struct {
 	Year  string
 }
 
+type Sex struct {
+	Sex string
+}
+
 type CardValidityModel struct {
 	CardIssueDate      date.Date `gorm:"serializer:json"`
 	CardExpirationDate date.Date `gorm:"serializer:json"`
@@ -63,4 +67,5 @@ type PersonInfoModel struct {
 	DateOfBirth  DateOfBirthModel      `gorm:"serializer:json"` // TODO we have to change this into a more compact format. we can use the data type provided by go
 	CardValidity CardValidityModel     `gorm:"embedded"`
 	NationalID   NationalIDNumberModel `gorm:"embedded"`
+	Sex          Sex                   `gorm:"embedded"`
 }
