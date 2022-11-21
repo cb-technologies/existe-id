@@ -14,6 +14,10 @@ message Address {
   string reference = 8; // reference is optional. this is just to help with easier localisation
 }
 
+message Sex {
+  string sex = 1; // Homme/ Femme
+}
+
 message Names {
   string nom = 1;
   string prenom = 2;
@@ -67,6 +71,7 @@ message PersonInfoRequest {
   Origin origins = 4;
   Phenotype phenotypes = 5;
   DateOfBirth date_of_birth = 6;
+  Sex sex = 7;
 }
 
 message PersonInfoResponse {
@@ -78,6 +83,7 @@ message PersonInfoResponse {
   DateOfBirth date_of_birth = 6;
   CardValidity card_validity = 7;
   NationalIDNumber id = 8;
+  Sex sex = 9;
 }
 
 message EditPersonInfoParameters{
