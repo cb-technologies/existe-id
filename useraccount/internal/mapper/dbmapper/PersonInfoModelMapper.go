@@ -10,13 +10,14 @@ func protoAddressToDBAddress(address *pb.Address) *db.AddressModel {
 		return &db.AddressModel{}
 	}
 	return &db.AddressModel{
-		Number:    address.Number,
-		Avenue:    address.Avenue,
-		Quartier:  address.Quartier,
-		Commune:   address.Commune,
-		ZipCode:   address.ZipCode,
-		Ville:     address.Ville,
-		Reference: address.Reference,
+		Number:          address.Number,
+		Avenue:          address.Avenue,
+		Quartier:        address.Quartier,
+		Commune:         address.Commune,
+		ZipCode:         address.ZipCode,
+		Ville:           address.Ville,
+		Reference:       address.Reference,
+		ProvinceAddress: address.Province,
 	}
 }
 
@@ -32,6 +33,7 @@ func addressModelToProtoAddress(addressModel *db.AddressModel) *pb.Address {
 		ZipCode:   addressModel.ZipCode,
 		Ville:     addressModel.Ville,
 		Reference: addressModel.Reference,
+		Province:  addressModel.ProvinceAddress,
 	}
 }
 
