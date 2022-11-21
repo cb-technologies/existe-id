@@ -6,6 +6,9 @@ import (
 )
 
 func protoAddressToDBAddress(address *pb.Address) *db.AddressModel {
+	if address == nil {
+		return &db.AddressModel{}
+	}
 	return &db.AddressModel{
 		Number:    address.Number,
 		Avenue:    address.Avenue,
@@ -18,6 +21,9 @@ func protoAddressToDBAddress(address *pb.Address) *db.AddressModel {
 }
 
 func addressModelToProtoAddress(addressModel *db.AddressModel) *pb.Address {
+	if addressModel == nil {
+		return &pb.Address{}
+	}
 	return &pb.Address{
 		Number:    addressModel.Number,
 		Avenue:    addressModel.Avenue,
@@ -30,6 +36,9 @@ func addressModelToProtoAddress(addressModel *db.AddressModel) *pb.Address {
 }
 
 func ProtoNamesToDBNames(names *pb.Names) *db.NamesModel {
+	if names == nil {
+		return &db.NamesModel{}
+	}
 	return &db.NamesModel{
 		Nom:         names.Nom,
 		Prenom:      names.Prenom,
@@ -38,6 +47,9 @@ func ProtoNamesToDBNames(names *pb.Names) *db.NamesModel {
 }
 
 func namesModelToProtoNames(namesModel *db.NamesModel) *pb.Names {
+	if namesModel == nil {
+		return &pb.Names{}
+	}
 	return &pb.Names{
 		Nom:         namesModel.Nom,
 		Prenom:      namesModel.Prenom,
@@ -46,6 +58,9 @@ func namesModelToProtoNames(namesModel *db.NamesModel) *pb.Names {
 }
 
 func protoOriginToDBOrigin(origin *pb.Origin) *db.OriginModel {
+	if origin == nil {
+		return &db.OriginModel{}
+	}
 	return &db.OriginModel{
 		Province: origin.Province,
 		ChefLieu: origin.ChefLieu,
@@ -53,6 +68,9 @@ func protoOriginToDBOrigin(origin *pb.Origin) *db.OriginModel {
 }
 
 func originModelToProtoOrigin(originModel *db.OriginModel) *pb.Origin {
+	if originModel == nil {
+		return &pb.Origin{}
+	}
 	return &pb.Origin{
 		Province: originModel.Province,
 		ChefLieu: originModel.ChefLieu,
@@ -60,6 +78,9 @@ func originModelToProtoOrigin(originModel *db.OriginModel) *pb.Origin {
 }
 
 func protoPhenotypeToDBPhenotype(phenotype *pb.Phenotype) *db.PhenotypeModel {
+	if phenotype == nil {
+		return &db.PhenotypeModel{}
+	}
 	return &db.PhenotypeModel{
 		Height:   phenotype.Height,
 		Weight:   phenotype.Weight,
@@ -68,6 +89,9 @@ func protoPhenotypeToDBPhenotype(phenotype *pb.Phenotype) *db.PhenotypeModel {
 }
 
 func phenotypeModelToProtoPhenotype(phenotypeModel *db.PhenotypeModel) *pb.Phenotype {
+	if phenotypeModel == nil {
+		return &pb.Phenotype{}
+	}
 	return &pb.Phenotype{
 		Height:   phenotypeModel.Height,
 		Weight:   phenotypeModel.Weight,
@@ -76,6 +100,9 @@ func phenotypeModelToProtoPhenotype(phenotypeModel *db.PhenotypeModel) *pb.Pheno
 }
 
 func protoBiometricToDBBiometric(biometric *pb.Biometric) *db.BiometricModel {
+	if biometric == nil {
+		return &db.BiometricModel{}
+	}
 	return &db.BiometricModel{
 		Photos:      biometric.Photos,
 		FingerPrint: biometric.FingerPrint,
@@ -83,6 +110,9 @@ func protoBiometricToDBBiometric(biometric *pb.Biometric) *db.BiometricModel {
 }
 
 func biometricModelToProtoBiometric(biometricModel *db.BiometricModel) *pb.Biometric {
+	if biometricModel == nil {
+		return &pb.Biometric{}
+	}
 	return &pb.Biometric{
 		Photos:      biometricModel.Photos,
 		FingerPrint: biometricModel.FingerPrint,
@@ -90,18 +120,27 @@ func biometricModelToProtoBiometric(biometricModel *db.BiometricModel) *pb.Biome
 }
 
 func protoSexToDBSex(sex *pb.Sex) *db.Sex {
+	if sex == nil {
+		return &db.Sex{}
+	}
 	return &db.Sex{
 		Sex: sex.Sex.String(),
 	}
 }
 
 func sexModelToProtoSex(sexModel *db.Sex) *pb.Sex {
+	if sexModel == nil {
+		return &pb.Sex{}
+	}
 	return &pb.Sex{
 		Sex: pb.SexEnum(pb.SexEnum_value[sexModel.Sex]),
 	}
 }
 
 func ProtoDateOfBirthToDBDateOfBirth(dateofBirth *pb.DateOfBirth) *db.DateOfBirthModel {
+	if dateofBirth == nil {
+		return &db.DateOfBirthModel{}
+	}
 	return &db.DateOfBirthModel{
 		Day:   dateofBirth.Day,
 		Month: dateofBirth.Month,
@@ -110,6 +149,9 @@ func ProtoDateOfBirthToDBDateOfBirth(dateofBirth *pb.DateOfBirth) *db.DateOfBirt
 }
 
 func dateOfBirthModelToProtoDateOfBirth(dateOfBirthModel *db.DateOfBirthModel) *pb.DateOfBirth {
+	if dateOfBirthModel == nil {
+		return &pb.DateOfBirth{}
+	}
 	return &pb.DateOfBirth{
 		Day:   dateOfBirthModel.Day,
 		Month: dateOfBirthModel.Month,
@@ -118,6 +160,9 @@ func dateOfBirthModelToProtoDateOfBirth(dateOfBirthModel *db.DateOfBirthModel) *
 }
 
 func cardValidityModelToProtoCardValidity(cardValidityModel *db.CardValidityModel) *pb.CardValidity {
+	if cardValidityModel == nil {
+		return &pb.CardValidity{}
+	}
 	return &pb.CardValidity{
 		IssueDate: &pb.Date{
 			Year:  cardValidityModel.CardIssueDate.Year,
@@ -133,6 +178,9 @@ func cardValidityModelToProtoCardValidity(cardValidityModel *db.CardValidityMode
 }
 
 func PersonInfoRequestToPersonInfoModel(personInfoModel *pb.PersonInfoRequest) *db.PersonInfoModel {
+	if personInfoModel == nil {
+		return &db.PersonInfoModel{}
+	}
 	return &db.PersonInfoModel{
 		Names:       *ProtoNamesToDBNames(personInfoModel.Names),
 		Biometrics:  *protoBiometricToDBBiometric(personInfoModel.Biometrics),
@@ -145,18 +193,27 @@ func PersonInfoRequestToPersonInfoModel(personInfoModel *pb.PersonInfoRequest) *
 }
 
 func nationaIDNumberModelToProtoNationalID(nationalID *db.NationalIDNumberModel) *pb.NationalIDNumber {
+	if nationalID == nil {
+		return &pb.NationalIDNumber{}
+	}
 	return &pb.NationalIDNumber{
 		Id: nationalID.NationalID,
 	}
 }
 
 func ProtoNationalIDNumberToNationalIDNumberModel(nationalID *pb.NationalIDNumber) *db.NationalIDNumberModel {
+	if nationalID == nil {
+		return &db.NationalIDNumberModel{}
+	}
 	return &db.NationalIDNumberModel{
 		NationalID: nationalID.Id,
 	}
 }
 
 func PersonInfoModelToPersonInfoResponse(personInfoModel *db.PersonInfoModel) *pb.PersonInfoResponse {
+	if personInfoModel == nil {
+		return &pb.PersonInfoResponse{}
+	}
 	return &pb.PersonInfoResponse{
 		Names:        namesModelToProtoNames(&personInfoModel.Names),
 		Biometrics:   biometricModelToProtoBiometric(&personInfoModel.Biometrics),
