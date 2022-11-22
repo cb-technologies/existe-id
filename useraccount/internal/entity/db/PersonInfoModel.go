@@ -6,13 +6,14 @@ import (
 )
 
 type AddressModel struct {
-	Number    int32
-	Avenue    string
-	Quartier  string
-	Commune   string
-	ZipCode   string
-	Ville     string
-	Reference string
+	Number          int32
+	Avenue          string
+	Quartier        string
+	Commune         string
+	ZipCode         string
+	Ville           string
+	Reference       string
+	ProvinceAddress string
 }
 
 type NamesModel struct {
