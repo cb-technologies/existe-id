@@ -32,6 +32,7 @@ message Names {
 message Origin {
   repeated string province = 1; // could be from multiple provinces
   string chef_lieu = 2;
+  string lieu_de_naissance = 3;
 }
 
 message Phenotype {
