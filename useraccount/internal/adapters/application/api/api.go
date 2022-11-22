@@ -22,7 +22,7 @@ func NewAdapter(dbPersonInfo ports.PostgresSQLPersonInfoPort, dbAgentInfo ports.
 
 func (adapter Adapter) AddNewPerson(personInfo *pb.PersonInfoRequest) error {
 	personInfoModel := dbmapper.PersonInfoRequestToPersonInfoModel(personInfo)
-	personInfoModel.CardValidity = *adapter.core.GetCurrentDate()
+	personInfoModel.CardValidity = *adapter.core.GetCardValidity()
 
 	nationalId, _ := adapter.core.GenerateNationalID()
 	personInfoModel.NationalID = db.NationalIDNumberModel{NationalID: *nationalId}
