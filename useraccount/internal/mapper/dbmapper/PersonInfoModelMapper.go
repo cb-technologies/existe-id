@@ -91,13 +91,13 @@ func biometricModelToProtoBiometric(biometricModel *db.BiometricModel) *pb.Biome
 
 func protoSexToDBSex(sex *pb.Sex) *db.Sex {
 	return &db.Sex{
-		Sex: sex.Sex,
+		Sex: sex.Sex.String(),
 	}
 }
 
 func sexModelToProtoSex(sexModel *db.Sex) *pb.Sex {
 	return &pb.Sex{
-		Sex: sexModel.Sex,
+		Sex: pb.SexEnum(pb.SexEnum_value[sexModel.Sex]),
 	}
 }
 

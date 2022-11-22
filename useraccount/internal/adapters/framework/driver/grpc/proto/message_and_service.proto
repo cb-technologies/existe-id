@@ -15,8 +15,9 @@ message Address {
 }
 
 enum SexEnum {
-  HOMME = 0;
-  FEMME = 1;
+  UNKNOWN = 0;
+  HOMME = 1;
+  FEMME = 2;
 }
 message Sex {
   SexEnum sex = 1;
