@@ -64,8 +64,9 @@ func protoOriginToDBOrigin(origin *pb.Origin) *db.OriginModel {
 		return &db.OriginModel{}
 	}
 	return &db.OriginModel{
-		Province: origin.Province,
-		ChefLieu: origin.ChefLieu,
+		Province:        origin.Province,
+		ChefLieu:        origin.ChefLieu,
+		LieuDeNaissance: origin.LieuDeNaissance,
 	}
 }
 
@@ -74,8 +75,9 @@ func originModelToProtoOrigin(originModel *db.OriginModel) *pb.Origin {
 		return &pb.Origin{}
 	}
 	return &pb.Origin{
-		Province: originModel.Province,
-		ChefLieu: originModel.ChefLieu,
+		Province:        originModel.Province,
+		ChefLieu:        originModel.ChefLieu,
+		LieuDeNaissance: originModel.LieuDeNaissance,
 	}
 }
 

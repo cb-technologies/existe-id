@@ -23,8 +23,9 @@ type NamesModel struct {
 }
 
 type OriginModel struct {
-	Province []string `gorm:"serializer:json"`
-	ChefLieu string
+	Province        []string `gorm:"serializer:json"`
+	ChefLieu        string
+	LieuDeNaissance string
 }
 
 type PhenotypeModel struct {
