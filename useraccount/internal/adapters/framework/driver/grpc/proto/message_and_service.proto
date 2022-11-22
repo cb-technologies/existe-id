@@ -14,8 +14,12 @@ message Address {
   string reference = 8; // reference is optional. this is just to help with easier localisation
 }
 
+enum SexEnum {
+  HOMME = 0;
+  FEMME = 1;
+}
 message Sex {
-  string sex = 1; // Homme/ Femme
+  SexEnum sex = 1;
 }
 
 message Names {

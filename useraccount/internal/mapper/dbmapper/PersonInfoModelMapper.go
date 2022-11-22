@@ -95,9 +95,9 @@ func protoSexToDBSex(sex *pb.Sex) *db.Sex {
 	}
 }
 
-func sexToProtoSex(sex *db.Sex) *pb.Sex {
+func sexModelToProtoSex(sexModel *db.Sex) *pb.Sex {
 	return &pb.Sex{
-		Sex: sex.Sex,
+		Sex: sexModel.Sex,
 	}
 }
 
@@ -166,6 +166,6 @@ func PersonInfoModelToPersonInfoResponse(personInfoModel *db.PersonInfoModel) *p
 		DateOfBirth:  dateOfBirthModelToProtoDateOfBirth(&personInfoModel.DateOfBirth),
 		CardValidity: cardValidityModelToProtoCardValidity(&personInfoModel.CardValidity),
 		Id:           nationaIDNumberModelToProtoNationalID(&personInfoModel.NationalID),
-		Sex:          sexToProtoSex(&personInfoModel.Sex),
+		Sex:          sexModelToProtoSex(&personInfoModel.Sex),
 	}
 }
