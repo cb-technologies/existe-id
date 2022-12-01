@@ -37,6 +37,7 @@ type PhenotypeModel struct {
 type BiometricModel struct {
 	Photos      []byte `gorm:"serializer:json"`
 	FingerPrint []byte `gorm:"serializer:json"`
+	PhotoType   string
 }
 
 type DateOfBirthModel struct {

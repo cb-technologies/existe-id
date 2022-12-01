@@ -46,6 +46,7 @@ message Phenotype {
 message Biometric {
   bytes photos = 1;
   bytes finger_print = 2;
+  string photo_type = 3;
 }
 
 message DateOfBirth {

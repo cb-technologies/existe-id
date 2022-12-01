@@ -110,6 +110,7 @@ func protoBiometricToDBBiometric(biometric *pb.Biometric) *db.BiometricModel {
 	return &db.BiometricModel{
 		Photos:      biometric.Photos,
 		FingerPrint: biometric.FingerPrint,
+		PhotoType:   biometric.PhotoType,
 	}
 }
 
@@ -120,6 +121,7 @@ func biometricModelToProtoBiometric(biometricModel *db.BiometricModel) *pb.Biome
 	return &pb.Biometric{
 		Photos:      biometricModel.Photos,
 		FingerPrint: biometricModel.FingerPrint,
+		PhotoType:   biometricModel.PhotoType,
 	}
 }
 
