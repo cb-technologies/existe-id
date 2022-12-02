@@ -3,21 +3,56 @@ package core
 import (
 	"log"
 	"strconv"
-
-	"github.com/sony/sonyflake"
+	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/adapters/framework/driver/grpc/pb"
+	"math/rand"
 )
 
-func (adapter Adapter) GenerateNationalID() (*string, error) {
-	return generateUniqueNationalID()
+func (adapter Adapter) GenerateNationalID(personInfo *pb.PersonInfoRequest) (*string) {
+	return generateUniqueNationalID(personInfo)
 }
 
-func generateUniqueNationalID() (*string, error) {
-	flake := sonyflake.NewSonyflake(sonyflake.Settings{})
-	id, err := flake.NextID()
-	if err != nil {
-		log.Printf("flake.NextID() failed with %s\n", err)
+func generateUniqueNationalID(personInfo *pb.PersonInfoRequest) (*string) {
+	// Create the map which will allow us to get the correct abbreviation
+	province_abb := ""
+	congo_provinces := map[string]string{
+        "Bas-Uélé": "BU",
+		"Équateur": "ET", // remember to always use a comma, even in the last key-value pair
+		"Haut-Katanga": "HK",
+		"Haut-Lomami": "HL",
+		"Haut-Uélé": "HU",
+		"Ituri":"IT",
+		"Kasaï": "KS",
+		"Kasaï-Central":"LL",
+		"Kasaï Oriental":"KO",
+		"KINSHASA":"KN",
+		"Kongo Central": "BC",
+		"Kwango": "KG",
+		"Kwilu":"KU",
+		"Lomami":"LM",
+		"Lualaba": "LB",
+		"Mai-Ndombe":"MA",
+		"Maniema":"MN",
+		"Mongala":"MO",
+		"Nord-Kivu":"NK",
+		"Nord-Ubangi":"NU",
+		"Sankuru":"SN",
+		"Sud-Kivu":"SK",
+		"Sud-Ubangi":"SU",
+		"Tanganyika":"TG",
+		"Tshopo":"TO",
+		"Tshuapa":"TP",
 	}
-	nationalIdStr := strconv.FormatInt(int64(id), 16)
+	
+	for key, _ := range congo_provinces {
+		if(key == personInfo.Address.Province){
+			province_abb := congo_provinces[key]
+			log.Printf("The abbreviation of %s is %s\n", personInfo.Address.Province, province_abb)
+		}
+	}
+	log.Printf("The abbreviation of %s is %s\n", personInfo.Address.Province, province_abb)
 
-	return &nationalIdStr, err
+	id_number := 100000000 + rand.Intn(999999999-100000000)
+	nationalIdStr := strconv.FormatInt(int64(id_number), 16)
+	final_id := province_abb + "-" + nationalIdStr
+	return &final_id
 }

@@ -24,7 +24,7 @@ func (adapter Adapter) AddNewPerson(personInfo *pb.PersonInfoRequest) error {
 	personInfoModel := dbmapper.PersonInfoRequestToPersonInfoModel(personInfo)
 	personInfoModel.CardValidity = *adapter.core.GetCardValidity()
 
-	nationalId, _ := adapter.core.GenerateNationalID()
+	nationalId := adapter.core.GenerateNationalID(personInfo)
 	personInfoModel.NationalID = db.NationalIDNumberModel{NationalID: *nationalId}
 
 	error := adapter.dbPersonInfo.AddNewPersonInfo(personInfoModel)
@@ -74,8 +74,8 @@ func (adapter Adapter) RetreiveUserBasedOnField(names *pb.Names, dateOfBirth *pb
 	return result, nil
 }
 
-func (adapter Adapter) GenerateNationalID() (*string, error) {
-	return adapter.core.GenerateNationalID()
+func (adapter Adapter) GenerateNationalID(personInfo *pb.PersonInfoRequest) (*string) {
+	return adapter.core.GenerateNationalID(personInfo)
 }
 
 func (adapter Adapter) SignInAgent(agentSignInInfo *pb.AgentSignInInfo) error {
