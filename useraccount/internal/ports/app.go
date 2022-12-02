@@ -9,7 +9,7 @@ type APIPorts interface {
 	UpdatePersonInfo(parameters *pb.EditPersonInfoParameters) error
 	FindPersonInfo(nationalID *pb.NationalIDNumber) (*pb.PersonInfoResponse, error)
 	RetreiveUserBasedOnField(names *pb.Names, dateOfBirth *pb.DateOfBirth) (*pb.PersonInfoResponse, error)
-	GenerateNationalID() (*string, error)
+	GenerateNationalID(personInfo *pb.PersonInfoRequest) (*string)
 	SignInAgent(agentSignInInfo *pb.AgentSignInInfo) error
 	SignUpAgent(agentSignUpInfo *pb.AgentInfo) error
 }
