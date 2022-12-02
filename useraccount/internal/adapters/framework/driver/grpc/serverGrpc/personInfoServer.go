@@ -3,7 +3,6 @@ package serverGrpc
 import (
 	"context"
 	"log"
-
 	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/adapters/framework/driver/grpc/pb"
 	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/constants/serviceresponse"
 )
@@ -40,9 +39,9 @@ func (adapter Adapter) FindPersonInfo(ctx context.Context, req *pb.NationalIDNum
 }
 
 func (adapter Adapter) RetreiveUserBasedOnField(ctx context.Context, req *pb.RetreivePersonInfoParameters) (*pb.PersonInfoResponse, error) {
-
+	
 	personInfo, err := adapter.api.RetreiveUserBasedOnField(req.Names, req.DateOfBirth)
-
+	
 	if err != nil {
 		log.Fatal("Could not Find personInfo")
 		return &pb.PersonInfoResponse{}, err
