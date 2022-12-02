@@ -9,6 +9,7 @@ const (
 	dbName     = "existdb"
 	region     = "us-east-1"
 	dbPassword = "existnaruto3"
+
 )
 
 func makeDSN() string {

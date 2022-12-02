@@ -8,7 +8,7 @@ import (
 
 func (adapter Adapter) GetCardValidity() *db.CardValidityModel {
 	return &db.CardValidityModel{
-		CardExpirationDate: date.Date{Day: int32(golangDate.Today().Day()), Month: int32(golangDate.Today().Month()), Year: int32(golangDate.Today().Year() + 5)},
+		CardExpirationDate: date.Date{Day: int32(golangDate.Today().Day()), Month: int32(golangDate.Today().Month()), Year: int32(golangDate.Today().Year() + 3)},
 		CardIssueDate:      date.Date{Day: int32(golangDate.Today().Day()), Month: int32(golangDate.Today().Month()), Year: int32(golangDate.Today().Year())},
 	}
 }
