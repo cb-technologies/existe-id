@@ -9,6 +9,7 @@ type AgentInfoModel struct {
 	Prenom   string `gorm:"not null"`
 	Email    string `gorm:"uniqueIndex;not null"` // will make this unique and create an index on this field in the db
 	Password string `gorm:"not null"`
+	Role     string `gorm:"not null"`
 }
 
 type AgentSignInModel struct {

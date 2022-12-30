@@ -33,5 +33,6 @@ func ProtoAgentInfoToAgentInfoModel(agentInfo *pb.AgentInfo) *db.AgentInfoModel 
 		Prenom:   agentInfo.Prenom,
 		Email:    agentInfo.Email,
 		Password: hashedPassword,
+		Role:     agentInfo.Role,
 	}
 }

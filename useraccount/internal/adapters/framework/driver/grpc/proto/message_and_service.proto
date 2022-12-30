@@ -123,6 +123,7 @@ message AgentInfo {
   string prenom = 2;
   string email = 3;
   string password = 4;
+  string Role = 5;
 }
 
 message AgentSignInInfo {
