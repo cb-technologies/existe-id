@@ -8,7 +8,7 @@ const (
 	dbHost     = "exist-identifier.cprbzqerfjiq.us-east-1.rds.amazonaws.com"
 	dbName     = "existdb"
 	region     = "us-east-1"
-	dbPassword = "existnaruto4"
+	dbPassword = "existnaruto5"
 )
 
 func makeDSN() string {
