@@ -57,7 +57,7 @@ func main() {
 
 	httpServerExist := &http.Server{
 		Handler: grpcWebServer,
-		Addr:    "localhost:4551",
+		Addr:    "localhost:4500",
 	}
 
 	log.Printf("Http server listening at %v", httpServerExist.Addr)
