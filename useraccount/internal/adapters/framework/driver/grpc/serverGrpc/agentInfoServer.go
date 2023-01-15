@@ -18,6 +18,8 @@ func (adapter Adapter) SignInAgent(ctx context.Context, agentSignInInfo *pb.Agen
 }
 
 func (adapter Adapter) SignUpAgent(ctx context.Context, agentInfo *pb.AgentInfo) (*pb.Response, error) {
+	print("Backend ")
+	print(agentInfo.Role)
 	err := adapter.api.SignUpAgent(agentInfo)
 
 	if err != nil {
