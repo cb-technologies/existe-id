@@ -15,7 +15,7 @@ jobs:
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.EC2_USER }}
-          key: ${{ secrets.ACCESS_KEY_EC2 }}
+          key: ${{ secrets.KEY }}
           script: |
             cd /home/ec2-user/server/existe-id/
             git pull
