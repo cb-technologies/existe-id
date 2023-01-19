@@ -16,21 +16,19 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-    - name: Configure Exist AWS credentials
-      id: configure-aws-credentials
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        role-to-assume: arn:aws:iam::456807214525:role/github-exist-server-redeploy-iam
-        role-session-name: examplesessionname
-        aws-region: us-east-1
     - name: Updating the server Code and Redeploying
-      run: |
-        ssh ec2-user@ec2-18-205-154-46.compute-1.amazonaws.com
-        cd /home/ec2-user/server/existe-id/
-        git pull
-        cd /home/ec2-user/server/existe-id/useraccount/cmd/
-        go build main.go -o existserverbinary
-        sudo systemctl daemon-reload
-        sudo systemctl restart exist_id.service
-    
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.EC2_USER }}
+        key: ${{ secrets.ACCESS_KEY_EC2 }}
+        script: |
+          ssh ec2-user@ec2-18-205-154-46.compute-1.amazonaws.com
+          cd /home/ec2-user/server/existe-id/
+          git pull
+          cd /home/ec2-user/server/existe-id/useraccount/cmd/
+          go build main.go -o existserverbinary
+          sudo systemctl daemon-reload
+          sudo systemctl restart exist_id.service
+
           
