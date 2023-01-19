@@ -9,15 +9,19 @@ on:
     branches:
       - main
       
+permissions:
+  id-token: write
+      
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
     - name: Configure Exist AWS credentials
       id: configure-aws-credentials
-      uses: aws-actions/configure-aws-credentials@v2
+      uses: aws-actions/configure-aws-credentials@v1
       with:
-        role-arn: arn:aws:iam::456807214525:role/github-exist-server-redeploy-iam
+        role-to-assume: arn:aws:iam::456807214525:role/github-action-role
+        role-session-name: examplesessionname
         aws-region: us-east-1
     - name: Updating the server Code and Redeploying
       run: |
