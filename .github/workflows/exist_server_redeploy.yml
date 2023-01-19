@@ -2,31 +2,24 @@ name: exist_server_redeploy
 
 on:
   push:
-    branches:
-      - main
+    branches: [ "main" ]
   pull_request:
-    types: [closed]
-    branches:
-      - main
-      
+    branches: [ "main" ]
 jobs:
-  deploy:
+  build:
+    name: Build
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Updating the server Code and Redeploying
-      env:
-        PRIVATE_KEY: ${{ secrets.ACCESS_KEY_EC2 }}
-        HOSTNAME: ${{ secrets.HOST }}
-        USER_NAME: ${{ secrets.EC2_USER }}
-      
-      run: |
-        echo "$PRIVATE_KEY" > private_key && chmod 600 private_key && ssh -i private_key ${USER_NAME}@${HOSTNAME}
-        cd /home/ec2-user/server/existe-id/
-        git pull
-        cd /home/ec2-user/server/existe-id/useraccount/cmd/
-        go build main.go -o existserverbinary
-        sudo systemctl daemon-reload
-        sudo systemctl restart exist_id.service
-          
-          
+      - name: Redeploy Exist Server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.ACCESS_KEY_EC2 }}
+          script: |
+            cd /home/ec2-user/server/existe-id/
+            git pull
+            cd /home/ec2-user/server/existe-id/useraccount/cmd/
+            go build main.go -o existserverbinary
+            sudo systemctl daemon-reload
+            sudo systemctl restart exist_id.service
