@@ -42,8 +42,10 @@ For Service
 protoc --go-grpc_out=internal/adapters/framework/driver/grpc --proto_path=internal/adapters/framework/driver/grpc/proto internal/adapters/framework/driver/grpc/proto/message_and_service.proto
 ```
 
-
-
 # Issues
 
 - FindPerson is shutting down the server when the wrong ID is given to it
+
+# Just some Notes
+
+Merci Patrick
