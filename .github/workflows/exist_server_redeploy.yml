@@ -20,7 +20,7 @@ jobs:
       id: configure-aws-credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
-        role-to-assume: arn:aws:iam::456807214525:role/github-action-role
+        role-to-assume: arn:aws:iam::456807214525:role/github-exist-server-redeploy-iam
         role-session-name: examplesessionname
         aws-region: us-east-1
     - name: Updating the server Code and Redeploying
