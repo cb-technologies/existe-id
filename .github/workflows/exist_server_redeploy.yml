@@ -18,6 +18,7 @@ jobs:
       uses: aws-actions/configure-aws-credentials@v1
       with:
         role-arn: arn:aws:iam::456807214525:role/github-exist-server-redeploy-iam
+        aws-region: us-east-1
     - name: Updating the server Code and Redeploying
       run: |
         cd /home/ec2-user/server/existe-id/
