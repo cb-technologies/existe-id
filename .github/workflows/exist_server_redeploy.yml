@@ -29,6 +29,6 @@ jobs:
         go build main.go -o existserverbinary
         sudo systemctl daemon-reload
         sudo systemctl restart exist_id.service
-
+        '
           
           
