@@ -25,6 +25,7 @@ jobs:
         aws-region: us-east-1
     - name: Updating the server Code and Redeploying
       run: |
+        ssh ec2-user@ec2-18-205-154-46.compute-1.amazonaws.com
         cd /home/ec2-user/server/existe-id/
         git pull
         cd /home/ec2-user/server/existe-id/useraccount/cmd/
