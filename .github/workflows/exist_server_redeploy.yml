@@ -15,7 +15,7 @@ jobs:
     steps:
     - name: Configure Exist AWS credentials
       id: configure-aws-credentials
-      uses: aws-actions/configure-aws-credentials@v1
+      uses: aws-actions/configure-aws-credentials@v2
       with:
         role-arn: arn:aws:iam::456807214525:role/github-exist-server-redeploy-iam
         aws-region: us-east-1
