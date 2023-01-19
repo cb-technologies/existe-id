@@ -1,0 +1,28 @@
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    types: [closed]
+    branches:
+      - master
+      
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Configure Exist AWS credentials
+      id: configure-aws-credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        role-arn: arn:aws:iam::456807214525:role/github-exist-server-redeploy-iam
+    - name: Updating the server Code and Redeploying
+      run: |
+        cd /home/ec2-user/server/existe-id/
+        git pull
+        cd /home/ec2-user/server/existe-id/useraccount/cmd/
+        go build main.go -o existserverbinary
+        sudo systemctl daemon-reload
+        sudo systemctl restart exist_id.service
+    
+          
