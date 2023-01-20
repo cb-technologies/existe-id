@@ -14,34 +14,7 @@ jobs:
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
-          key: | 
-          -----BEGIN RSA PRIVATE KEY-----
-MIIEogIBAAKCAQEAgK3zPJXHq5xorXuUITY6j7+ZUJE/ed/sN5Z7HBwMb9ppdH8v
-Df5rtUMsKjv1bV+BPRpqRWRpKlHML4qhyVoiLR0Ui5Yz/M8b7Y22es8Tr0fowxmf
-Z82XTm8p8ashVNfaw0rCeEhdzHFPNflv1KBc3VrzhWeHB6m0eQxuRlWNh6cwdTSy
-J2ZYnkiLJw0eckXQ8hP7vKrakScXCNsg97gUs0eRi+omIah6GlPTphfplp/nDwPa
-Mg+svbsk4BNd94SSt9puJ/JQk+07wgoCCDLlatYaKCIKvwhSdXsFU2qEYc/ZKVB7
-8G0J2Ou9x24oqrmMyoXZD86C4wlOK11ZFPpH0QIDAQABAoIBAA3wScfHRbCuKZyZ
-JUuPrzpA+9+BTEnsWo8O6tj5pNM86m1nFXbDl3E0DIWqpwQo8zvmL5rCrK2b3K1N
-rAa+j7MpUj9ojssUuCa8UgbthWlYNbtkfCLnXztsyTNXYS3qj9TVtUkINbjekUD8
-ewOiN0z2/Cf4NeU7mcP+97cAr2sBJlcZ4IHm/zD3u54yMVa7E6wxI6CrVhgH57nq
-qH2eG6KqXrKYmICCsUNnoRegoxLCT4q2NPZiGGoeucPDjAgfhBk3jmme56IDOLBz
-lGU5vp49vrUc2Flg6mG+Kl2qWCuPN8xyb5evgOutOZWqqdf5Q17R3Z48OpNpQrW9
-bZ1KRP0CgYEA1zSMgdGUAsrc1ep+pAOo9LP/yYoJdJI/LT+8km9rF7s5HgxtvhBC
-stYPoPcbpzvSybhXnTAAuIcF0xiZ5hmOBTgys58Y67JtdTk3Iw7SVA1a1FPgdRQk
-3JrPvJrdVDztMSU+XOlV1+fT2yVXqKjI92DIJpKogunvFPFQDTKB2BsCgYEAmRJ9
-lA2SigtIWL3X877Vm0AIclJm4RieI+xNK2O/ufmbXbfW4Y4XR+Tsg8bCdqpf+14u
-wZ7jLsUJopx6YIwVfEVbOD0AJqRO4xIiyeKeDuU9W29fWs6m4sWgIx1s/bvTEJso
-3+E4/7Ojr5wzcF640f5E+97Fr8kTFDpMpMAJNoMCgYAbz1Gc8Q1UcwyopB3ragGq
-ZZxXWfww0TlSypq+vaE0NuCBro978TP9UkZAwc4UBVoO8UB5MpvVPLWW+uXgY0sE
-B6gdqCCbTLpyXItwf1jUvckQCSrHVmwRCfxwXf7eBOWN5Ucy0IBkXzP0bNXwGKen
-uB0FRwx5pmtb5Hc4zV8UIwKBgCdmeAZ02+RGdS/KZdyqoUbd2465oRuNf58VguOJ
-QF95XUFpQZk7PsjVpv9gWMu8nQoRuw1BfY6bTxiZGHLje+BJ5en64aAQqPGPyH6Y
-o0CIRxvS9gNkr9YtMkP3ngdNok1i8sl1qns+3QIlvaPN7dq3jUAbnlzZ79xECVha
-ycRLAoGAZBNuqkdT4xD3sJlrRrFgz7Mx+821RZg/CqhIqhYx4wUaTF9bDztdpCo8
-CpZ7Bfs2sL+3pe6CxG5uBYWu1TTdVlm98VKczD0yXntUVqWny6plc5kqEyTfxgOT
-WitfZ6L1BPB2GntbQIlOkpTmglZmLoy9Gm9rsXQmRSRStrOA190=
------END RSA PRIVATE KEY-----
+          key: ${{ secrets.SSH_KEY }}
           script: |
             cd /home/ec2-user/server/existe-id/
             git pull
