@@ -1,13 +1,12 @@
 package postgresSQL
 
 import (
-    "database/sql"
     "github.com/aws/aws-sdk-go/aws"
     "github.com/aws/aws-sdk-go/aws/credentials"
     "github.com/aws/aws-sdk-go/aws/session"
     "github.com/aws/aws-sdk-go/service/secretsmanager"
-    "github.com/lib/pq"
     "os"
+    "encoding/json"
  "fmt"
 )
 
@@ -27,20 +26,31 @@ func makeDSN() string {
     secretKey := os.Getenv("AWS_SECRET_KEY")
 
     // Then we create a new AWS session
-    sess := session.Must(session.NewSession(&aws.Config{
-        Region:      aws.String("us-west-2"),
+    //sess, err := session.Must(session.NewSession(&aws.Config{
+      //  Region:      aws.String("us-east-1"),
+        //Credentials: credentials.NewStaticCredentials(accessKey, secretKey, ""),
+    //}))
+    sess, err := session.NewSession(&aws.Config{
+        Region:      aws.String("us-east-1"),
         Credentials: credentials.NewStaticCredentials(accessKey, secretKey, ""),
-    }))
+    })
 
-    / Then we create a new Secrets Manager client
+
+    if err != nil {
+    fmt.Println("Error creating session: ", err)
+} else {
+    fmt.Println("Session created successfully")
+}
+
+    // Then we create a new Secrets Manager client
     client := secretsmanager.New(sess)
 
     // Use the client to retrieve the secret value
     result, err := client.GetSecretValue(&secretsmanager.GetSecretValueInput{
-        SecretId: aws.String("my-secret"),
+        SecretId: aws.String("arn:aws:secretsmanager:us-east-1:456807214525:secret:rds!cluster-efc93003-9c72-432e-8b3c-613bf8a1e11c-8trB0Q"),
     })
     if err != nil {
-        fmt.Println(err)
+        fmt.Println("here is the error",err)
     }
 
     // Now we have to parse the secret value as JSON to get the database credentials
