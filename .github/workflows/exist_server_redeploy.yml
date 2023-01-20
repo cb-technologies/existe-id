@@ -6,17 +6,15 @@ on:
   pull_request:
     branches: [ "main" ]
 jobs:
-  build:
-    name: Build
+  deploy-to-server:
     runs-on: ubuntu-latest
-    environment: main
     steps:
       - name: Redeploy Exist Server
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.HOST }}
+          host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
-          key: ${{ secrets.KEY }}
+          key: ${{ secrets.SSH_KEY }}
           script: |
             cd /home/ec2-user/server/existe-id/
             git pull
