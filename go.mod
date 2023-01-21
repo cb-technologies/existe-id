@@ -3,10 +3,13 @@ module github.com/cb-technologies/existe-id/useraccount
 go 1.18
 
 require (
+	github.com/aws/aws-sdk-go v1.44.10
+	github.com/aws/aws-sdk-go-v2 v1.17.3
+	github.com/aws/aws-sdk-go-v2/config v1.18.8
+	github.com/aws/aws-sdk-go-v2/service/secretsmanager v1.18.1
 	github.com/improbable-eng/grpc-web v0.15.0
 	github.com/lib/pq v1.10.7
 	github.com/rickb777/date v1.20.1
-	github.com/sony/sonyflake v1.1.0
 	golang.org/x/crypto v0.0.0-20220924013350-4ba4fb4dd9e7
 	google.golang.org/genproto v0.0.0-20220923205249-dd2d53f1fffc
 	google.golang.org/grpc v1.49.0
@@ -16,6 +19,16 @@ require (
 )
 
 require (
+	github.com/aws/aws-sdk-go-v2/credentials v1.13.8 // indirect
+	github.com/aws/aws-sdk-go-v2/feature/ec2/imds v1.12.21 // indirect
+	github.com/aws/aws-sdk-go-v2/internal/configsources v1.1.27 // indirect
+	github.com/aws/aws-sdk-go-v2/internal/endpoints/v2 v2.4.21 // indirect
+	github.com/aws/aws-sdk-go-v2/internal/ini v1.3.28 // indirect
+	github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.9.21 // indirect
+	github.com/aws/aws-sdk-go-v2/service/sso v1.12.0 // indirect
+	github.com/aws/aws-sdk-go-v2/service/ssooidc v1.14.0 // indirect
+	github.com/aws/aws-sdk-go-v2/service/sts v1.18.0 // indirect
+	github.com/aws/smithy-go v1.13.5 // indirect
 	github.com/cenkalti/backoff/v4 v4.1.1 // indirect
 	github.com/desertbit/timer v0.0.0-20180107155436-c41aec40b27f // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
@@ -29,6 +42,7 @@ require (
 	github.com/jackc/pgx/v4 v4.17.2 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
+	github.com/jmespath/go-jmespath v0.4.0 // indirect
 	github.com/klauspost/compress v1.11.7 // indirect
 	github.com/rickb777/plural v1.4.1 // indirect
 	github.com/rs/cors v1.7.0 // indirect
