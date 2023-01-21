@@ -3,6 +3,7 @@ module github.com/cb-technologies/existe-id/useraccount
 go 1.18
 
 require (
+	github.com/aws/aws-sdk-go v1.27.0
 	github.com/improbable-eng/grpc-web v0.15.0
 	github.com/lib/pq v1.10.7
 	github.com/rickb777/date v1.20.1
@@ -29,6 +30,7 @@ require (
 	github.com/jackc/pgx/v4 v4.17.2 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
+	github.com/jmespath/go-jmespath v0.0.0-20180206201540-c2b33e8439af // indirect
 	github.com/klauspost/compress v1.11.7 // indirect
 	github.com/rickb777/plural v1.4.1 // indirect
 	github.com/rs/cors v1.7.0 // indirect
