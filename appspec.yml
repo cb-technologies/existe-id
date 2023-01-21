@@ -1,0 +1,19 @@
+version:0.0
+os: linux
+files:
+  - source: /
+    destination: /home/ec2-user/exist_id_server
+hook:
+  ApplicationStop:
+    - location: scripts/application_stop.sh
+      timeout: 300
+      runas: ec2-user
+  BeforeInstall:
+    - location: scripts/application_before.sh
+      timeout: 300
+      runas: 300
+  AfterInstall:
+    - location: scripts/application_start.sh
+      timeout: 300
+      runas: ec2-user
+  
