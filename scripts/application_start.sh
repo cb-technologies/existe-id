@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Giving permission to the file inside /home/ec2-user/existe_id_server
-sudo chmod 777 /home/ec2-user/existe_id_server
-
 #start our app in the background
-sudo systemctl restart existe_id.service
+go build -o /home/ec2-user/exist_id_server/useraccount/cmd/existserver /home/ec2-user/exist_id_server/useraccount/cmd/main.go
+
+#Running the server
+sudo nohup /home/ec2-user/exist_id_server/useraccount/cmd/existserver >> /home/ec2-user/exist_id_server/useraccount/existserver.log 2>&1 &
