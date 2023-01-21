@@ -12,12 +12,10 @@ import (
 )
 
 const (
-	dbPort     = 5432
-	dbUser     = "postgres"
-	dbHost     = "exist-identifier.cprbzqerfjiq.us-east-1.rds.amazonaws.com"
-	dbName     = "existdb"
-	region     = "us-east-1"
-	dbPassword = "existnaruto5"
+	dbPort = 5432
+	dbHost = "exist-identifier.cprbzqerfjiq.us-east-1.rds.amazonaws.com"
+	dbName = "existdb"
+	region = "us-east-1"
 )
 
 func makeDSN() string {
