@@ -67,6 +67,7 @@ func makeDSN() string {
     // Use the credentials to connect to the database
 
 	return fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s",
-		secret.Host, secret.Port, secret.User, secret.Password, secret.Database,
+		dbHost, dbPort, secret.User, secret.Password, dbName,
 	)
+
 }
