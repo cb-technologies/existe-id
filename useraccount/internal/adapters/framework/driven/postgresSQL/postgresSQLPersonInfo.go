@@ -2,6 +2,7 @@ package postgresSQL
 
 import (
 	"database/sql"
+	"fmt"
 	"log"
 
 	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/entity/db"
@@ -21,6 +22,7 @@ func NewPersonInfoAdapter() (*PersonInfoAdapter, error) {
 	if err != nil {
 		panic(err)
 	}
+	fmt.Println(postgresdb)
 
 	err = postgresdb.Ping()
 	if err != nil {
