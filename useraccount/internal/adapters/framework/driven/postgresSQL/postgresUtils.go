@@ -9,6 +9,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/secretsmanager"
+	"os"
 )
 
 const (
@@ -40,10 +41,14 @@ type postgresCredentials struct {
 func getCredentials(secretName string) (postgresCredentials, error) {
 	var creds postgresCredentials
 
+    accessKey := os.Getenv("AWS_ACCESS_KEY")
+    secretKey := os.Getenv("AWS_SECRET_KEY")
+
 	// Create a new session
 	sess, err := session.NewSession(&aws.Config{
 		Region:      aws.String(region),
-		Credentials: credentials.NewStaticCredentials("AKIAWUW6U5W6Q6G2BUGV", "WXVwLgRGs2QAzrQch2gKjRTJ3NSPrHA7w+sVU24J", ""),
+		//Credentials: credentials.NewStaticCredentials("AKIAWUW6U5W6Q6G2BUGV", "WXVwLgRGs2QAzrQch2gKjRTJ3NSPrHA7w+sVU24J", ""),
+		Credentials: credentials.NewStaticCredentials(accessKey, secretKey, ""),
 	})
 	if err != nil {
 		return creds, fmt.Errorf("Error creating session: %v", err)
