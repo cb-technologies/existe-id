@@ -60,6 +60,10 @@ message NationalIDNumber {
   string id = 1;
 }
 
+message QRCode {
+  string qrcode = 1;
+}
+
 message Date {
   int32 year = 1;
   int32 month = 2;
@@ -79,6 +83,7 @@ message PersonInfoRequest {
   Phenotype phenotypes = 5;
   DateOfBirth date_of_birth = 6;
   Sex sex = 7;
+  QRCode qrcode = 8;
 }
 
 message PersonInfoResponse {
@@ -91,6 +96,7 @@ message PersonInfoResponse {
   CardValidity card_validity = 7;
   NationalIDNumber id = 8;
   Sex sex = 9;
+  QRCode qrcode = 10;
 }
 
 message EditPersonInfoParameters{

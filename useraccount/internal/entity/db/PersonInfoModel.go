@@ -59,6 +59,10 @@ type NationalIDNumberModel struct {
 	NationalID string
 }
 
+type QRCodeModel struct {
+	QRCode string
+}
+
 type PersonInfoModel struct {
 	gorm.Model
 
@@ -71,4 +75,5 @@ type PersonInfoModel struct {
 	CardValidity CardValidityModel     `gorm:"embedded"`
 	NationalID   NationalIDNumberModel `gorm:"embedded"`
 	Sex          Sex                   `gorm:"embedded"`
+	QRCode       QRCodeModel           `gorm:"embedded"`
 }
