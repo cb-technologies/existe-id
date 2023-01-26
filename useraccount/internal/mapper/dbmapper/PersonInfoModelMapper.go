@@ -183,6 +183,24 @@ func cardValidityModelToProtoCardValidity(cardValidityModel *db.CardValidityMode
 	}
 }
 
+func protoQRCodeToQRCodeModel(qrcode *pb.QRCode) *db.QRCodeModel {
+	if qrcode == nil {
+		return &db.QRCodeModel{}
+	}
+	return &db.QRCodeModel{
+		QRCode: qrcode.Qrcode,
+	}
+}
+
+func QRCodeModelToProtoQRCode(qrcode *db.QRCodeModel) *pb.QRCode {
+	if qrcode == nil {
+		return &pb.QRCode{}
+	}
+	return &pb.QRCode{
+		Qrcode: qrcode.QRCode,
+	}
+}
+
 func PersonInfoRequestToPersonInfoModel(personInfoModel *pb.PersonInfoRequest) *db.PersonInfoModel {
 	if personInfoModel == nil {
 		return &db.PersonInfoModel{}
@@ -195,6 +213,7 @@ func PersonInfoRequestToPersonInfoModel(personInfoModel *pb.PersonInfoRequest) *
 		Phenotypes:  *protoPhenotypeToDBPhenotype(personInfoModel.Phenotypes),
 		DateOfBirth: *ProtoDateOfBirthToDBDateOfBirth(personInfoModel.DateOfBirth),
 		Sex:         *protoSexToDBSex(personInfoModel.Sex),
+		QRCode:      *protoQRCodeToQRCodeModel(personInfoModel.Qrcode),
 	}
 }
 
@@ -230,5 +249,6 @@ func PersonInfoModelToPersonInfoResponse(personInfoModel *db.PersonInfoModel) *p
 		CardValidity: cardValidityModelToProtoCardValidity(&personInfoModel.CardValidity),
 		Id:           nationaIDNumberModelToProtoNationalID(&personInfoModel.NationalID),
 		Sex:          sexModelToProtoSex(&personInfoModel.Sex),
+		Qrcode:       QRCodeModelToProtoQRCode(&personInfoModel.QRCode),
 	}
 }
