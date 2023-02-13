@@ -114,7 +114,7 @@ func (adapter PersonInfoAdapter) RetreiveUserBasedOnField(names *db.NamesModel, 
 	err := adapter.db.Where(personInfo).First(&result).Error
 
 	if err != nil {
-		log.Printf("Person with name %v and date of birth %v does not exist", names.Nom, names.Prenom)
+		log.Printf("Person with name %v and date of birth %v does not exist", names.Nom+" "+names.Prenom, dateOfBirth.Month+"/"+dateOfBirth.Day+"/"+dateOfBirth.Year)
 		return &db.PersonInfoModel{}, err
 	}
 	return &result, nil
