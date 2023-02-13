@@ -48,7 +48,8 @@ sudo systemctl restart httpd
 
 # THIS PART HANDLES REBUILDING THE SERVER BINARY CODE AFTER THE NEW PUSH TO THE MASTER CODE
 sudo echo "`date` [Rebuilding Server Binary Code]: Rebuilding the server binary code" >> /var/log/exist_id_server/exist_server.log
-go build -o /home/ec2-user/exist_id_server/useraccount/cmd/existserver /home/ec2-user/exist_id_server/useraccount/cmd/main.go
+/usr/local/go/bin/go run 2>&1 >> /var/log/exist_id_server/exist_server.log
+/usr/local/go/bin/go build -o /home/ec2-user/exist_id_server/useraccount/cmd/existserver /home/ec2-user/exist_id_server/useraccount/cmd/main.go 2>&1 >> /var/log/exist_id_server/exist_server.log  
 
 # THIS PART HANDLES RELOADING THE SYSTEMD CONFIGURATION FILES BECAUSE THERE HAS BEEN A CHANGE TO THE SERVER BINARY CODE
 # THIS WILL RELOAD THE CONFIGURATION OF THE EXIST SERVER SERVICE
