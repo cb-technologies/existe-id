@@ -13,7 +13,7 @@
 
 #MAKE SURE TO CHANGE THIS true value TO false WHEN THERE HAS BEEN NO CHANGE TO THE PUBLIC DNS IP  OF THE EC2 INSTANCE
 #USUALLY THE CHANGE HAPPENS WHEN THE EC2 INSTANCE IS STOP THEN RESTARTED
-if true ; then
+if false ; then
 
   sudo echo "`date` [Configure SSL]: There has been an update to Public DNS(which means an Update to the self_signed_ssl_certificate.ssl.txt file) file or It has been created for the first time" >> /var/log/exist_id_server/exist_server.log
 
