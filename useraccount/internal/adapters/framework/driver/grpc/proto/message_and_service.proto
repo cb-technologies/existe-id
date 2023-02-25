@@ -3,6 +3,8 @@ package pb;
 
 option go_package = "/pb";
 
+import "google/api/annotations.proto";
+
 message Address {
   int32 number = 1;
   string avenue = 2;
@@ -116,7 +118,11 @@ message Response {
 service ExistCRUD {
   rpc AddNewPersonInfo(PersonInfoRequest) returns (Response) {}
   rpc UpdatePersonInfo(EditPersonInfoParameters) returns (Response) {}
-  rpc FindPersonInfo(NationalIDNumber) returns (PersonInfoResponse) {}
+  rpc FindPersonInfo(NationalIDNumber) returns (PersonInfoResponse) {
+    option (google.api.http) = {
+      get: "/v1/citizen/{id}"
+    };
+  }
   rpc RetreiveUserBasedOnField(RetreivePersonInfoParameters) returns (PersonInfoResponse) {}
   rpc SignInAgent(AgentSignInInfo) returns (Response) {}
   rpc SignUpAgent(AgentInfo) returns (Response) {}

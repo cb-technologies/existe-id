@@ -1,6 +1,8 @@
 package main
 
 import (
+	"context"
+	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"log"
 	"net"
 	"net/http"
@@ -34,36 +36,62 @@ func main() {
 	gRPCAdapter := serverGrpc.NewAdapter(appAdapter)
 	//fmt.Println("Nicolas debugging")
 
+	// Runn the HTTP server in another go routine
+	go runGatewayServer(gRPCAdapter)
+	// Run the GRPC server in the main routine
+	runGrpcServer(gRPCAdapter)
+
+}
+
+func runGrpcServer(grpcAdapter *serverGrpc.Adapter) {
 	grpcServer := grpc.NewServer()
 
-	pb.RegisterExistCRUDServer(grpcServer, gRPCAdapter)
+	pb.RegisterExistCRUDServer(grpcServer, grpcAdapter)
 	reflection.Register(grpcServer)
-	// Opening another thread to start the real exist id server
 
-	lis, err := net.Listen("tcp", "localhost:4550")
-	go func() {
-		log.Printf("failed to serve : %v", grpcServer.Serve(lis))
-	}()
-
+	listener, err := net.Listen("tcp", "localhost:4550")
 	if err != nil {
-		log.Printf("Error while listening : %v", err)
+		log.Printf("failed to serve : %v", grpcServer.Serve(listener))
 	}
-
 	grpcWebServer := grpcweb.WrapServer(
 		grpcServer,
-		// Enabling CORS
 		grpcweb.WithOriginFunc(func(origin string) bool { return true }),
 	)
-
 	httpServerExist := &http.Server{
 		Handler: grpcWebServer,
 		Addr:    "localhost:4500",
 	}
-
-	log.Printf("Http server listening at %v", httpServerExist.Addr)
+	log.Printf("GRPC server listening at %v", httpServerExist.Addr)
 
 	err = httpServerExist.ListenAndServe()
 	if err != nil {
 		log.Printf("failed to serve: %v", err)
 	}
+}
+
+func runGatewayServer(grpcAdapter *serverGrpc.Adapter) {
+
+	grpcMux := runtime.NewServeMux()
+
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	err := pb.RegisterExistCRUDHandlerServer(ctx, grpcMux, grpcAdapter)
+	if err != nil {
+		log.Printf("cannot register http handler server: %v", err)
+	}
+	mux := http.NewServeMux()
+	mux.Handle("/", grpcMux)
+
+	listener, err := net.Listen("tcp", "localhost:8080")
+	if err != nil {
+		log.Printf("failed to serve : %v", listener)
+	}
+
+	log.Printf("Http server listening at %v", listener.Addr().String())
+	err = http.Serve(listener, mux)
+	if err != nil {
+		log.Printf("failed to serve: %v", err)
+	}
+
 }
