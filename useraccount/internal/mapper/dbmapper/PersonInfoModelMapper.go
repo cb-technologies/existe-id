@@ -125,7 +125,7 @@ func biometricModelToProtoBiometric(biometricModel *db.BiometricModel) *pb.Biome
 	}
 }
 
-func protoSexToDBSex(sex *pb.Sex) *db.Sex {
+func ProtoSexToDBSex(sex *pb.Sex) *db.Sex {
 	if sex == nil {
 		return &db.Sex{}
 	}
@@ -212,7 +212,7 @@ func PersonInfoRequestToPersonInfoModel(personInfoModel *pb.PersonInfoRequest) *
 		Origins:     *protoOriginToDBOrigin(personInfoModel.Origins),
 		Phenotypes:  *protoPhenotypeToDBPhenotype(personInfoModel.Phenotypes),
 		DateOfBirth: *ProtoDateOfBirthToDBDateOfBirth(personInfoModel.DateOfBirth),
-		Sex:         *protoSexToDBSex(personInfoModel.Sex),
+		Sex:         *ProtoSexToDBSex(personInfoModel.Sex),
 		QRCode:      *protoQRCodeToQRCodeModel(personInfoModel.Qrcode),
 	}
 }

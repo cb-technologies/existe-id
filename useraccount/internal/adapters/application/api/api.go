@@ -64,7 +64,7 @@ func (adapter Adapter) RetreiveUserBasedOnField(names *pb.Names, dateOfBirth *pb
 
 	namesModel := dbmapper.ProtoNamesToDBNames(names)
 	dateOfBirthModel := dbmapper.ProtoDateOfBirthToDBDateOfBirth(dateOfBirth)
-	sexModel := dbmapper.protoSexToDBSex(sex)
+	sexModel := dbmapper.ProtoSexToDBSex(sex)
 	personInfo, err := adapter.dbPersonInfo.RetreiveUserBasedOnField(namesModel, dateOfBirthModel, sexModel)
 
 	if err != nil {

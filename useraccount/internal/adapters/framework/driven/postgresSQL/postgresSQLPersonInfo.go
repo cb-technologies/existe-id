@@ -110,7 +110,7 @@ func (adapter PersonInfoAdapter) RetreiveUserBasedOnField(names *db.NamesModel, 
 
 	var result db.PersonInfoModel
 
-	personInfo := &db.PersonInfoModel{Names: *names, DateOfBirth: *dateOfBirth, Sex: *db.Sex} // Retreiving names, dateofbirth and sex
+	personInfo := &db.PersonInfoModel{Names: *names, DateOfBirth: *dateOfBirth, Sex: *sex} // Retreiving names, dateofbirth and sex
 	err := adapter.db.Where(personInfo).First(&result).Error
 
 	if err != nil {
