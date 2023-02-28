@@ -106,11 +106,11 @@ func (adapter PersonInfoAdapter) FindPersonInfo(nationalId *db.NationalIDNumberM
 
 }
 
-func (adapter PersonInfoAdapter) RetreiveUserBasedOnField(names *db.NamesModel, dateOfBirth *db.DateOfBirthModel) (*db.PersonInfoModel, error) {
+func (adapter PersonInfoAdapter) RetreiveUserBasedOnField(names *db.NamesModel, dateOfBirth *db.DateOfBirthModel, sex *db.Sex) (*db.PersonInfoModel, error) {
 
 	var result db.PersonInfoModel
 
-	personInfo := &db.PersonInfoModel{Names: *names, DateOfBirth: *dateOfBirth} // Retreiving names and dateofbirth
+	personInfo := &db.PersonInfoModel{Names: *names, DateOfBirth: *dateOfBirth, Sex: *db.Sex} // Retreiving names, dateofbirth and sex
 	err := adapter.db.Where(personInfo).First(&result).Error
 
 	if err != nil {

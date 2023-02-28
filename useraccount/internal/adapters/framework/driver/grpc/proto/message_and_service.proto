@@ -109,6 +109,7 @@ message EditPersonInfoParameters{
 message RetreivePersonInfoParameters{
   Names names = 1;
   DateOfBirth date_of_birth = 2;
+  Sex sex = 3;
 }
 
 message Response {
