@@ -41,7 +41,7 @@ func (adapter Adapter) FindPersonInfo(ctx context.Context, req *pb.NationalIDNum
 
 func (adapter Adapter) RetreiveUserBasedOnField(ctx context.Context, req *pb.RetreivePersonInfoParameters) (*pb.PersonInfoResponse, error) {
 
-	personInfo, err := adapter.api.RetreiveUserBasedOnField(req.Names, req.DateOfBirth)
+	personInfo, err := adapter.api.RetreiveUserBasedOnField(req.Names, req.DateOfBirth, req.Sex)
 
 	if err != nil {
 		log.Printf("[ServerGRPC] Person with name %v and date of birth %v does not exist", req.Names.Nom+" "+req.Names.Prenom, req.DateOfBirth.Month+"/"+req.DateOfBirth.Day+"/"+req.DateOfBirth.Year)

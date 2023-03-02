@@ -60,11 +60,12 @@ func (adapter Adapter) FindPersonInfo(nationalID *pb.NationalIDNumber) (*pb.Pers
 	return result, nil
 }
 
-func (adapter Adapter) RetreiveUserBasedOnField(names *pb.Names, dateOfBirth *pb.DateOfBirth) (*pb.PersonInfoResponse, error) {
+func (adapter Adapter) RetreiveUserBasedOnField(names *pb.Names, dateOfBirth *pb.DateOfBirth, sex *pb.Sex) (*pb.PersonInfoResponse, error) {
 
 	namesModel := dbmapper.ProtoNamesToDBNames(names)
 	dateOfBirthModel := dbmapper.ProtoDateOfBirthToDBDateOfBirth(dateOfBirth)
-	personInfo, err := adapter.dbPersonInfo.RetreiveUserBasedOnField(namesModel, dateOfBirthModel)
+	sexModel := dbmapper.ProtoSexToDBSex(sex)
+	personInfo, err := adapter.dbPersonInfo.RetreiveUserBasedOnField(namesModel, dateOfBirthModel, sexModel)
 
 	if err != nil {
 		log.Print("Error finding a personInfo")
