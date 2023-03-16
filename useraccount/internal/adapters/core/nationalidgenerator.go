@@ -1,56 +1,56 @@
 package core
 
 import (
-	"log"
-	"strconv"
 	"github.com/cb-technologies/existe-id/useraccount/useraccount/internal/adapters/framework/driver/grpc/pb"
+	"log"
 	"math/rand"
+	"strconv"
 	"time"
 )
 
-func (adapter Adapter) GenerateNationalID(personInfo *pb.PersonInfoRequest) (*string) {
+func (adapter Adapter) GenerateNationalID(personInfo *pb.PersonInfoRequest) *string {
 	return generateUniqueNationalID(personInfo)
 }
 
-func generateUniqueNationalID(personInfo *pb.PersonInfoRequest) (*string) {
+func generateUniqueNationalID(personInfo *pb.PersonInfoRequest) *string {
 	// Create the map which will allow us to get the correct abbreviation
 	province_abb := ""
 	congo_provinces := map[string]string{
-        "Bas-Uélé": "BU",
-		"Équateur": "ET", // remember to always use a comma, even in the last key-value pair
-		"Haut-Katanga": "HK",
-		"Haut-Lomami": "HL",
-		"Haut-Uélé": "HU",
-		"Ituri":"IT",
-		"Kasaï": "KS",
-		"Kasaï-Central":"LL",
-		"Kasaï Oriental":"KO",
-		"KINSHASA":"KN",
-		"Kongo Central": "BC",
-		"Kwango": "KG",
-		"Kwilu":"KU",
-		"Lomami":"LM",
-		"Lualaba": "LB",
-		"Mai-Ndombe":"MA",
-		"Maniema":"MN",
-		"Mongala":"MO",
-		"Nord-Kivu":"NK",
-		"Nord-Ubangi":"NU",
-		"Sankuru":"SN",
-		"Sud-Kivu":"SK",
-		"Sud-Ubangi":"SU",
-		"Tanganyika":"TG",
-		"Tshopo":"TO",
-		"Tshuapa":"TP",
+		"BAS-UELE":       "BU",
+		"EQUATEUR":       "ET", // remember to always use a comma, even in the last key-value pair
+		"HAUT-KATANGA":   "HK",
+		"HAUT-LOMAMI":    "HL",
+		"HAUT-UELE":      "HU",
+		"ITURI":          "IT",
+		"KASAI":          "KS",
+		"KASAI-CENTRAL":  "LL",
+		"KASAI-ORIENTAL": "KO",
+		"KINSHASA":       "KN",
+		"KONGO-CENTRAL":  "BC",
+		"KWANGO":         "KG",
+		"KWILU":          "KU",
+		"LOMAMI":         "LM",
+		"LUALABA":        "LB",
+		"MAI-NDOMBE":     "MA",
+		"MANIEMA":        "MN",
+		"MONGALA":        "MO",
+		"NORD-KIVU":      "NK",
+		"NORD-UBANGI":    "NU",
+		"SANKURU":        "SN",
+		"SUD-KIVU":       "SK",
+		"SUD-UBANGI":     "SU",
+		"TANGANYIKA":     "TG",
+		"TSHOPO":         "TO",
+		"TSHUAPA":        "TP",
 	}
-	
+
 	for key, _ := range congo_provinces {
-		if(key == personInfo.Address.Province){
+		if key == personInfo.Address.Province {
 			province_abb = congo_provinces[key]
-			log.Printf("The abbreviation of %s is %s\n",personInfo.Address.Province, province_abb)
+			log.Printf("The abbreviation of %s is %s\n", personInfo.Address.Province, province_abb)
 		}
 	}
-	log.Printf("The abbreviation of %s is %s\n",personInfo.Address.Province, province_abb)
+	log.Printf("The abbreviation of %s is %s\n", personInfo.Address.Province, province_abb)
 	rand.Seed(time.Now().UnixNano())
 	id_number := 0 + rand.Intn(999999999-100000000)
 	nationalIdStr := strconv.Itoa(id_number)
